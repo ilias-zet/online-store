@@ -10,7 +10,9 @@
   "devDependencies": {
     "typescript": "^4.8.4"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "npx ts-node index.ts"
+  },
   "author": "",
   "license": "ISC"
 }
