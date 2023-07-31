@@ -45,8 +45,8 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
   return (
     <Container>
       <H1>All categories</H1>
-      <LoadingTheme></LoadingTheme>
-      {/* {!categories ? (
+      {/* <LoadingTheme></LoadingTheme> */}
+      {!categories ? (
         <LoadingTheme></LoadingTheme>
       ) : (
         <CategoriesContainer>
@@ -61,7 +61,7 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
             );
           })}
         </CategoriesContainer>
-      )} */}
+      )}
     </Container>
   );
 };
