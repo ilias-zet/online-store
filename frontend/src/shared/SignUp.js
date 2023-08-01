@@ -131,7 +131,7 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
   
 
   const clickHandlerForSignUpBtn = () => {
-    let user;
+    let userData;
     const name = userName.value;
     const surName = userSurname.value;
     const email = userEmail.value;
@@ -141,16 +141,16 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/SignUpNewUser", {
-          params: { user },
+          params: { userData },
         });
         const resUser = await res.data;
-        if(resUser.succesSignUp && !resUser.findedUser) {
+        if(resUser.succes && !resUser.user) {
           setLoginedUser(user)
         }
-        if(resUser.succesSignUp){
+        if(resUser.succes){
           alert("Успешная регистрация!")
         }
-        if(resUser.findedUser) {
+        if(resUser.user) {
           alert("Пользователь с такой почтой уже зарегистрирован")
         }
         console.log(resUser)
