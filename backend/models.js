@@ -7,7 +7,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  surName: {
+  surname: {
     type: String,
     required: true,
   },
@@ -35,6 +35,10 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
+    main_category: {
+      type: String,
+      required: true,
+    },
     SubCategory: String,
     ProductType: String,
     Colour: String,
@@ -48,5 +52,5 @@ const productSchema = new Schema({
 const Product = mongoose.model('Product', productSchema, 'products')
 const User = mongoose.model('User', userSchema, 'users')
 
-module.exports = Product;
-module.exports = User;
+exports.Product =  Product;
+exports.User = User;
