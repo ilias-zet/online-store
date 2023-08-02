@@ -1,18 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Product = require('./models')
-const User = require('./models')
+const { Product, User } = require('./models');
 const productsRoutes = require('./routes/products')
 require('dotenv').config()
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
-const MONGO_URL = process.env.MONGO_URL
+const PORT = process.env.PORT;
+const MONGO_URL = process.env.MONGO_URL;
 if(!MONGO_URL) {
   throw new Error(".env Error: Some variable is not defined or does not exist")
 }
-
+console.log(Product)
 async function start() {
     try{
         await mongoose.connect(MONGO_URL, {
@@ -33,13 +32,16 @@ async function start() {
 start()
 
 // Conditional save user to DB
-app.get('/SignUpNewUser',async (request, response) => {
+app.get('/createUser',async (request, response) => {
   const { userData } = request.query
-  const { name,surName,email,pass } = userData;
+  const { name,surname,email,pass } = userData;
   let user = await User.findOne({ email })
   let succes;
-  if(!user) {
-    let newUser = new User({ name,surName,email,pass })
+  if(user) {
+    console.log(user)
+  }
+  else {
+    let newUser = new User({ name,surname,email,pass })
     try {
       await newUser.save();
       succes = true;
@@ -47,13 +49,14 @@ app.get('/SignUpNewUser',async (request, response) => {
       console.log("User save error: ", e)
     }
   }
-  await response.json({ succes,user })
+  response.json({ succes,user })
 })
 
 // Get all categories in DB
 app.get('/getAllCategories',async (request, response) => {
   const categories = await Product.distinct("main_category")
-  await response.json(categories)
+  response.json(categories)
+  console.log(categories)
 })
 
 app.use(productsRoutes)
