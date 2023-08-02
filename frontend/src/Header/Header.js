@@ -195,10 +195,10 @@ const HeaderWithSearch = ({
           <>
             <UserBtnContainer>
               <UserImgBtn>
-                {loginedUser.name[0] + " " + loginedUser.surName[0]}
+                {loginedUser.name[0] + " " + loginedUser.surname[0]}
               </UserImgBtn>
               <UserFullname>
-                {loginedUser.name + " " + loginedUser.surName}
+                {loginedUser.name + " " + loginedUser.surname}
               </UserFullname>
             </UserBtnContainer>
             <LogoutBtn onClick={() => setLoginedUser(null)}>
