@@ -77,6 +77,7 @@ const MainCagetoryPage = ({ searchParams }) => {
               <ProductCard
                 product={product}
                 category={category}
+                key={product._id}
               ></ProductCard>
             );
           })}
