@@ -133,19 +133,20 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
   const clickHandlerForSignUpBtn = () => {
     let userData;
     const name = userName.value;
-    const surName = userSurname.value;
+    const surname = userSurname.value;
     const email = userEmail.value;
     const pass = userPass.value;
     const repeatPass = userRepeatPass.value;
 
     const fetchData = async () => {
       try {
-        const res = await axios.get("/SignUpNewUser", {
+        const res = await axios.get("/createUser", {
           params: { userData },
         });
         const resUser = await res.data;
         if(resUser.succes && !resUser.user) {
-          setLoginedUser(user)
+          setLoginedUser(userData)
+          console.log(userData)
         }
         if(resUser.succes){
           alert("Успешная регистрация!")
@@ -160,17 +161,17 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
     };
     
 
-    if(name && surName && email && pass && repeatPass && (pass === repeatPass)) {
-      user = {
+    if(name && surname && email && pass && repeatPass && (pass === repeatPass)) {
+      userData = {
         name,
-        surName,
+        surname,
         email,
         pass,
         repeatPass,
       }
       
     }
-    console.log(user)
+    console.log(userData)
     fetchData()
     close()
   }
