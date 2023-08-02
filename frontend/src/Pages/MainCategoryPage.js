@@ -40,7 +40,7 @@ const MainCagetoryPage = ({ searchParams }) => {
   const [responsedProduct, setresponsedProduct] = useState(null);
   const fetchData = async () => {
     try {
-      const res = await axios.get("/getProductsByCategory", {
+      const res = await axios.get("http://localhost:8000/getProducts", {
         params: { category },
       });
       const resProductData = await res.data;

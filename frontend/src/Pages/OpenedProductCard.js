@@ -64,7 +64,7 @@ const OpenedProductCard = () => {
   
   const fetchData = async () => {
   try {
-    const res = await axios.get("/getProductAllInformation",{params: { product_id }}) 
+    const res = await axios.get("http://localhost:8000/getFullProduct",{params: { product_id }}) 
     const resProductData = await res.data
     setresponsedProduct(resProductData[0])
 
