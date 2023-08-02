@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Body from "./Pages/MainBody/MainBody";
 import Footer from "./Footer/Footer";
-// import styled from "styled-components";
+
 import {
   Routes,
   Route,
@@ -14,16 +14,6 @@ import Header from "./Header/Header";
 import SignUp from "./shared/SignUp";
 import useSignUp from "./shared/useSignUp";
 import PageWithCategories from "./Pages/PageWithCategories/PageWithCategories"
-
-// const Container = styled.div`
-//   display: flex;
-//   align-items: center;
-//   flex-direction: column;
-//   width: 100%;
-//   font-family: Bradley Hand;
-//   height: 100%;
-//   /* background-color: rgb(46, 45, 64); */
-// `;
 
 function App() {
   const { isOpened, open, close } = useSignUp(false);
@@ -68,7 +58,6 @@ function App() {
         />
         <Route path="/products/:product_id" element={<OpenedProductCard />} />
       </Routes>
-      {/* </BrowserRouter> */}
       <Footer />
       <SignUp
         isOpened={isOpened}
