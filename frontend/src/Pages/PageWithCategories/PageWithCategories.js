@@ -57,6 +57,7 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
                 setSearchParams={setSearchParams}
                 categoryNameForHeader={elem}
                 categoryNameStrForHandler={elem}
+                key={elem}
               ></CategoryForMainPage>
             );
           })}
