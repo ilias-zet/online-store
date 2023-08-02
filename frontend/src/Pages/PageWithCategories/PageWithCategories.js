@@ -30,7 +30,7 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
   const [categories, setCategories] = useState(null);
   const fetchData = async () => {
     try {
-      const res = await axios.get("/getAllCategories");
+      const res = await axios.get("http://localhost:8000/getAllCategories");
       const data = await res.data;
       setCategories(data);
     } catch (e) {
