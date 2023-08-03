@@ -4,6 +4,8 @@ import recomendedOne from "./images/products/Bose portable Smart speaker.png";
 import recomendedTwo from "./images/products/SoundLink Flex Bluetooth speaker.png";
 import recomendedThree from "./images/products/SoundLink Color Bluetooth speaker II.png";
 import CategoryForMainPage from "../../shared/CategoryForMainPage";
+import axios from "axios";
+import LoadingTheme from "../../shared/LoadingTheme";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -95,8 +97,22 @@ const ProductPrice = styled.p`
 `;
 
 const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
-  // searchParams.delete("category");
-  // setSearchParams(searchParams);
+  const [categories, setCategories] = useState(null)
+  const fetchData = async () => {
+    try {
+      //Get array with images for categories
+      const resImgs = await axios.get("http://localhost:8000/getImages")
+      const imgsAndNameCategoriesArr = resImgs.data;
+      setCategories(imgsAndNameCategoriesArr);
+      console.log(imgsAndNameCategoriesArr)
+    } catch (e) {
+      console.log("Error MainBody.js: ", e);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <BodyContainer>
       <RecommendedTitle>Recommended</RecommendedTitle>
@@ -139,55 +155,20 @@ const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
           ></BannerForPage> */}
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
-        <CategoryForMainPage
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Men"}
-          categoryNameForHeader={"For Men"}
-        ></CategoryForMainPage>
-        <CategoryForMainPage
-          setMainPageHeader={setMainPageHeader}
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Women"}
-          categoryNameForHeader={"FootWear"}
-        ></CategoryForMainPage>
-        <CategoryForMainPage
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Women"}
-          categoryNameForHeader={"For women"}
-        ></CategoryForMainPage>
-        <CategoryForMainPage
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Electronics"}
-          categoryNameForHeader={"Electronics"}
-        ></CategoryForMainPage>
-        <CategoryForMainPage
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Video Games"}
-          categoryNameForHeader={"Video Games"}
-        ></CategoryForMainPage>
-        <CategoryForMainPage
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Pets"}
-          categoryNameForHeader={"Pets"}
-        ></CategoryForMainPage>
-        <CategoryForMainPage
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          categoryNameStrForHandler={"Movies, Music & Books"}
-          categoryNameForHeader={"Movies, Music & Books"}
-        ></CategoryForMainPage>
-        {/* 
-
-              <Category>
-                <CategoryImage src={ElectronicsCategoryImg} alt='' onClick={(e) => productFilterHandler(e,"Electronics")}></CategoryImage>
-                <CategoryNameA  onClick={(e) => productFilterHandler(e,"Electronics")}>Electronics</CategoryNameA>
-              </Category> */}
+        {categories ? categories.map((elem, idx) => {
+          if(idx<6) {
+            return (
+              <CategoryForMainPage
+                searchParams={searchParams}
+                setSearchParams={setSearchParams}
+                categoryNameForHeader={elem.main_category}
+                categoryNameStrForHandler={elem.main_category}
+                categoryImage={elem.image}
+                key={elem._id}
+              ></CategoryForMainPage>
+            )
+          }
+        }): <LoadingTheme></LoadingTheme>}
       </CategoriesContainer>
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>
