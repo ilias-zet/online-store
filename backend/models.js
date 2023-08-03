@@ -23,33 +23,48 @@ const userSchema = new Schema({
 });
 
 const productSchema = new Schema({
-    ProductId: {
+    _id: {
         type: Number,
         required: true,
     },
-    Gender: {
+    title: {
         type: String,
         required: true,
     },
-    Category: {
+    brand: {
         type: String,
         required: true,
     },
-    main_category: {
+    description: {
       type: String,
       required: true,
     },
-    SubCategory: String,
-    ProductType: String,
-    Colour: String,
-    Usage: String,
-    ProductTitle: String,
-    Image: String,
-    ImageURL: String,
+    gtin13: {
+      type: Number,
+      required: true,
+    },
+    availability: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    }, 
+    sku: String,
+    priceCurrency: String,
+    breadcrumbs: [String,String,String],
+    images: String,
+    crawled_at: String,
+    
 
 });
 
-const Product = mongoose.model('Product', productSchema, 'products')
-const User = mongoose.model('User', userSchema, 'users')
+const Products = mongoose.model('Product', productSchema, 'products')
+const Users = mongoose.model('User', userSchema, 'users')
 
-module.exports = { Product, User }
+module.exports = { Products, Users }

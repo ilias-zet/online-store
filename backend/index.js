@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { Product, User } = require("./models");
+const { Products, Users } = require("./models");
 const productsRoutes = require("./routes/products");
 const cors = require('cors');
 require("dotenv").config();
@@ -41,14 +41,14 @@ app.post("/createUser", async (request, response) => {
   const { userData } = request.query;
   const { name, surname, email, pass } = userData;
   let success;
-  let user = await User.findOne({ email })
+  let user = await Users.findOne({ email })
   if(user){
     return response.status(500).send({message : 'User with this e-mail is already signed up!'})
   }
   else {
     try {
       success = true; 
-      user = new User({ name, surname, email, pass });
+      user = new Users({ name, surname, email, pass });
       await user.save();
     } catch (e) {
       console.log("User save error: ", e);
@@ -60,7 +60,7 @@ app.post("/createUser", async (request, response) => {
 
 // Get all categories in DB
 app.get("/getAllCategories", async (request, response) => {
-  const categories = await Product.distinct("main_category");
+  const categories = await Products.distinct("main_category");
   response.json(categories);
 });
 
