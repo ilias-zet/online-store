@@ -140,21 +140,18 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
 
     const fetchData = async () => {
       try {
-        const res = await axios.get("/createUser", {
+        const res = await axios.post("http://localhost:8000/createUser",null, {
           params: { userData },
         });
         const resUser = await res.data;
-        if(resUser.succes && !resUser.user) {
-          setLoginedUser(userData)
-          console.log(userData)
-        }
-        if(resUser.succes){
+        if(resUser.success) {
+          setLoginedUser(resUser.user)
           alert("Успешная регистрация!")
         }
-        if(resUser.user) {
-          alert("Пользователь с такой почтой уже зарегистрирован")
+        if(!resUser.success) {
+          alert("Пользователь с таким мейлом уже зареган")
         }
-        console.log(resUser)
+
       } catch (e) {
         console.log("Error on fetchData const:  ", e);
       }
@@ -171,7 +168,6 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
       }
       
     }
-    console.log(userData)
     fetchData()
     close()
   }
@@ -205,10 +201,6 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
         </OtherContainer>
         <SignUpBtn onClick={() => clickHandlerForSignUpBtn()}>Sign Up</SignUpBtn>
       </FormContainer>
-      {/* <SignUpFormBg modalOpened={modalOpened} onClick={() => {
-        setModalOpened(false)
-        console.log(modalOpened)
-      }}></SignUpFormBg> */}
     </SignUpFormBg>
   );
 };
