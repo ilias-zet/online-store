@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -23,48 +23,57 @@ const userSchema = new Schema({
 });
 
 const productSchema = new Schema({
-    _id: {
-        type: Number,
-        required: true,
-    },
-    title: {
-        type: String,
-        required: true,
-    },
-    brand: {
-        type: String,
-        required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    gtin13: {
-      type: Number,
-      required: true,
-    },
-    availability: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    }, 
-    sku: String,
-    priceCurrency: String,
-    breadcrumbs: [String,String,String],
-    images: String,
-    crawled_at: String,
-    
-
+  _id: {
+    type: Number,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  brand: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  gtin13: {
+    type: Number,
+    required: true,
+  },
+  availability: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+  sku: String,
+  priceCurrency: String,
+  breadcrumbs: [String, String, String],
+  images: String,
+  crawled_at: String,
+});
+const imgSchema = new Schema({
+  main_category: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
 });
 
-const Products = mongoose.model('Product', productSchema, 'products')
-const Users = mongoose.model('User', userSchema, 'users')
+const Products = mongoose.model("Product", productSchema, "products");
+const Users = mongoose.model("User", userSchema, "users");
+const Images = mongoose.model("Image", imgSchema,"images")
 
-module.exports = { Products, Users }
+module.exports = { Products, Users, Images };
