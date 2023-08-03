@@ -159,6 +159,8 @@ const HeaderWithSearch = ({
   isOpened,
   open,
   close,
+  openLogin,
+  closeLogin,
   loginedUser,
   setLoginedUser,
 }) => {
@@ -171,6 +173,10 @@ const HeaderWithSearch = ({
   const clickHandlerForSignUp = () => {
     open();
   };
+
+  const clickHandlerForLogin = () => {
+    openLogin();
+  }
 
   return (
     <HeaderContainer>
@@ -195,10 +201,10 @@ const HeaderWithSearch = ({
           <>
             <UserBtnContainer>
               <UserImgBtn>
-                {loginedUser.name[0] + " " + loginedUser.surname[0]}
+                {loginedUser.userName[0] + " " + loginedUser.userSurname[0]}
               </UserImgBtn>
               <UserFullname>
-                {loginedUser.name + " " + loginedUser.surname}
+                {loginedUser.userName + " " + loginedUser.userSurname}
               </UserFullname>
             </UserBtnContainer>
             <LogoutBtn onClick={() => setLoginedUser(null)}>
@@ -210,7 +216,7 @@ const HeaderWithSearch = ({
             <SignUpLogInBtnContainer onClick={() => clickHandlerForSignUp()}>
               <TextSignUpLogInBtn>Sign Up</TextSignUpLogInBtn>
             </SignUpLogInBtnContainer>
-            <SignUpLogInBtnContainer>
+            <SignUpLogInBtnContainer onClick={() => clickHandlerForLogin()}>
               <TextSignUpLogInBtn>Log In</TextSignUpLogInBtn>
             </SignUpLogInBtnContainer>
           </>
