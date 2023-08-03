@@ -71,7 +71,6 @@ const OpenedProductCard = () => {
   } catch(e) {
     console.log("Error on fetchData const:  ", e)
   }
-  console.log(responsedProduct)
 }
 useEffect(() => {
   fetchData();

@@ -104,7 +104,6 @@ const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
       const resImgs = await axios.get("http://localhost:8000/getImages")
       const imgsAndNameCategoriesArr = resImgs.data;
       setCategories(imgsAndNameCategoriesArr);
-      console.log(imgsAndNameCategoriesArr)
     } catch (e) {
       console.log("Error MainBody.js: ", e);
     }
