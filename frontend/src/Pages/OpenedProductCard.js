@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components'
 import axios from 'axios';
 import LoadingTheme from "../shared/LoadingTheme";
+import LoadingCard from "../shared/LoadingCard";
 
 const Container = styled.div`
 display: flex;
@@ -77,7 +78,7 @@ useEffect(() => {
 },[])
   return (
     <Container>
-      {!responsedProduct? <LoadingTheme /> : (
+      {!responsedProduct? <LoadingCard /> : (
         <>
           <ProductCardImageContainer>
             <img src={responsedProduct.images} alt=""></img>
