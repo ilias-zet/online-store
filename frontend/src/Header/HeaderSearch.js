@@ -43,7 +43,6 @@ const HeaderSearch = () => {
 
   const inputSearchHandler = (e) => {
     setSearchReq(e.target.value)
-    console.log(e.target.value)
   }
 
   const buttonSearchHandler = () => {
