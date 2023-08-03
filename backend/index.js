@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { Products, Users, Images } = require("./models");
+const authRouter = require("./routes/auth")
 const productsRoutes = require("./routes/products");
 const cors = require('cors');
 require("dotenv").config();
@@ -8,6 +9,9 @@ require("dotenv").config();
 const app = express();
 app.use(cors())
 app.use(express.static('public'));
+
+app.use(express.json())
+app.use("/auth",authRouter)
 
 const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
@@ -37,27 +41,6 @@ async function start() {
 
 start();
 
-// Conditional save user to DB
-app.post("/createUser", async (request, response) => {
-  const { userData } = request.query;
-  const { name, surname, email, pass } = userData;
-  let success;
-  let user = await Users.findOne({ email })
-  if(user){
-    return response.status(500).send({message : 'User with this e-mail is already signed up!'})
-  }
-  else {
-    try {
-      success = true; 
-      user = new Users({ name, surname, email, pass });
-      await user.save();
-    } catch (e) {
-      console.log("User save error: ", e);
-      return response.status(500).send({message : 'Error saving user!'})
-    }
-  }
-  response.json({ success, user });
-});
 
 // Get all categories in DB
 app.get("/getAllCategories", async (request, response) => {
