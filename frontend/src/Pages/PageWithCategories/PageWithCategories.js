@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import LoadingTheme from "../../shared/LoadingTheme";
 import CategoryForMainPage from "../../shared/CategoryForMainPage";
+import LoadingCard from "../../shared/LoadingCard";
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const H1 = styled.h1`
 
 const PageWithCategories = ({ searchParams, setSearchParams }) => {
   const [categories, setCategories] = useState(null);
+  let counterForLoadingCards = 0;
   const fetchData = async () => {
     try {
       //Get array with all categories
@@ -50,9 +52,11 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
   return (
     <Container>
       <H1>All categories</H1>
+      
       {/* <LoadingTheme></LoadingTheme> */}
       {!categories ? (
-        <LoadingTheme></LoadingTheme>
+        // <LoadingTheme></LoadingTheme>
+        <LoadingCard></LoadingCard>
       ) : (
         <CategoriesContainer>
           {categories.map((elem) => {
