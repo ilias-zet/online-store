@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { Products, Users } = require("./models");
+const { Products, Users, Images } = require("./models");
 const productsRoutes = require("./routes/products");
 const cors = require('cors');
 require("dotenv").config();
 
 const app = express();
 app.use(cors())
+app.use(express.static('public'));
 
 const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
@@ -63,5 +64,10 @@ app.get("/getAllCategories", async (request, response) => {
   const categories = await Products.distinct("main_category");
   response.json(categories);
 });
+
+app.get("/getImages", async(req,res) => {
+  const images = await Images.find({});
+  res.json(images)
+})
 
 app.use(productsRoutes);
