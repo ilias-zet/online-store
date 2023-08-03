@@ -2,26 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  surname: {
-    type: String,
-    required: true,
-  },
-
-  pass: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-});
-
 const productSchema = new Schema({
   _id: {
     type: Number,
@@ -72,8 +52,28 @@ const imgSchema = new Schema({
   },
 });
 
-const Products = mongoose.model("Product", productSchema, "products");
-const Users = mongoose.model("User", userSchema, "users");
-const Images = mongoose.model("Image", imgSchema,"images")
+const Role = new Schema({
+  value: { type: String, unique: true, default: "USER" },
+});
 
-module.exports = { Products, Users, Images };
+const User = new Schema({
+  userName: { type: String, unique: true, required: true },
+  userSurname: {
+    type: String,
+    required: true,
+  },
+  userEmail: {
+    type: String,
+    required: true,
+  },
+  userPassword: { type: String, required: true },
+  roles: [{ type: String, ref: "Role" }],
+});
+
+const Products = mongoose.model("Product", productSchema, "products");
+const Images = mongoose.model("Image", imgSchema, "images");
+
+const Users = mongoose.model("User", User, "users");
+const Roles = mongoose.model("Role", Role, "roles");
+
+module.exports = { Products, Users, Images, Roles };

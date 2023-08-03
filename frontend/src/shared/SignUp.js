@@ -123,48 +123,44 @@ const SignUpBtn = styled.div`
 `;
 
 const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
-  const userName = useInput("")
-  const userSurname = useInput("")
-  const userEmail = useInput("")
-  const userPass = useInput("")
-  const userRepeatPass = useInput("")
+  const name = useInput("")
+  const surname = useInput("")
+  const email = useInput("")
+  const pass = useInput("")
+  const repeatpass = useInput("")
   
 
   const clickHandlerForSignUpBtn = () => {
     let userData;
-    const name = userName.value;
-    const surname = userSurname.value;
-    const email = userEmail.value;
-    const pass = userPass.value;
-    const repeatPass = userRepeatPass.value;
+    const userName = name.value;
+    const userSurname = surname.value;
+    const userEmail = email.value;
+    const userPassword = pass.value;
+    const userRepeatPassword = repeatpass.value;
 
     const fetchData = async () => {
       try {
-        const res = await axios.post("http://localhost:8000/createUser",null, {
+        const res = await axios.post("http://localhost:8000/auth/registration",userData, {
           params: { userData },
         });
         const resUser = await res.data;
-        if(resUser.success) {
+        if(resUser.user) {
           setLoginedUser(resUser.user)
           alert("Успешная регистрация!")
         }
-        if(!resUser.success) {
-          alert("Пользователь с таким мейлом уже зареган")
-        }
-
       } catch (e) {
-        console.log("Error on fetchData const:  ", e);
+        const err = e?.response.data?.message && e?.response.data?.candidate? `${e?.response.data?.message}` : "Unexpected registration error"
+        alert(err)
       }
     };
     
 
-    if(name && surname && email && pass && repeatPass && (pass === repeatPass)) {
+    if(userName && userSurname && userEmail && userPassword && userRepeatPassword && (userPassword === userRepeatPassword)) {
       userData = {
-        name,
-        surname,
-        email,
-        pass,
-        repeatPass,
+        userName,
+        userSurname,
+        userEmail,
+        userPassword,
       }
       
     }
@@ -180,24 +176,24 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
         <NameAndSurnameMainContainer>
           <NameAndSurnameSubContainer>
             <Text>Name*:</Text>
-            <NameAndSurnameInput { ... userName} placeholder="Ivan"></NameAndSurnameInput>
+            <NameAndSurnameInput { ...name} placeholder="Ivan"></NameAndSurnameInput>
           </NameAndSurnameSubContainer>
           <NameAndSurnameSubContainer>
             <Text>Surname*:</Text>
-            <NameAndSurnameInput { ...userSurname } placeholder="Ivanov"></NameAndSurnameInput>
+            <NameAndSurnameInput { ...surname } placeholder="Ivanov"></NameAndSurnameInput>
           </NameAndSurnameSubContainer>
         </NameAndSurnameMainContainer>
         <OtherContainer>
           <Text>E-mail*:</Text>
-          <OtherInput { ...userEmail } placeholder="ivanivanov@mail.com"></OtherInput>
+          <OtherInput { ...email } placeholder="ivanivanov@mail.com"></OtherInput>
         </OtherContainer>
         <OtherContainer>
           <Text>Password*:</Text>
-          <OtherInput { ...userPass }></OtherInput>
+          <OtherInput { ...pass }></OtherInput>
         </OtherContainer>
         <OtherContainer>
           <Text>Repeat password*:</Text>
-          <OtherInput { ...userRepeatPass }></OtherInput>
+          <OtherInput { ...repeatpass }></OtherInput>
         </OtherContainer>
         <SignUpBtn onClick={() => clickHandlerForSignUpBtn()}>Sign Up</SignUpBtn>
       </FormContainer>
