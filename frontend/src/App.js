@@ -13,10 +13,13 @@ import OpenedProductCard from "./Pages/OpenedProductCard";
 import Header from "./Header/Header";
 import SignUp from "./shared/SignUp";
 import useSignUp from "./shared/useSignUp";
+import useLogin from "./shared/useLogin";
 import PageWithCategories from "./Pages/PageWithCategories/PageWithCategories"
+import Login from "./shared/Login";
 
 function App() {
   const { isOpened, open, close } = useSignUp(false);
+  const { isOpenedLogin, openLogin, closeLogin } = useLogin(false);
   const [loginedUser, setLoginedUser] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
 
@@ -26,6 +29,9 @@ function App() {
           isOpened={isOpened}
           open={open}
           close={close}
+          isOpenedLogin={isOpenedLogin}
+          openLogin={openLogin}
+          closeLogin={closeLogin}
           loginedUser={loginedUser}
           setLoginedUser={setLoginedUser}
         ></Header>
@@ -66,6 +72,13 @@ function App() {
         loginedUser={loginedUser}
         setLoginedUser={setLoginedUser}
       ></SignUp>
+      <Login
+        isOpenedLogin={isOpenedLogin}
+        openLogin={openLogin}
+        closeLogin={closeLogin}
+        loginedUser={loginedUser}
+        setLoginedUser={setLoginedUser}
+      ></Login>
     </>
   );
 }
