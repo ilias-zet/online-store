@@ -3,6 +3,7 @@ config/default.json
 data
 .pnp
 .pnp.js
+config.js
 
 # testing
 coverage
