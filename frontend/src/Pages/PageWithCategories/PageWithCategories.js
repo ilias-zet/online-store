@@ -30,9 +30,14 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
   const [categories, setCategories] = useState(null);
   const fetchData = async () => {
     try {
+      //Get array with all categories
       const res = await axios.get("http://localhost:8000/getAllCategories");
       const data = await res.data;
-      setCategories(data);
+
+      //Get array with images for categories
+      const resImgs = await axios.get("http://localhost:8000/getImages")
+      const imgsAndNameCategoriesArr = resImgs.data;
+      setCategories(imgsAndNameCategoriesArr);
     } catch (e) {
       console.log("Error PageWithCategories: ", e);
     }
@@ -55,9 +60,10 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
               <CategoryForMainPage
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
-                categoryNameForHeader={elem}
-                categoryNameStrForHandler={elem}
-                key={elem}
+                categoryNameForHeader={elem.main_category}
+                categoryNameStrForHandler={elem.main_category}
+                categoryImage={elem.image}
+                key={elem._id}
               ></CategoryForMainPage>
             );
           })}
