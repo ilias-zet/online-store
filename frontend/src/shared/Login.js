@@ -14,6 +14,7 @@ const LoginFormBg = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgb(0, 0, 0, 0.7);
+  transition: all 0.5s;
 `;
 
 const FormContainer = styled.div`
@@ -96,7 +97,7 @@ const SignUpBtn = styled.div`
   border-radius: 10px;
 `;
 
-const Login = ({ isOpenedLogin, openLogin, closeLogin,loginedUser, setLoginedUser }) => {
+const Login = ({ isOpenedLogin, openLogin, closeLogin, setUser }) => {
   const email = useInput("")
   const pass = useInput("")
   
@@ -113,7 +114,7 @@ const Login = ({ isOpenedLogin, openLogin, closeLogin,loginedUser, setLoginedUse
         });
         const {user} = await res.data;
         if(user) {
-          setLoginedUser(user)
+          setUser(user)
           alert("Успешный вход")
         }
       } catch (e) {

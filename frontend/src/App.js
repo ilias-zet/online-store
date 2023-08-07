@@ -1,85 +1,90 @@
 import React, { useState } from "react";
 import "./App.css";
-import Body from "./Pages/MainBody/MainBody";
+import HomePage from "./Pages/HomePage/HomePage";
 import Footer from "./Footer/Footer";
-
-import {
-  Routes,
-  Route,
-  useSearchParams,
-} from "react-router-dom";
-import MainCagetoryPage from "./Pages/MainCategoryPage";
-import OpenedProductCard from "./Pages/OpenedProductCard";
+import styled from "styled-components";
+import { Routes, Route, useSearchParams } from "react-router-dom";
+import ProductsPage from "./Pages/ProductsPage";
+import ProductPage from "./Pages/ProductPage";
 import Header from "./Header/Header";
 import SignUp from "./shared/SignUp";
 import useSignUp from "./shared/useSignUp";
 import useLogin from "./shared/useLogin";
-import PageWithCategories from "./Pages/PageWithCategories/PageWithCategories"
+import CategoriesPage from "./Pages/CategoriesPage/CategoriesPage";
 import Login from "./shared/Login";
+
+const Container = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+min-height: 100%;
+width: 100%;
+`
 
 function App() {
   const { isOpened, open, close } = useSignUp(false);
   const { isOpenedLogin, openLogin, closeLogin } = useLogin(false);
-  const [loginedUser, setLoginedUser] = useState(null);
+  const [user, setUser] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <>
-        <Header
-          isOpened={isOpened}
-          open={open}
-          close={close}
-          isOpenedLogin={isOpenedLogin}
-          openLogin={openLogin}
-          closeLogin={closeLogin}
-          loginedUser={loginedUser}
-          setLoginedUser={setLoginedUser}
-        ></Header>
+    <Container>
+      <Header
+        isOpened={isOpened}
+        open={open}
+        close={close}
+        isOpenedLogin={isOpenedLogin}
+        openLogin={openLogin}
+        closeLogin={closeLogin}
+        user={user}
+        setUser={setUser}
+      ></Header>
       <Routes>
         <Route
-          path="/main-page"
+          path="/"
           element={
-            <Body
+            <HomePage
               searchParams={searchParams}
               setSearchParams={setSearchParams}
-            ></Body>
+            ></HomePage>
           }
         />
         <Route
           path="/products"
           element={
-            <MainCagetoryPage
+            <ProductsPage
               searchParams={searchParams}
               setSearchParams={setSearchParams}
             />
           }
         />
         <Route
-          path="/all-categories"
+          path="/categories"
           element={
-          <PageWithCategories
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}>
-          </PageWithCategories>}
+            <CategoriesPage
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+            ></CategoriesPage>
+          }
         />
-        <Route path="/products/:product_id" element={<OpenedProductCard />} />
+        <Route path="/products/:product_id" element={<ProductPage />} />
       </Routes>
       <Footer />
       <SignUp
         isOpened={isOpened}
         open={open}
         close={close}
-        loginedUser={loginedUser}
-        setLoginedUser={setLoginedUser}
+        user={user}
+        setUser={setUser}
       ></SignUp>
       <Login
         isOpenedLogin={isOpenedLogin}
         openLogin={openLogin}
         closeLogin={closeLogin}
-        loginedUser={loginedUser}
-        setLoginedUser={setLoginedUser}
+        user={user}
+        setUser={setUser}
       ></Login>
-    </>
+    </Container>
   );
 }
 

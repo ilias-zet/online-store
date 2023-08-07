@@ -122,7 +122,7 @@ const SignUpBtn = styled.div`
   border-radius: 10px;
 `;
 
-const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
+const SignUp = ({ isOpened, open, close, setUser }) => {
   const name = useInput("")
   const surname = useInput("")
   const email = useInput("")
@@ -145,7 +145,7 @@ const SignUp = ({ isOpened, open, close,loginedUser, setLoginedUser }) => {
         });
         const resUser = await res.data;
         if(resUser.user) {
-          setLoginedUser(resUser.user)
+          setUser(resUser.user)
           alert("Успешная регистрация!")
         }
       } catch (e) {
