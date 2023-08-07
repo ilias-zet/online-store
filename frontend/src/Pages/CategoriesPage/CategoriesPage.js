@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import LoadingTheme from "../../shared/LoadingTheme";
 import CategoryForMainPage from "../../shared/CategoryForMainPage";
 import LoadingCard from "../../shared/LoadingCard";
 
@@ -27,15 +26,10 @@ const H1 = styled.h1`
   width: 90%;
 `;
 
-const PageWithCategories = ({ searchParams, setSearchParams }) => {
+const CategoriesPage = ({ searchParams, setSearchParams}) => {
   const [categories, setCategories] = useState(null);
-  let counterForLoadingCards = 0;
   const fetchData = async () => {
     try {
-      //Get array with all categories
-      const res = await axios.get("http://localhost:8000/getAllCategories");
-      const data = await res.data;
-
       //Get array with images for categories
       const resImgs = await axios.get("http://localhost:8000/getImages")
       const imgsAndNameCategoriesArr = resImgs.data;
@@ -53,9 +47,8 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
     <Container>
       <H1>All categories</H1>
       
-      {/* <LoadingTheme></LoadingTheme> */}
+      {/* <LoadingCard></LoadingCard> */}
       {!categories ? (
-        // <LoadingTheme></LoadingTheme>
         <LoadingCard></LoadingCard>
       ) : (
         <CategoriesContainer>
@@ -77,4 +70,4 @@ const PageWithCategories = ({ searchParams, setSearchParams }) => {
   );
 };
 
-export default PageWithCategories;
+export default CategoriesPage;

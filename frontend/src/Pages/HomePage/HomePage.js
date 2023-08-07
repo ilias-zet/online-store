@@ -5,17 +5,15 @@ import recomendedTwo from "./images/products/SoundLink Flex Bluetooth speaker.pn
 import recomendedThree from "./images/products/SoundLink Color Bluetooth speaker II.png";
 import CategoryForMainPage from "../../shared/CategoryForMainPage";
 import axios from "axios";
-import LoadingTheme from "../../shared/LoadingTheme";
+import LoadingCard from "../../shared/LoadingCard";
 
 const BodyContainer = styled.div`
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   width: 100%;
   padding-top: 20px;
   min-height: 100%;
-  /* background-color: rgb(46, 45, 64); */
   background-color: white;
 `;
 
@@ -28,7 +26,6 @@ const CategoriesContainer = styled.div`
   justify-content: center;
   width: 70%;
   min-height: 500px;
-  /* border: 5px solid gray; */
   border-radius: 10px;
   background-color: white;
   margin-top: 20px;
@@ -96,7 +93,7 @@ const ProductPrice = styled.p`
   font-weight: bold;
 `;
 
-const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
+const HomePage = ({ searchParams, setSearchParams }) => {
   const [categories, setCategories] = useState(null)
   const fetchData = async () => {
     try {
@@ -149,9 +146,6 @@ const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
           <ProductPrice>$ 129.00</ProductPrice>
         </Product>
       </RecommendedProducts>
-      {/* <BannerForPage
-          bannerURL={MainBanner}
-          ></BannerForPage> */}
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
         {categories ? categories.map((elem, idx) => {
@@ -167,7 +161,7 @@ const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
               ></CategoryForMainPage>
             )
           }
-        }): <LoadingTheme></LoadingTheme>}
+        }): <LoadingCard></LoadingCard>}
       </CategoriesContainer>
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>
@@ -224,4 +218,4 @@ const Body = ({ searchParams, setSearchParams,setMainPageHeader }) => {
   );
 };
 
-export default Body;
+export default HomePage;

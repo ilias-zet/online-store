@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components'
 import axios from 'axios';
-import LoadingTheme from "../shared/LoadingTheme";
 import LoadingCard from "../shared/LoadingCard";
 
 const Container = styled.div`
@@ -58,9 +57,8 @@ margin-top: 10px;
 
 
 
-const OpenedProductCard = () => {
+const ProductPage = () => {
   const { product_id } = useParams()
-  
   const [responsedProduct, setresponsedProduct] = useState(null)
   
   const fetchData = async () => {
@@ -68,6 +66,7 @@ const OpenedProductCard = () => {
     const res = await axios.get("http://localhost:8000/getFullProduct",{params: { product_id }}) 
     const resProductData = await res.data
     setresponsedProduct(resProductData[0])
+    
 
   } catch(e) {
     console.log("Error on fetchData const:  ", e)
@@ -75,7 +74,7 @@ const OpenedProductCard = () => {
 }
 useEffect(() => {
   fetchData();
-},[])
+})
   return (
     <Container>
       {!responsedProduct? <LoadingCard /> : (
@@ -98,4 +97,4 @@ useEffect(() => {
   )
 }
 
-export default OpenedProductCard;
+export default ProductPage;

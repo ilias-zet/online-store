@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "./images/Logo.png";
 import { useNavigate } from "react-router-dom";
 
-const HeaderContainer = styled.div`
+const Container = styled.div`
   position: sticky;
   display: flex;
   align-items: center;
@@ -18,7 +18,6 @@ const HeaderContainer = styled.div`
 const LogoContainer = styled.div`
   cursor: pointer;
   display: flex;
-  /* justify-content: center; */
   margin-left: 20px;
   width: 200px;
 `;
@@ -33,7 +32,6 @@ const BtnsContainer = styled.div`
   align-items: center;
   width: 300px;
   height: 100%;
-  /* background-color: white; */
 `;
 
 const SignUpLogInBtnContainer = styled.div`
@@ -60,7 +58,6 @@ const UserBtnContainer = styled.div`
   align-items: center;
   width: 200px;
   height: 100%;
-  /* background-color: white; */
 `;
 
 const UserImgBtn = styled.div`
@@ -77,10 +74,10 @@ const UserImgBtn = styled.div`
 `;
 
 const UserFullname = styled.span`
-color: #f2f3f4;
-font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 140%;
+  color: #f2f3f4;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 140%;
 `;
 
 const LogoutBtn = styled.div`
@@ -97,133 +94,112 @@ const LogoutImg = styled.img`
 `;
 
 const NavMenu = styled.nav`
-display: flex;
-width: 500px;
-height: 100%;
-/* background-color: white; */
-`
+  display: flex;
+  width: 500px;
+  height: 100%;
+`;
 
 const Ul = styled.ul`
-display: flex;
-width: 100%;
-height: 100%;
-margin: 0;
-`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+`;
 
 const LiLeft = styled.li`
-display: flex;
-list-style-type: none;
-justify-content: center;
-align-items: center;
-height: 100%;
-width: 33%;
-border-right: 1px solid gray;
-border-left: 2px solid gray;
-`
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 33%;
+  border-right: 1px solid gray;
+  border-left: 2px solid gray;
+`;
 const LiCenter = styled.li`
-display: flex;
-justify-content: center;
-align-items: center;
-list-style-type: none;
-height: 100%;
-width: 33%;
-border-right: 1px solid gray;
-border-left: 1px solid gray;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  height: 100%;
+  width: 33%;
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+`;
 const LiRight = styled.li`
-display: flex;
-justify-content: center;
-align-items: center;
-list-style-type: none;
-height: 100%;
-width: 33%;
-border-right: 2px solid gray;
-border-left: 1px solid gray;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  height: 100%;
+  width: 33%;
+  border-right: 2px solid gray;
+  border-left: 1px solid gray;
+`;
 
-const A = styled.a`
-display: flex;
-justify-content: center;
-align-items: center;
-text-decoration: none;
-color: white;
-height: 100%;
-width: 100%;
-transition: all 0.2s;
-&:hover {
-  background-color: rgb(0,0,0,0.5);
-}
-`
-
-const HeaderWithSearch = ({
-  isOpened,
-  open,
-  close,
-  openLogin,
-  closeLogin,
-  loginedUser,
-  setLoginedUser,
-}) => {
-  const navigate = useNavigate();
-
-  const clickHandler = () => {
-    navigate(`/main-page`);
-  };
-
-  const clickHandlerForSignUp = () => {
-    open();
-  };
-
-  const clickHandlerForLogin = () => {
-    openLogin();
+const NavBtn = styled.span`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  height: 100%;
+  width: 100%;
+  transition: all 0.2s;
+  &:hover {
+    background-color: rgb(0, 0, 0, 0.5);
   }
+`;
 
+const Header = ({ open, openLogin, user, setUser }) => {
+  const navigate = useNavigate();
   return (
-    <HeaderContainer>
-      <LogoContainer onClick={() => clickHandler()}>
+    <Container>
+      <LogoContainer onClick={() => navigate(`/`)}>
         <Logo alt="" src={logo}></Logo>
       </LogoContainer>
       <NavMenu>
         <Ul>
           <LiLeft>
-            <A href="/main-page">Main page</A>
+            <NavBtn onClick={() => navigate(`/`)}>Main page</NavBtn>
           </LiLeft>
           <LiCenter>
-            <A href="/all-categories">Categories</A>
+            <NavBtn onClick={() => navigate(`/categories`)}>Categories</NavBtn>
           </LiCenter>
           <LiRight>
-            <A href="#">Contacts</A>
+            <NavBtn href="#">Contacts</NavBtn>
           </LiRight>
         </Ul>
       </NavMenu>
       <BtnsContainer>
-        {loginedUser ? (
+        {user ? (
           <>
             <UserBtnContainer>
               <UserImgBtn>
-                {loginedUser.userName[0] + " " + loginedUser.userSurname[0]}
+                {user.userName[0] + " " + user.userSurname[0]}
               </UserImgBtn>
               <UserFullname>
-                {loginedUser.userName + " " + loginedUser.userSurname}
+                {user.userName + " " + user.userSurname}
               </UserFullname>
             </UserBtnContainer>
-            <LogoutBtn onClick={() => setLoginedUser(null)}>
+            <LogoutBtn onClick={() => setUser(null)}>
               <LogoutImg src="https://cdn-icons-png.flaticon.com/512/152/152534.png"></LogoutImg>
             </LogoutBtn>
           </>
         ) : (
           <>
-            <SignUpLogInBtnContainer onClick={() => clickHandlerForSignUp()}>
+            <SignUpLogInBtnContainer onClick={open}>
               <TextSignUpLogInBtn>Sign Up</TextSignUpLogInBtn>
             </SignUpLogInBtnContainer>
-            <SignUpLogInBtnContainer onClick={() => clickHandlerForLogin()}>
+            <SignUpLogInBtnContainer onClick={openLogin}>
               <TextSignUpLogInBtn>Log In</TextSignUpLogInBtn>
             </SignUpLogInBtnContainer>
           </>
         )}
       </BtnsContainer>
-    </HeaderContainer>
+    </Container>
   );
 };
 
-export default HeaderWithSearch;
+export default Header;

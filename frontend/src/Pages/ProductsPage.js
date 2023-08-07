@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import LoadingTheme from "../shared/LoadingTheme";
 import ProductCard from "../shared/ProductCard";
 import FilterProducts from "../shared/FilterProducts";
+import LoadingCard from "../shared/LoadingCard";
 
 const Container = styled.div`
   display: flex;
@@ -34,8 +34,8 @@ const ProductsCounter = styled.span`
   color: gray;
 `;
 
-//Компонент рендера разных страниц категории
-const MainCagetoryPage = ({ searchParams }) => {
+//Компонент рендера разных страниц категории, рендерится то, что находится в определенной категории
+const ProductsPage = ({ searchParams }) => {
   const category = searchParams.get("category");
   const [responsedProduct, setresponsedProduct] = useState(null);
   const fetchData = async () => {
@@ -57,14 +57,9 @@ const MainCagetoryPage = ({ searchParams }) => {
     <Container>
       <H1>{category}</H1>
       <FilterProducts></FilterProducts>
-      {/* <SubCategoriesContainer>
-          <SubCategoriesList1></SubCategoriesList1>
-          <SubCategoriesList2></SubCategoriesList2>
-        </SubCategoriesContainer> */}
-
-      {/* <LoadingTheme /> */}
+      {/* <LoadingCard></LoadingCard> */}
       {!responsedProduct ? (
-        <LoadingTheme />
+        <LoadingCard></LoadingCard>
       ) : (
         <CardsContainer>
           <ProductsCounter>
@@ -87,4 +82,4 @@ const MainCagetoryPage = ({ searchParams }) => {
   );
 };
 
-export default MainCagetoryPage;
+export default ProductsPage;
