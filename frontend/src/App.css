@@ -18,11 +18,11 @@ html,body {
 
 body {
   margin: 0;
-    font-family: 'Inter', sans-serif;
-    color: #292929;
-    font-size: 16px;
-    line-height: 140%;
-    min-height: 100%;
+  font-family: 'Inter', sans-serif;
+  color: #292929;
+  font-size: 16px;
+  line-height: 140%;
+  min-height: 100%;
 }
 
 .product-card {
@@ -37,16 +37,14 @@ body {
 }
 
 body::-webkit-scrollbar {
-  width: 12px;               /* ширина всей полосы прокрутки */
+  width: 12px;
 }
 
 body::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0)       /* цвет зоны отслеживания */
+  background: rgba(255, 255, 255, 0)
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: rgba(23, 23, 24, 0.219);    /* цвет бегунка */
-  border: solid rgba(49, 49, 49, 0.075);  /* отступ вокруг бегунка */
+  background-color: rgba(23, 23, 24, 0.219);
+  border: solid rgba(49, 49, 49, 0.075);
 }
-
-/* фон нашего модального окна */
