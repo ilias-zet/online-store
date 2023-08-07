@@ -7,7 +7,7 @@ top: 170px;
 left: 20px;
 background-color: black;
 width: 20%;
-height: 400px;
+height: 200px;
 border-radius: 10px;
 `
 const FilterTitle = styled.div`
