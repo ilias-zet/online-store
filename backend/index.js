@@ -42,12 +42,6 @@ async function start() {
 start();
 
 
-// Get all categories in DB
-app.get("/getAllCategories", async (request, response) => {
-  const categories = await Products.distinct("main_category");
-  response.json(categories);
-});
-
 app.get("/getImages", async(req,res) => {
   const images = await Images.find({});
   res.json(images)
