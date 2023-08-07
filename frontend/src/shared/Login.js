@@ -114,7 +114,9 @@ const Login = ({ isOpenedLogin, openLogin, closeLogin, setUser }) => {
         });
         const {user} = await res.data;
         if(user) {
-          setUser(user)
+          let userCopy = user.slice()
+          userCopy.isAuthorised=true;
+          setUser(userCopy)
           alert("Успешный вход")
         }
       } catch (e) {

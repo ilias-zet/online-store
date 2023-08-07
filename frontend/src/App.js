@@ -24,7 +24,12 @@ width: 100%;
 function App() {
   const { isOpened, open, close } = useSignUp(false);
   const { isOpenedLogin, openLogin, closeLogin } = useLogin(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    userName:null,
+    userSurname:null,
+    userEmail:null,
+    userPassword:null,
+  });
   let [searchParams, setSearchParams] = useSearchParams();
 
   return (

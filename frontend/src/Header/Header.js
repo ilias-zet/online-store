@@ -154,6 +154,8 @@ const NavBtn = styled.span`
 
 const Header = ({ open, openLogin, user, setUser }) => {
   const navigate = useNavigate();
+  const { userName, userSurname, isAuthorised } = user;
+
   return (
     <Container>
       <LogoContainer onClick={() => navigate(`/`)}>
@@ -173,7 +175,7 @@ const Header = ({ open, openLogin, user, setUser }) => {
         </Ul>
       </NavMenu>
       <BtnsContainer>
-        {user ? (
+        {user && user.userEmail ? (
           <>
             <UserBtnContainer>
               <UserImgBtn>
@@ -183,7 +185,16 @@ const Header = ({ open, openLogin, user, setUser }) => {
                 {user.userName + " " + user.userSurname}
               </UserFullname>
             </UserBtnContainer>
-            <LogoutBtn onClick={() => setUser(null)}>
+            <LogoutBtn
+              onClick={() =>
+                setUser({
+                  userName: null,
+                  userSurname: null,
+                  userEmail: null,
+                  userPassword: null,
+                })
+              }
+            >
               <LogoutImg src="https://cdn-icons-png.flaticon.com/512/152/152534.png"></LogoutImg>
             </LogoutBtn>
           </>
