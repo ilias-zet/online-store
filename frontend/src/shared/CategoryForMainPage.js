@@ -35,7 +35,7 @@ const CategoryNameA = styled.div`
   width: 200px;
   background-color: white;
   text-decoration: none;
-  color: #0a0a0a;
+  color: #120907;
   font-size: 20px;
   &:hover {
     text-decoration: underline;

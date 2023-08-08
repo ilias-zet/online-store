@@ -74,7 +74,7 @@ const ProductPage = () => {
 }
 useEffect(() => {
   fetchData();
-})
+},[])
   return (
     <Container>
       {!responsedProduct? <LoadingCard /> : (

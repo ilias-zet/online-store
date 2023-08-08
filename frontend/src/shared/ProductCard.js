@@ -3,17 +3,18 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const CardContainer = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 230px;
   height: 350px;
-  background-color: rgb(184, 184, 184);
+  background-color: #b5b8b6;
   margin: 10px;
   border-radius: 10px;
   transition: all 0.2s;
   &:hover {
-    background-color: rgb(144, 144, 144);
+    background-color: #7f8377;
   }
 `;
 const CardImageContainer = styled.div`
@@ -37,6 +38,7 @@ const CardImage = styled.img`
 `;
 const CardTitle = styled.a`
   cursor: pointer;
+  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -44,11 +46,11 @@ const CardTitle = styled.a`
   height: 88px;
   font-family: Bradley Hand;
   text-decoration: none;
-  color: black;
+  color: #120907;
   font-size: 16px;
   font-family: "Inter", sans-serif;
   &:hover {
-    color: rgb(102, 62, 158);
+    color: wheat;
   }
 `;
 const CardPrice = styled.div`
@@ -58,7 +60,7 @@ const CardPrice = styled.div`
   font-weight: 1000;
   font-family: Bradley Hand;
   font-size: 20px;
-  color: black;
+  color: #120907;
   font-family: "Inter", sans-serif;
 `;
 const CardIsAmazonSeller = styled.div`
@@ -74,18 +76,13 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   return (
-    <CardContainer>
+    <CardContainer onClick={() => navigate(`/products/${product._id}`)}>
       <CardImageContainer>
-        {product.images ? (
-          <CardImage
-            onClick={() => navigate(`/products/${product._id}`)}
-            src={product.images}
-          ></CardImage>
-        ) : null}
+        {product.images ? <CardImage src={product.images}></CardImage> : null}
       </CardImageContainer>
-      <CardTitle onClick={() => navigate(`/products/${product._id}`)}>
-        {product.title.length > 91
-          ? product.title.substr(0, 91) + "..."
+      <CardTitle>
+        {product.title.length > 41
+          ? product.title.substr(0, 41) + "..."
           : product.title}
       </CardTitle>
       <CardPrice>{product.price + "$"}</CardPrice>

@@ -42,6 +42,7 @@ const RecommendedTitle = styled.h2`
   font-weight: bold;
   text-align: center;
   letter-spacing: -1.5px;
+  color:#120907;
 `;
 const RecommendedProducts = styled.div`
   display: flex;
@@ -83,6 +84,7 @@ const ProductTitle = styled.h3`
   margin-bottom: 8px;
   font-size: 16px;
   line-height: 140%;
+  color:#120907;
 `;
 const ProductCategory = styled.p`
   margin-top: 0;
@@ -91,6 +93,7 @@ const ProductCategory = styled.p`
 const ProductPrice = styled.p`
   margin: 0;
   font-weight: bold;
+  color:#120907;
 `;
 
 const HomePage = ({ searchParams, setSearchParams }) => {
