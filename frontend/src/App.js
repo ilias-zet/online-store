@@ -7,34 +7,36 @@ import { Routes, Route, useSearchParams } from "react-router-dom";
 import ProductsPage from "./Pages/ProductsPage";
 import ProductPage from "./Pages/ProductPage";
 import Header from "./Header/Header";
-import SignUp from "./shared/SignUp";
 import useSignUp from "./shared/useSignUp";
 import useLogin from "./shared/useLogin";
 import CategoriesPage from "./Pages/CategoriesPage/CategoriesPage";
-import Login from "./shared/Login";
+import Authorization from "./shared/Authorization";
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-min-height: 100%;
-width: 100%;
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+`;
 
 function App() {
   const { isOpened, open, close } = useSignUp(false);
   const { isOpenedLogin, openLogin, closeLogin } = useLogin(false);
+  const [isSignIn, setIsSignIn] = useState(true);
   const [user, setUser] = useState({
-    userName:null,
-    userSurname:null,
-    userEmail:null,
-    userPassword:null,
+    name: null,
+    surname: null,
+    email: null,
+    password: null,
   });
+  const [token, setToken] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <Container>
       <Header
+        setIsSignIn={setIsSignIn}
         isOpened={isOpened}
         open={open}
         close={close}
@@ -75,20 +77,18 @@ function App() {
         <Route path="/products/:product_id" element={<ProductPage />} />
       </Routes>
       <Footer />
-      <SignUp
+      <Authorization
+        isSignIn={isSignIn}
         isOpened={isOpened}
         open={open}
         close={close}
         user={user}
         setUser={setUser}
-      ></SignUp>
-      <Login
         isOpenedLogin={isOpenedLogin}
         openLogin={openLogin}
         closeLogin={closeLogin}
-        user={user}
-        setUser={setUser}
-      ></Login>
+        setToken={setToken}
+      ></Authorization>
     </Container>
   );
 }

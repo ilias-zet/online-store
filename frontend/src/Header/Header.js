@@ -12,7 +12,7 @@ const Container = styled.div`
   backdrop-filter: blur(5px);
   width: 100%;
   height: 80px;
-  background-color: rgb(0, 0, 0, 0.54);
+  background-color: #4b4449;
 `;
 
 const LogoContainer = styled.div`
@@ -41,9 +41,9 @@ const SignUpLogInBtnContainer = styled.div`
   align-items: center;
   width: 100px;
   height: 60%;
-  background-color: black;
-  border: 2px solid gray;
-  border-radius: 10px;
+  background-color: #7f8377;
+  /* border: 2px solid gray; */
+  border-radius: 4px;
   margin: 10px;
 `;
 const TextSignUpLogInBtn = styled.div`
@@ -152,9 +152,8 @@ const NavBtn = styled.span`
   }
 `;
 
-const Header = ({ open, openLogin, user, setUser }) => {
+const Header = ({ open, openLogin, user, setUser, setIsSignIn }) => {
   const navigate = useNavigate();
-  const { userName, userSurname, isAuthorised } = user;
 
   return (
     <Container>
@@ -175,23 +174,19 @@ const Header = ({ open, openLogin, user, setUser }) => {
         </Ul>
       </NavMenu>
       <BtnsContainer>
-        {user && user.userEmail ? (
+        {user && user.email ? (
           <>
             <UserBtnContainer>
-              <UserImgBtn>
-                {user.userName[0] + " " + user.userSurname[0]}
-              </UserImgBtn>
-              <UserFullname>
-                {user.userName + " " + user.userSurname}
-              </UserFullname>
+              <UserImgBtn>{user.name[0] + " " + user.surname[0]}</UserImgBtn>
+              <UserFullname>{user.name + " " + user.surname}</UserFullname>
             </UserBtnContainer>
             <LogoutBtn
               onClick={() =>
                 setUser({
-                  userName: null,
-                  userSurname: null,
-                  userEmail: null,
-                  userPassword: null,
+                  name: null,
+                  surname: null,
+                  email: null,
+                  password: null,
                 })
               }
             >
@@ -200,10 +195,20 @@ const Header = ({ open, openLogin, user, setUser }) => {
           </>
         ) : (
           <>
-            <SignUpLogInBtnContainer onClick={open}>
+            <SignUpLogInBtnContainer
+              onClick={() => {
+                setIsSignIn(false);
+                open();
+              }}
+            >
               <TextSignUpLogInBtn>Sign Up</TextSignUpLogInBtn>
             </SignUpLogInBtnContainer>
-            <SignUpLogInBtnContainer onClick={openLogin}>
+            <SignUpLogInBtnContainer
+              onClick={() => {
+                setIsSignIn(true);
+                open();
+              }}
+            >
               <TextSignUpLogInBtn>Log In</TextSignUpLogInBtn>
             </SignUpLogInBtnContainer>
           </>
