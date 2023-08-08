@@ -1,15 +1,15 @@
-const { Images, Users, Roles } = require("./models");
+const { Users } = require("./models");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
-const {secret} = require("./config")
+require("dotenv").config();
+const SECRET = process.env.SECRET;
 
-const generateAccessToken = (id, roles) => {
+const generateAccessToken = (id) => {
   const payload = {
     id,
-    roles,
   }
-  return jwt.sign(payload,secret,{expiresIn:"24h"})
+  return jwt.sign(payload,SECRET,{expiresIn:"24h"})
 }
 
 class authController {
@@ -19,46 +19,39 @@ class authController {
       if(!errors.isEmpty()) {
         return res.status(400).json({message:"Registration error:",errors})
       }
-      const { userName,userSurname,userEmail,userPassword } = req.body;
-      const candidate = await Users.findOne({ userEmail });
+      const { name,surname,email,password } = req.body;
+      const candidate = await Users.findOne({ email });
       if (candidate) {
         return res
           .status(400)
           .json({ message: "User with this email is already registered",candidate});
       }
-      const hashPassword = bcrypt.hashSync(userPassword, 7);
-      const userRole = await Roles.findOne({ value: "USER" });
-      const user = new Users({ userName, userSurname,userEmail, userPassword:hashPassword,roles:[userRole.value] });
+      const hashPassword = bcrypt.hashSync(password, 7);
+      const user = new Users({ name, surname,email, password:hashPassword });
       await user.save()
       return res.json({ message: "User successful registered!",user })
     } catch (e) {
-      res.status(400).json({ message: "Registration error" });
+      res.status(400).json({ message: "Registration error" ,e});
     }
   }
 
   async login(req, res) {
     try {
-      const { userEmail, userPassword } = req.body;
-      const user = await Users.findOne({ userEmail });
+      const { email, password } = req.body;
+      const body = req.body
+      const user = await Users.findOne({ email });
       if(!user) {
-        return res.status(400).json({messageUserNotFound:`User with e-mail ${userEmail} is not found`})
+        return res.status(400).json({message:`User with e-mail ${email} is not found`})
       }
-      const validPassword = bcrypt.compareSync(userPassword, user.userPassword)
+      const validPassword = bcrypt.compareSync(password, user.password)
       if(!validPassword) {
-        return res.status(400).json({messageValidPassword:"Password is not valid"})
+        return res.status(400).json({message:"Password is not valid"})
       }
-      const token = generateAccessToken(user._id, user.roles)
-      return res.json({user})
+      const token = generateAccessToken(user._id)
+      return res.json({token,user})
     } catch (e) {
       res.status(400).json({ message: "Login error",e });
     }
-  }
-
-  async getUsers(req, res) {
-    try {
-      const users = new Users.find()
-      res.json(users);
-    } catch (e) {}
   }
 }
 

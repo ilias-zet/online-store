@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { Products, Users, Images } = require("./models");
+const { Images } = require("./models");
 const authRouter = require("./routes/auth")
 const productsRoutes = require("./routes/products");
 const cors = require('cors');
