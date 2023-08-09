@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "./images/Logo.png";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,9 @@ const Container = styled.div`
   width: 100%;
   height: 80px;
   background-color: #4b4449;
+  @media (max-width: 480px) {
+    height: 60px;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -32,6 +35,9 @@ const BtnsContainer = styled.div`
   align-items: center;
   width: 300px;
   height: 100%;
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const SignUpLogInBtnContainer = styled.div`
@@ -97,13 +103,34 @@ const NavMenu = styled.nav`
   display: flex;
   width: 500px;
   height: 100%;
+  @media (max-width: 480px) {
+    transition: all 0.5s;
+    transform: ${(props) => props.isOpenedMenu && !props.scroll ? "translate(-0%)":"translate(100%)"};
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    top: 60px;
+    left: auto;
+    background-color: rgb(75, 68, 73);
+    z-index: 1;
+  }
 `;
 
 const Ul = styled.ul`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100% 100%;
   width: 100%;
   height: 100%;
   margin: 0;
+  @media (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
 `;
 
 const LiLeft = styled.li`
@@ -112,9 +139,13 @@ const LiLeft = styled.li`
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 33%;
+  width: 100%;
   border-right: 1px solid gray;
   border-left: 2px solid gray;
+  @media (max-width: 480px) {
+    border-top: 2px solid gray;
+    border-bottom: 1px solid gray;
+  }
 `;
 const LiCenter = styled.li`
   display: flex;
@@ -122,9 +153,13 @@ const LiCenter = styled.li`
   align-items: center;
   list-style-type: none;
   height: 100%;
-  width: 33%;
+  width: 100%;
   border-right: 1px solid gray;
   border-left: 1px solid gray;
+  @media (max-width: 480px) {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+  }
 `;
 const LiRight = styled.li`
   display: flex;
@@ -132,9 +167,13 @@ const LiRight = styled.li`
   align-items: center;
   list-style-type: none;
   height: 100%;
-  width: 33%;
+  width: 100%;
   border-right: 2px solid gray;
   border-left: 1px solid gray;
+  @media (max-width: 480px) {
+    border-top: 1px solid gray;
+    border-bottom: 2px solid gray;
+  }
 `;
 
 const NavBtn = styled.span`
@@ -150,17 +189,42 @@ const NavBtn = styled.span`
   &:hover {
     background-color: rgb(0, 0, 0, 0.5);
   }
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
+
 `;
 
-const Header = ({ open, openLogin, user, setUser, setIsSignIn }) => {
+const BurgerBtnContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+width: 40px;
+height: 30px;
+@media (min-width: 480px) {
+    display: none;
+  }
+`
+
+const OneBurgerLine = styled.div`
+width: 40px;
+height: 2px;
+background-color: white;
+`
+
+
+const Header = ({ open, openLogin, user, setUser, setIsSignIn,scroll,isOpenedMenu,setIsopenedMenu }) => {
   const navigate = useNavigate();
 
+  
   return (
     <Container>
       <LogoContainer onClick={() => navigate(`/`)}>
         <Logo alt="" src={logo}></Logo>
       </LogoContainer>
-      <NavMenu>
+      <NavMenu 
+      isOpenedMenu={isOpenedMenu}
+      scroll={scroll}>
         <Ul>
           <LiLeft>
             <NavBtn onClick={() => navigate(`/`)}>Main page</NavBtn>
@@ -214,6 +278,11 @@ const Header = ({ open, openLogin, user, setUser, setIsSignIn }) => {
           </>
         )}
       </BtnsContainer>
+      <BurgerBtnContainer onClick={() => isOpenedMenu? setIsopenedMenu(false): setIsopenedMenu(true)}>
+        <OneBurgerLine></OneBurgerLine>
+        <OneBurgerLine></OneBurgerLine>
+        <OneBurgerLine></OneBurgerLine>
+      </BurgerBtnContainer> 
     </Container>
   );
 };

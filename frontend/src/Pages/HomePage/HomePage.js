@@ -43,21 +43,26 @@ const RecommendedTitle = styled.h2`
   text-align: center;
   letter-spacing: -1.5px;
   color:#120907;
+  @media (max-width: 480px) {
+    font-size: 32px;
+  }
 `;
 const RecommendedProducts = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100% 100%;
   width: 70%;
+  height: 100%;
 `;
 const Product = styled.article`
-  flex-basis: 324px;
+  width: 100%;
 `;
 const HowtoBuy = styled.div`
   max-width: 1020px;
   margin: 0 auto;
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100% 100%;
   margin-top: 48px;
   margin-bottom: 48px;
 `;
@@ -71,6 +76,9 @@ const HowToBuyTitle = styled.div`
   line-height: 100%;
   font-weight: bold;
   letter-spacing: -1.5px;
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 const HowToBuyContent = styled.div`
   flex-basis: 50%;

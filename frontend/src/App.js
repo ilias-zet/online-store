@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import HomePage from "./Pages/HomePage/HomePage";
 import Footer from "./Footer/Footer";
@@ -8,7 +8,6 @@ import ProductsPage from "./Pages/ProductsPage";
 import ProductPage from "./Pages/ProductPage";
 import Header from "./Header/Header";
 import useSignUp from "./shared/useSignUp";
-import useLogin from "./shared/useLogin";
 import CategoriesPage from "./Pages/CategoriesPage/CategoriesPage";
 import Authorization from "./shared/Authorization";
 
@@ -20,9 +19,22 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const Button = styled.div`
+transition: all 0.5s;
+/* display: ${(props) => props.scroll ? "flex":"none"}; */
+bottom: ${(props) => props.scroll ? "3rem":"-10rem"};
+padding: 1rem 2rem;
+margin: 1rem;
+border-radius: 1rem;
+position: fixed;
+right: 1rem;
+transition: 0.2s all ease-in-out;
+background-color: rgb(0,0,0,0.5);
+color: white;
+border: none;`
+
 function App() {
   const { isOpened, open, close } = useSignUp(false);
-  const { isOpenedLogin, openLogin, closeLogin } = useLogin(false);
   const [isSignIn, setIsSignIn] = useState(true);
   const [user, setUser] = useState({
     name: null,
@@ -32,6 +44,24 @@ function App() {
   });
   const [token, setToken] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
+  const [scroll, setScroll] = useState(0)
+  const [isOpenedMenu,setIsopenedMenu] = useState(false)
+  const handleScroll = () => {
+    setScroll(window.scrollY);
+    if(window.scrollY) {
+      setScroll(true)
+      setIsopenedMenu(false)
+    }
+  };
+
+  const handleUpButton = () => {
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <Container>
@@ -40,11 +70,11 @@ function App() {
         isOpened={isOpened}
         open={open}
         close={close}
-        isOpenedLogin={isOpenedLogin}
-        openLogin={openLogin}
-        closeLogin={closeLogin}
         user={user}
         setUser={setUser}
+        scroll={scroll}
+        isOpenedMenu={isOpenedMenu}
+        setIsopenedMenu={setIsopenedMenu}
       ></Header>
       <Routes>
         <Route
@@ -84,11 +114,14 @@ function App() {
         close={close}
         user={user}
         setUser={setUser}
-        isOpenedLogin={isOpenedLogin}
-        openLogin={openLogin}
-        closeLogin={closeLogin}
         setToken={setToken}
       ></Authorization>
+      <Button
+            scroll={scroll}
+            onClick={handleUpButton}
+        >
+            Go Up
+        </Button>
     </Container>
   );
 }

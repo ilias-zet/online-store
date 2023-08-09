@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import useInput from "./useInput";
 import axios from "axios";
@@ -6,7 +6,6 @@ import axios from "axios";
 const FormBg = styled.div`
   display: ${(props) => (props.isOpened ? "block" : "none")};
   position: absolute;
-  /* display: flex; */
   justify-content: center;
   align-items: center;
   top: 0;
@@ -21,8 +20,8 @@ const FormContainer = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 350px;
-  height: 450px;
+  width: 300px;
+  min-height: 250px;
   background-color: white;
   border: 2px solid gray;
   border-radius: 10px;
