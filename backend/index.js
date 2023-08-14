@@ -42,7 +42,7 @@ async function start() {
 start();
 
 
-app.get("/getImages", async(req,res) => {
+app.get("/getCategories", async(req,res) => {
   const images = await Images.find({});
   res.json(images)
 })

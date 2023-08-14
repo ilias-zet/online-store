@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import BGImg from "./footer-bg.png"
+import BGImg from "../assets/footer-bg.png"
 
 const FooterContainer = styled.div`
   width: 100%;

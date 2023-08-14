@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import logo from "./images/Logo.png";
+import logo from "../assets/images/Logo.png";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-  position: sticky;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-around;
   top: 0;
   backdrop-filter: blur(5px);
   width: 100%;
+  max-width: 1024px;
   height: 80px;
-  background-color: #4b4449;
+  z-index: 1;
+  background-color: rgb(0, 0, 0, 0.7);
   @media (max-width: 480px) {
     height: 60px;
   }
@@ -25,7 +26,6 @@ const LogoContainer = styled.div`
   width: 200px;
 `;
 const Logo = styled.img`
-  display: flex;
   width: 100%;
 `;
 
@@ -36,11 +36,18 @@ const BtnsContainer = styled.div`
   width: 300px;
   height: 100%;
   @media (max-width: 480px) {
-    display: none;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+
+    transition: all 0.3s;
+    transform: ${({ isOpenedMenu }) => (isOpenedMenu ? "translateY(0%)" : "translateY(-100%)")};
+    height: ${({ isOpenedMenu }) => (isOpenedMenu ? "40px" : "0")};
+    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
   }
 `;
 
-const SignUpLogInBtnContainer = styled.div`
+const BtnContainer = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -48,14 +55,23 @@ const SignUpLogInBtnContainer = styled.div`
   width: 100px;
   height: 60%;
   background-color: #7f8377;
-  /* border: 2px solid gray; */
   border-radius: 4px;
   margin: 10px;
+  @media (max-width: 480px) {
+    transition: all 0.5s;
+    width: 60px;
+    height: ${({ isOpenedMenu }) => (isOpenedMenu ? "50%" : "0")};
+    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+  }
 `;
-const TextSignUpLogInBtn = styled.div`
+const TextBtn = styled.div`
   font-size: 16px;
   font-weight: 1000;
   color: white;
+  @media (max-width: 480px) {
+    transition: font-size;
+    font-size: ${({ isOpenedMenu }) => (isOpenedMenu ? "10px" : "0")};
+  }
 `;
 
 const UserBtnContainer = styled.div`
@@ -104,75 +120,17 @@ const NavMenu = styled.nav`
   width: 500px;
   height: 100%;
   @media (max-width: 480px) {
-    transition: all 0.5s;
-    transform: ${(props) => props.isOpenedMenu && !props.scroll ? "translate(-0%)":"translate(100%)"};
-    display: flex;
+    transition: height 0.5s;
+    flex-direction: column;
     position: absolute;
     width: 100%;
-    height: 100px;
+    height: ${({ isOpenedMenu }) => (isOpenedMenu ? "100px" : "0")};
     top: 60px;
     left: auto;
-    background-color: rgb(75, 68, 73);
-    z-index: 1;
-  }
-`;
-
-const Ul = styled.ul`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 100% 100%;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  @media (max-width: 480px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-  }
-`;
-
-const LiLeft = styled.li`
-  display: flex;
-  list-style-type: none;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  border-right: 1px solid gray;
-  border-left: 2px solid gray;
-  @media (max-width: 480px) {
-    border-top: 2px solid gray;
-    border-bottom: 1px solid gray;
-  }
-`;
-const LiCenter = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style-type: none;
-  height: 100%;
-  width: 100%;
-  border-right: 1px solid gray;
-  border-left: 1px solid gray;
-  @media (max-width: 480px) {
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-  }
-`;
-const LiRight = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  list-style-type: none;
-  height: 100%;
-  width: 100%;
-  border-right: 2px solid gray;
-  border-left: 1px solid gray;
-  @media (max-width: 480px) {
-    border-top: 1px solid gray;
-    border-bottom: 2px solid gray;
+    padding-top: ${({ isOpenedMenu }) => (isOpenedMenu ? "40px" : "0")};
+    backdrop-filter: blur(5px);
+    background-color: rgb(0, 0, 0, 0.7);
+    z-index: -1;
   }
 `;
 
@@ -185,59 +143,73 @@ const NavBtn = styled.span`
   color: white;
   height: 100%;
   width: 100%;
-  transition: all 0.2s;
+  transition: all 0.5s;
   &:hover {
     background-color: rgb(0, 0, 0, 0.5);
   }
   @media (max-width: 768px) {
     font-size: 10px;
   }
-
+  @media (max-width: 480px) {
+    font-size: ${({ isOpenedMenu }) => (isOpenedMenu ? "10px" : "0")};
+    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+  }
 `;
 
 const BurgerBtnContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-width: 40px;
-height: 30px;
-@media (min-width: 480px) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40px;
+  height: 30px;
+  @media (min-width: 480px) {
     display: none;
   }
-`
+`;
 
-const OneBurgerLine = styled.div`
-width: 40px;
-height: 2px;
-background-color: white;
-`
+const BurgerBtn = styled.svg`
+  filter: invert(100%);
+`;
 
-
-const Header = ({ open, openLogin, user, setUser, setIsSignIn,scroll,isOpenedMenu,setIsopenedMenu }) => {
+const Header = ({
+  open,
+  user,
+  setUser,
+  setIsSignIn,
+  isOpenedMenu,
+  setIsopenedMenu,
+}) => {
   const navigate = useNavigate();
 
-  
   return (
     <Container>
       <LogoContainer onClick={() => navigate(`/`)}>
         <Logo alt="" src={logo}></Logo>
       </LogoContainer>
-      <NavMenu 
-      isOpenedMenu={isOpenedMenu}
-      scroll={scroll}>
-        <Ul>
-          <LiLeft>
-            <NavBtn onClick={() => navigate(`/`)}>Main page</NavBtn>
-          </LiLeft>
-          <LiCenter>
-            <NavBtn onClick={() => navigate(`/categories`)}>Categories</NavBtn>
-          </LiCenter>
-          <LiRight>
-            <NavBtn href="#">Contacts</NavBtn>
-          </LiRight>
-        </Ul>
+      <NavMenu isOpenedMenu={isOpenedMenu}>
+        <NavBtn
+          isOpenedMenu={isOpenedMenu}
+          onClick={() => {
+            navigate(`/`);
+            window.scrollTo(0, 0);
+          }}
+        >
+          Main page
+        </NavBtn>
+        <NavBtn
+          isOpenedMenu={isOpenedMenu}
+          onClick={() => {
+            navigate(`/categories`);
+            window.scrollTo(0, 0);
+          }}
+        >
+          Categories
+        </NavBtn>
+        <NavBtn isOpenedMenu={isOpenedMenu} href="#">
+          Contacts
+        </NavBtn>
       </NavMenu>
-      <BtnsContainer>
+      <BtnsContainer isOpenedMenu={isOpenedMenu}>
         {user && user.email ? (
           <>
             <UserBtnContainer>
@@ -259,30 +231,34 @@ const Header = ({ open, openLogin, user, setUser, setIsSignIn,scroll,isOpenedMen
           </>
         ) : (
           <>
-            <SignUpLogInBtnContainer
+            <BtnContainer
+            isOpenedMenu={isOpenedMenu}
               onClick={() => {
                 setIsSignIn(false);
                 open();
               }}
             >
-              <TextSignUpLogInBtn>Sign Up</TextSignUpLogInBtn>
-            </SignUpLogInBtnContainer>
-            <SignUpLogInBtnContainer
+              <TextBtn isOpenedMenu={isOpenedMenu}>Sign Up</TextBtn>
+            </BtnContainer>
+            <BtnContainer
+            isOpenedMenu={isOpenedMenu}
               onClick={() => {
                 setIsSignIn(true);
                 open();
               }}
             >
-              <TextSignUpLogInBtn>Log In</TextSignUpLogInBtn>
-            </SignUpLogInBtnContainer>
+              <TextBtn isOpenedMenu={isOpenedMenu}>Log In</TextBtn>
+            </BtnContainer>
           </>
         )}
       </BtnsContainer>
-      <BurgerBtnContainer onClick={() => isOpenedMenu? setIsopenedMenu(false): setIsopenedMenu(true)}>
-        <OneBurgerLine></OneBurgerLine>
-        <OneBurgerLine></OneBurgerLine>
-        <OneBurgerLine></OneBurgerLine>
-      </BurgerBtnContainer> 
+      <BurgerBtnContainer
+        onClick={() =>
+          isOpenedMenu ? setIsopenedMenu(false) : setIsopenedMenu(true)
+        }
+      >
+        <BurgerBtn xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 160h352M80 256h352M80 352h352"/></BurgerBtn>
+      </BurgerBtnContainer>
     </Container>
   );
 };

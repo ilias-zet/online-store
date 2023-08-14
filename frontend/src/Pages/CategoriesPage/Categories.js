@@ -9,8 +9,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 95%;
   min-height: 100%;
+  margin-top: 80px;
 `;
 
 const CategoriesContainer = styled.div`
@@ -20,10 +20,12 @@ const CategoriesContainer = styled.div`
   justify-content: center;
   width: 100%;
   min-height: 100%;
+  max-width: 100%;
 `;
 
 const H1 = styled.h1`
-  width: 90%;
+  width: 100%;
+  padding-left:10%;
 `;
 
 const CategoriesPage = ({ searchParams, setSearchParams}) => {
@@ -31,7 +33,7 @@ const CategoriesPage = ({ searchParams, setSearchParams}) => {
   const fetchData = async () => {
     try {
       //Get array with images for categories
-      const resImgs = await axios.get("http://localhost:8000/getImages")
+      const resImgs = await axios.get("http://localhost:8000/getCategories")
       const imgsAndNameCategoriesArr = resImgs.data;
       setCategories(imgsAndNameCategoriesArr);
     } catch (e) {
@@ -47,20 +49,18 @@ const CategoriesPage = ({ searchParams, setSearchParams}) => {
     <Container>
       <H1>All categories</H1>
       
-      {/* <LoadingCard></LoadingCard> */}
       {!categories ? (
         <LoadingCard></LoadingCard>
       ) : (
         <CategoriesContainer>
-          {categories.map((elem) => {
+          {categories.map(({main_category,image,_id}) => {
             return (
               <CategoryForMainPage
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
-                categoryNameForHeader={elem.main_category}
-                categoryNameStrForHandler={elem.main_category}
-                categoryImage={elem.image}
-                key={elem._id}
+                name={main_category}
+                image={image}
+                key={_id}
               ></CategoryForMainPage>
             );
           })}

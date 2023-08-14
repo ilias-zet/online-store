@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import recomendedOne from "./images/products/Bose portable Smart speaker.png";
-import recomendedTwo from "./images/products/SoundLink Flex Bluetooth speaker.png";
-import recomendedThree from "./images/products/SoundLink Color Bluetooth speaker II.png";
+import recomendedOne from "../../assets/images/products/Bose portable Smart speaker.png";
+import recomendedTwo from "../../assets/images/products/SoundLink Flex Bluetooth speaker.png";
+import recomendedThree from "../../assets/images/products/SoundLink Color Bluetooth speaker II.png";
 import CategoryForMainPage from "../../shared/CategoryForMainPage";
 import axios from "axios";
 import LoadingCard from "../../shared/LoadingCard";
@@ -15,6 +15,7 @@ const BodyContainer = styled.div`
   padding-top: 20px;
   min-height: 100%;
   background-color: white;
+  margin-top: 80px;
 `;
 
 const CategoriesContainer = styled.div`
@@ -165,9 +166,8 @@ const HomePage = ({ searchParams, setSearchParams }) => {
               <CategoryForMainPage
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
-                categoryNameForHeader={elem.main_category}
-                categoryNameStrForHandler={elem.main_category}
-                categoryImage={elem.image}
+                name={elem.main_category}
+                image={elem.image}
                 key={elem._id}
               ></CategoryForMainPage>
             )

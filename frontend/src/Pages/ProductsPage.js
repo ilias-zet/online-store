@@ -9,9 +9,11 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  max-width: 100%;;
   width: 100%;
   min-height: 100vh;
   background-color: white;
+  margin-top: 80px;
 `;
 const CardsContainer = styled.div`
   display: flex;

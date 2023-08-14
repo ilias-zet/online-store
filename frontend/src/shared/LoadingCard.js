@@ -1,4 +1,4 @@
-import "./LoadingCard.css";
+import "../App.css";
 import styled from "styled-components";
 
 const LoadingContainer = styled.div`
@@ -6,7 +6,6 @@ const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
-  /* margin-left: 25%; */
   min-height: 100%;
   flex-wrap: wrap;
 `;

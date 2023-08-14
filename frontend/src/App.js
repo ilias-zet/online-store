@@ -8,10 +8,11 @@ import ProductsPage from "./Pages/ProductsPage";
 import ProductPage from "./Pages/ProductPage";
 import Header from "./Header/Header";
 import useSignUp from "./shared/useSignUp";
-import CategoriesPage from "./Pages/CategoriesPage/CategoriesPage";
+import CategoriesPage from "./Pages/CategoriesPage/Categories";
 import Authorization from "./shared/Authorization";
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,18 +21,22 @@ const Container = styled.div`
 `;
 
 const Button = styled.div`
-transition: all 0.5s;
-/* display: ${(props) => props.scroll ? "flex":"none"}; */
-bottom: ${(props) => props.scroll ? "3rem":"-10rem"};
-padding: 1rem 2rem;
-margin: 1rem;
-border-radius: 1rem;
-position: fixed;
-right: 1rem;
-transition: 0.2s all ease-in-out;
-background-color: rgb(0,0,0,0.5);
-color: white;
-border: none;`
+  cursor: pointer;
+  transition: all 0.5s;
+  bottom: ${({ scroll }) => (scroll ? "3rem" : "-10rem")};
+  padding: 1rem 2rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  position: fixed;
+  right: 5rem;
+  transition: 0.2s all ease-in-out;
+  background-color: rgb(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  @media (max-width:480px) {
+    right: 1rem;
+  }
+`;
 
 function App() {
   const { isOpened, open, close } = useSignUp(false);
@@ -44,18 +49,14 @@ function App() {
   });
   const [token, setToken] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
-  const [scroll, setScroll] = useState(0)
-  const [isOpenedMenu,setIsopenedMenu] = useState(false)
+  const [scroll, setScroll] = useState(0);
+  const [isOpenedMenu, setIsopenedMenu] = useState(false);
   const handleScroll = () => {
     setScroll(window.scrollY);
-    if(window.scrollY) {
-      setScroll(true)
-      setIsopenedMenu(false)
+    if (window.scrollY) {
+      setScroll(true);
+      setIsopenedMenu(false);
     }
-  };
-
-  const handleUpButton = () => {
-    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -72,7 +73,6 @@ function App() {
         close={close}
         user={user}
         setUser={setUser}
-        scroll={scroll}
         isOpenedMenu={isOpenedMenu}
         setIsopenedMenu={setIsopenedMenu}
       ></Header>
@@ -110,18 +110,13 @@ function App() {
       <Authorization
         isSignIn={isSignIn}
         isOpened={isOpened}
-        open={open}
         close={close}
-        user={user}
         setUser={setUser}
         setToken={setToken}
       ></Authorization>
-      <Button
-            scroll={scroll}
-            onClick={handleUpButton}
-        >
-            Go Up
-        </Button>
+      <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
+        Go Up
+      </Button>
     </Container>
   );
 }
