@@ -116,6 +116,7 @@ const LogoutImg = styled.img`
 `;
 
 const NavMenu = styled.nav`
+  cursor: pointer;
   display: flex;
   width: 500px;
   height: 100%;
@@ -135,7 +136,6 @@ const NavMenu = styled.nav`
 `;
 
 const NavBtn = styled.span`
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -175,7 +175,6 @@ const Header = ({
   open,
   user,
   setUser,
-  setIsSignIn,
   isOpenedMenu,
   setIsopenedMenu,
 }) => {
@@ -234,8 +233,7 @@ const Header = ({
             <BtnContainer
             isOpenedMenu={isOpenedMenu}
               onClick={() => {
-                setIsSignIn(false);
-                open();
+                open(false);
               }}
             >
               <TextBtn isOpenedMenu={isOpenedMenu}>Sign Up</TextBtn>
@@ -243,8 +241,7 @@ const Header = ({
             <BtnContainer
             isOpenedMenu={isOpenedMenu}
               onClick={() => {
-                setIsSignIn(true);
-                open();
+                open(true);
               }}
             >
               <TextBtn isOpenedMenu={isOpenedMenu}>Log In</TextBtn>

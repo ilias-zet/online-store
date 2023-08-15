@@ -39,8 +39,7 @@ const Button = styled.div`
 `;
 
 function App() {
-  const { isOpened, open, close } = useSignUp(false);
-  const [isSignIn, setIsSignIn] = useState(true);
+  const { isOpened, open, close,isSignIn } = useSignUp(false);
   const [user, setUser] = useState({
     name: null,
     surname: null,
@@ -67,7 +66,6 @@ function App() {
   return (
     <Container>
       <Header
-        setIsSignIn={setIsSignIn}
         isOpened={isOpened}
         open={open}
         close={close}
