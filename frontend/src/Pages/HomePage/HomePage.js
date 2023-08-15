@@ -110,7 +110,7 @@ const HomePage = ({ searchParams, setSearchParams }) => {
   const fetchData = async () => {
     try {
       //Get array with images for categories
-      const resImgs = await axios.get("http://localhost:8000/getImages")
+      const resImgs = await axios.get("http://localhost:8000/getCategories")
       const imgsAndNameCategoriesArr = resImgs.data;
       setCategories(imgsAndNameCategoriesArr);
     } catch (e) {
