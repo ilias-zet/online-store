@@ -30,7 +30,6 @@ router.get('/getRecommendedProducts', async (req,res) => {
   ]
   const passFields = '-crawled_at -breadcrumbs -description -sku'
   const recProducts = await Products.find({$or: findParams},passFields);
-  console.log(recProducts)
   res.json(recProducts)
 })
 
