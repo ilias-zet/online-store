@@ -10,7 +10,7 @@ const Container = styled.div`
   top: 0;
   backdrop-filter: blur(5px);
   width: 100%;
-  max-width: 1024px;
+  max-width: 1366px;
   height: 80px;
   z-index: 1;
   background-color: rgb(0, 0, 0, 0.7);
@@ -191,6 +191,7 @@ const Header = ({
           onClick={() => {
             navigate(`/`);
             window.scrollTo(0, 0);
+            setIsopenedMenu(false);
           }}
         >
           Main page
@@ -200,6 +201,7 @@ const Header = ({
           onClick={() => {
             navigate(`/categories`);
             window.scrollTo(0, 0);
+            setIsopenedMenu(false);
           }}
         >
           Categories
@@ -234,6 +236,7 @@ const Header = ({
             isOpenedMenu={isOpenedMenu}
               onClick={() => {
                 open(false);
+                setIsopenedMenu(false);
               }}
             >
               <TextBtn isOpenedMenu={isOpenedMenu}>Sign Up</TextBtn>
@@ -242,6 +245,7 @@ const Header = ({
             isOpenedMenu={isOpenedMenu}
               onClick={() => {
                 open(true);
+                setIsopenedMenu(false);
               }}
             >
               <TextBtn isOpenedMenu={isOpenedMenu}>Log In</TextBtn>

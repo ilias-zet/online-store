@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import CategoryForMainPage from "../../shared/CategoryForMainPage";
-import LoadingCard from "../../shared/LoadingCard";
+import CategoryForMainPage from "../shared/CategoryForMainPage";
+import LoadingCard from "../shared/LoadingCard";
 
 const Container = styled.div`
   display: flex;

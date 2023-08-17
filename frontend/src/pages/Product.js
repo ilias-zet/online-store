@@ -13,6 +13,7 @@ width: 100%;
 min-height: 600px;
 background-color: white;
 margin-top: 80px;
+padding: 40px;
 `
 
 const ImageAndTitleContainer = styled.div`
@@ -68,7 +69,7 @@ font-size: 14px;
 }
 `
 const ProductCardDesc = styled.span`
-width: 90%;
+width: 100%;
 margin-top: 10px;
 margin-bottom: 10px;
 @media (max-width:480px) {
@@ -103,7 +104,6 @@ margin-top: 10px;
 const ProductPage = () => {
   const { product_id } = useParams()
   const [responsedProduct, setresponsedProduct] = useState(null)
-  
   const fetchData = async () => {
   try {
     const res = await axios.get("http://localhost:8000/getFullProduct",{params: { product_id }}) 

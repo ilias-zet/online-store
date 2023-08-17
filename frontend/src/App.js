@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import HomePage from "./Pages/HomePage/HomePage";
-import Footer from "./Footer/Footer";
+import HomePage from "./pages/Home";
+import Footer from "./components/Footer";
 import styled from "styled-components";
 import { Routes, Route, useSearchParams } from "react-router-dom";
-import ProductsPage from "./Pages/ProductsPage";
-import ProductPage from "./Pages/ProductPage";
-import Header from "./Header/Header";
+import ProductsPage from "./pages/Products";
+import ProductPage from "./pages/Product";
+import Header from "./components/Header";
 import useSignUp from "./shared/useSignUp";
-import CategoriesPage from "./Pages/CategoriesPage/Categories";
+import CategoriesPage from "./pages/Categories";
 import Authorization from "./shared/Authorization";
 
 const Container = styled.div`
@@ -111,6 +111,7 @@ function App() {
         close={close}
         setUser={setUser}
         setToken={setToken}
+        scroll={scroll}
       ></Authorization>
       <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
         Go Up

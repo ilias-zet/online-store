@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import recomendedOne from "../../assets/images/products/Bose portable Smart speaker.png";
-import recomendedTwo from "../../assets/images/products/SoundLink Flex Bluetooth speaker.png";
-import recomendedThree from "../../assets/images/products/SoundLink Color Bluetooth speaker II.png";
-import CategoryForMainPage from "../../shared/CategoryForMainPage";
+import recomendedOne from "../assets/images/products/Bose portable Smart speaker.png";
+import recomendedTwo from "../assets/images/products/SoundLink Flex Bluetooth speaker.png";
+import recomendedThree from "../assets/images/products/SoundLink Color Bluetooth speaker II.png";
+import CategoryForMainPage from "../shared/CategoryForMainPage";
 import axios from "axios";
-import LoadingCard from "../../shared/LoadingCard";
+import LoadingCard from "../shared/LoadingCard";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -16,6 +16,12 @@ const BodyContainer = styled.div`
   min-height: 100%;
   background-color: white;
   margin-top: 80px;
+  padding-left: 40px;
+  padding-right: 40px;
+  @media (max-width: 480px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 const CategoriesContainer = styled.div`
@@ -33,7 +39,7 @@ const CategoriesContainer = styled.div`
 `;
 
 const MainDescription = styled.div`
-  width: 90%;
+  width: 100%;
 `;
 const RecommendedTitle = styled.h2`
   margin-top: 64px;
@@ -43,20 +49,25 @@ const RecommendedTitle = styled.h2`
   font-weight: bold;
   text-align: center;
   letter-spacing: -1.5px;
-  color:#120907;
+  color: #120907;
   @media (max-width: 480px) {
     font-size: 32px;
   }
 `;
 const RecommendedProducts = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 100% 100%;
-  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   height: 100%;
+  margin-top: 20px;
 `;
 const Product = styled.article`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 20%;
+  height: 400px;
 `;
 const HowtoBuy = styled.div`
   max-width: 1020px;
@@ -93,7 +104,7 @@ const ProductTitle = styled.h3`
   margin-bottom: 8px;
   font-size: 16px;
   line-height: 140%;
-  color:#120907;
+  color: #120907;
 `;
 const ProductCategory = styled.p`
   margin-top: 0;
@@ -102,19 +113,28 @@ const ProductCategory = styled.p`
 const ProductPrice = styled.p`
   margin: 0;
   font-weight: bold;
-  color:#120907;
+  color: #120907;
 `;
 
 const HomePage = ({ searchParams, setSearchParams }) => {
-  const [categories, setCategories] = useState(null)
+  const [categories, setCategories] = useState(null);
+  const [recProducts, setRecProducts] = useState(null);
   const fetchData = async () => {
     try {
       //Get array with images for categories
-      const resImgs = await axios.get("http://localhost:8000/getCategories")
+      const resImgs = await axios.get("http://localhost:8000/getCategories");
       const imgsAndNameCategoriesArr = resImgs.data;
       setCategories(imgsAndNameCategoriesArr);
+
+      //Get array with recommended products
+      const recProducts = await axios.get(
+        "http://localhost:8000/getRecommendedProducts"
+      );
+      const { data } = recProducts;
+      setRecProducts(data);
+      console.log(data);
     } catch (e) {
-      console.log("Error MainBody.js: ", e);
+      console.log("Error Home page: ", e);
     }
   };
 
@@ -126,53 +146,55 @@ const HomePage = ({ searchParams, setSearchParams }) => {
       <RecommendedTitle>Recommended</RecommendedTitle>
 
       <RecommendedProducts>
-        <Product>
-          <ProductPhoto
-            src={recomendedOne}
-            alt="Bose portable Smart speaker"
-          ></ProductPhoto>
-          <ProductTitle>Bose portable Smart speaker</ProductTitle>
-          <ProductCategory>
-            Smart home
-          </ProductCategory>
-          <ProductPrice>$ 399.00</ProductPrice>
-        </Product>
+      
+        {!recProducts ? (
+          <LoadingCard></LoadingCard>
+        ) : (
+          recProducts.map(
+            ({
+              availability,
+              brand,
+              images,
+              main_category,
+              price,
+              priceCurrency,
+              title,
+            }) => {
+              return (
+                <Product>
+                  <ProductPhoto
+                    src={images}
+                    alt="Recommended"
+                  ></ProductPhoto>
+                  <ProductTitle>{title}</ProductTitle>
+                  <ProductCategory>{main_category}</ProductCategory>
+                  <ProductPrice>{price + " " +priceCurrency}</ProductPrice>
+                </Product>
+              )
+            }
+          )
+        )}
 
-        <Product>
-          <ProductPhoto
-            src={recomendedTwo}
-            alt="SoundLink Flex Bluetooth speaker"
-          ></ProductPhoto>
-          <ProductTitle>SoundLink Flex Bluetooth speaker</ProductTitle>
-          <ProductCategory>Portable bluetooth</ProductCategory>
-          <ProductPrice>$ 149.00</ProductPrice>
-        </Product>
-
-        <Product>
-          <ProductPhoto
-            src={recomendedThree}
-            alt="SoundLink Color Bluetooth speaker II"
-          ></ProductPhoto>
-          <ProductTitle>SoundLink Color Bluetooth speaker II</ProductTitle>
-          <ProductCategory>Portable bluetooth</ProductCategory>
-          <ProductPrice>$ 129.00</ProductPrice>
-        </Product>
       </RecommendedProducts>
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
-        {categories ? categories.map((elem, idx) => {
-          if(idx<6) {
-            return (
-              <CategoryForMainPage
-                searchParams={searchParams}
-                setSearchParams={setSearchParams}
-                name={elem.main_category}
-                image={elem.image}
-                key={elem._id}
-              ></CategoryForMainPage>
-            )
-          }
-        }): <LoadingCard></LoadingCard>}
+        {categories ? (
+          categories.map((elem, idx) => {
+            if (idx < 6) {
+              return (
+                <CategoryForMainPage
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                  name={elem.main_category}
+                  image={elem.image}
+                  key={elem._id}
+                ></CategoryForMainPage>
+              );
+            }
+          })
+        ) : (
+          <LoadingCard></LoadingCard>
+        )}
       </CategoriesContainer>
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>

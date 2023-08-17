@@ -14,24 +14,24 @@ const Container = styled.div`
   min-height: 100vh;
   background-color: white;
   margin-top: 80px;
+  padding-left: 220px;
 `;
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
-  margin-left: 25%;
+  width: 100%;
   min-height: 100%;
 `;
 
 const H1 = styled.h1`
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 90%;
+  width: 100%;
   font-family: "Inter", sans-serif;
 `;
 
 const ProductsCounter = styled.span`
-  width: 90%;
+  width: 100%;
   display: flex;
   color: gray;
 `;
