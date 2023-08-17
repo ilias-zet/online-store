@@ -2,21 +2,29 @@ import styled from "styled-components";
 import logo from "../assets/images/Logo.png";
 import { useNavigate } from "react-router-dom";
 
-const Container = styled.div`
+const OuterContainer = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  top: 0;
-  backdrop-filter: blur(5px);
+  justify-content: center;
+  background-color: rgb(0, 0, 0, 0.7);
   width: 100%;
-  max-width: 1366px;
   height: 80px;
   z-index: 1;
-  background-color: rgb(0, 0, 0, 0.7);
+  top: 0;
+  backdrop-filter: blur(5px);
   @media (max-width: 480px) {
     height: 60px;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 1024px;
+  width: 100%;
+  height: 100%;
 `;
 
 const LogoContainer = styled.div`
@@ -41,7 +49,8 @@ const BtnsContainer = styled.div`
     top: 60px;
 
     transition: all 0.3s;
-    transform: ${({ isOpenedMenu }) => (isOpenedMenu ? "translateY(0%)" : "translateY(-100%)")};
+    transform: ${({ isOpenedMenu }) =>
+      isOpenedMenu ? "translateY(0%)" : "translateY(-100%)"};
     height: ${({ isOpenedMenu }) => (isOpenedMenu ? "40px" : "0")};
     opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
   }
@@ -171,96 +180,118 @@ const BurgerBtn = styled.svg`
   filter: invert(100%);
 `;
 
-const Header = ({
-  open,
-  user,
-  setUser,
-  isOpenedMenu,
-  setIsopenedMenu,
-}) => {
+const Header = ({ open, user, setUser, isOpenedMenu, setIsopenedMenu }) => {
   const navigate = useNavigate();
 
   return (
-    <Container>
-      <LogoContainer onClick={() => navigate(`/`)}>
-        <Logo alt="" src={logo}></Logo>
-      </LogoContainer>
-      <NavMenu isOpenedMenu={isOpenedMenu}>
-        <NavBtn
-          isOpenedMenu={isOpenedMenu}
-          onClick={() => {
-            navigate(`/`);
-            window.scrollTo(0, 0);
-            setIsopenedMenu(false);
-          }}
-        >
-          Main page
-        </NavBtn>
-        <NavBtn
-          isOpenedMenu={isOpenedMenu}
-          onClick={() => {
-            navigate(`/categories`);
-            window.scrollTo(0, 0);
-            setIsopenedMenu(false);
-          }}
-        >
-          Categories
-        </NavBtn>
-        <NavBtn isOpenedMenu={isOpenedMenu} href="#">
-          Contacts
-        </NavBtn>
-      </NavMenu>
-      <BtnsContainer isOpenedMenu={isOpenedMenu}>
-        {user && user.email ? (
-          <>
-            <UserBtnContainer>
-              <UserImgBtn>{user.name[0] + " " + user.surname[0]}</UserImgBtn>
-              <UserFullname>{user.name + " " + user.surname}</UserFullname>
-            </UserBtnContainer>
-            <LogoutBtn
-              onClick={() =>
-                setUser({
-                  name: null,
-                  surname: null,
-                  email: null,
-                  password: null,
-                })
-              }
-            >
-              <LogoutImg src="https://cdn-icons-png.flaticon.com/512/152/152534.png"></LogoutImg>
-            </LogoutBtn>
-          </>
-        ) : (
-          <>
-            <BtnContainer
+    <OuterContainer>
+      <Container>
+        <LogoContainer onClick={() => navigate(`/`)}>
+          <Logo alt="" src={logo}></Logo>
+        </LogoContainer>
+        <NavMenu isOpenedMenu={isOpenedMenu}>
+          <NavBtn
             isOpenedMenu={isOpenedMenu}
-              onClick={() => {
-                open(false);
-                setIsopenedMenu(false);
-              }}
-            >
-              <TextBtn isOpenedMenu={isOpenedMenu}>Sign Up</TextBtn>
-            </BtnContainer>
-            <BtnContainer
+            onClick={() => {
+              navigate(`/`);
+              window.scrollTo(0, 0);
+              setIsopenedMenu(false);
+            }}
+          >
+            Main page
+          </NavBtn>
+          <NavBtn
             isOpenedMenu={isOpenedMenu}
-              onClick={() => {
-                open(true);
-                setIsopenedMenu(false);
-              }}
+            onClick={() => {
+              navigate(`/categories`);
+              window.scrollTo(0, 0);
+              setIsopenedMenu(false);
+            }}
+          >
+            Categories
+          </NavBtn>
+          <NavBtn isOpenedMenu={isOpenedMenu} href="#">
+            Contacts
+          </NavBtn>
+        </NavMenu>
+        <BtnsContainer isOpenedMenu={isOpenedMenu}>
+          {user && user.email ? (
+            <>
+              <UserBtnContainer>
+                <UserImgBtn>{user.name[0] + " " + user.surname[0]}</UserImgBtn>
+                <UserFullname>{user.name + " " + user.surname}</UserFullname>
+              </UserBtnContainer>
+              <LogoutBtn
+                onClick={() =>
+                  setUser({
+                    name: null,
+                    surname: null,
+                    email: null,
+                    password: null,
+                  })
+                }
+              >
+                <LogoutImg src="https://cdn-icons-png.flaticon.com/512/152/152534.png"></LogoutImg>
+              </LogoutBtn>
+            </>
+          ) : (
+            <>
+              <BtnContainer
+                isOpenedMenu={isOpenedMenu}
+                onClick={() => {
+                  open(false);
+                  setIsopenedMenu(false);
+                }}
+              >
+                <TextBtn isOpenedMenu={isOpenedMenu}>Sign Up</TextBtn>
+              </BtnContainer>
+              <BtnContainer
+                isOpenedMenu={isOpenedMenu}
+                onClick={() => {
+                  open(true);
+                  setIsopenedMenu(false);
+                }}
+              >
+                <TextBtn isOpenedMenu={isOpenedMenu}>Log In</TextBtn>
+              </BtnContainer>
+            </>
+          )}
+        </BtnsContainer>
+        <BurgerBtnContainer
+          onClick={() =>
+            isOpenedMenu ? setIsopenedMenu(false) : setIsopenedMenu(true)
+          }
+        >
+          {isOpenedMenu ? (
+            <BurgerBtn
+              xmlns="http://www.w3.org/2000/svg"
+              class="ionicon"
+              viewBox="0 0 512 512"
             >
-              <TextBtn isOpenedMenu={isOpenedMenu}>Log In</TextBtn>
-            </BtnContainer>
-          </>
-        )}
-      </BtnsContainer>
-      <BurgerBtnContainer
-        onClick={() =>
-          isOpenedMenu ? setIsopenedMenu(false) : setIsopenedMenu(true)
-        }
-      >
-        {isOpenedMenu? <BurgerBtn xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"/></BurgerBtn>:<BurgerBtn xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 160h352M80 256h352M80 352h352"/></BurgerBtn>}
-      </BurgerBtnContainer>
-    </Container>
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="32"
+                d="M368 368L144 144M368 144L144 368"
+              />
+            </BurgerBtn>
+          ) : (
+            <BurgerBtn xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-miterlimit="10"
+                stroke-width="32"
+                d="M80 160h352M80 256h352M80 352h352"
+              />
+            </BurgerBtn>
+          )}
+        </BurgerBtnContainer>
+      </Container>
+    </OuterContainer>
   );
 };
 

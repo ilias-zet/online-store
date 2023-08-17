@@ -11,13 +11,21 @@ import useSignUp from "./shared/useSignUp";
 import CategoriesPage from "./pages/Categories";
 import Authorization from "./shared/Authorization";
 
+const OuterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
 const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 100%;
-  width: 100%;
+  max-width: 1024px;
 `;
 
 const Button = styled.div`
@@ -33,13 +41,13 @@ const Button = styled.div`
   background-color: rgb(0, 0, 0, 0.5);
   color: white;
   border: none;
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     right: 1rem;
   }
 `;
 
 function App() {
-  const { isOpened, open, close,isSignIn } = useSignUp(false);
+  const { isOpened, open, close, isSignIn } = useSignUp(false);
   const [user, setUser] = useState({
     name: null,
     surname: null,
@@ -64,7 +72,7 @@ function App() {
   }, []);
 
   return (
-    <Container>
+    <>
       <Header
         isOpened={isOpened}
         open={open}
@@ -74,49 +82,53 @@ function App() {
         isOpenedMenu={isOpenedMenu}
         setIsopenedMenu={setIsopenedMenu}
       ></Header>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <HomePage
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-            ></HomePage>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <ProductsPage
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
+      <OuterContainer>
+        <Container>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                ></HomePage>
+              }
             />
-          }
-        />
-        <Route
-          path="/categories"
-          element={
-            <CategoriesPage
-              searchParams={searchParams}
-              setSearchParams={setSearchParams}
-            ></CategoriesPage>
-          }
-        />
-        <Route path="/products/:product_id" element={<ProductPage />} />
-      </Routes>
+            <Route
+              path="/products"
+              element={
+                <ProductsPage
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                />
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <CategoriesPage
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                ></CategoriesPage>
+              }
+            />
+            <Route path="/products/:product_id" element={<ProductPage />} />
+          </Routes>
+          <Authorization
+            isSignIn={isSignIn}
+            isOpened={isOpened}
+            close={close}
+            setUser={setUser}
+            setToken={setToken}
+            scroll={scroll}
+          ></Authorization>
+          <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
+            Go Up
+          </Button>
+        </Container>
+      </OuterContainer>
       <Footer />
-      <Authorization
-        isSignIn={isSignIn}
-        isOpened={isOpened}
-        close={close}
-        setUser={setUser}
-        setToken={setToken}
-        scroll={scroll}
-      ></Authorization>
-      <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
-        Go Up
-      </Button>
-    </Container>
+    </>
   );
 }
 
