@@ -28,7 +28,7 @@ const H1 = styled.h1`
   padding-left:10%;
 `;
 
-const CategoriesPage = ({ searchParams, setSearchParams}) => {
+const CategoriesPage = () => {
   const [categories, setCategories] = useState(null);
   const fetchData = async () => {
     try {
@@ -56,8 +56,6 @@ const CategoriesPage = ({ searchParams, setSearchParams}) => {
           {categories.map(({main_category,image,_id}) => {
             return (
               <CategoryForMainPage
-                searchParams={searchParams}
-                setSearchParams={setSearchParams}
                 name={main_category}
                 image={image}
                 key={_id}

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Category = styled.div`
   display: flex;
@@ -42,13 +41,9 @@ const CategoryNameA = styled.div`
   }
 `;
 
-const CategoryForMainPage = ({
-  searchParams,
-  setSearchParams,
-  name,
-  image,
-}) => {
+const CategoryForMainPage = ({ name, image }) => {
   const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
   let categoryImgFullURL = `http://localhost:8000/${image}`;
   const productFilterHandler = (e, category) => {
     e.preventDefault();
@@ -57,9 +52,7 @@ const CategoryForMainPage = ({
     navigate(`/products?${searchParams.toString()}`);
   };
   return (
-    <Category
-      onClick={(e) => productFilterHandler(e, name)}
-    >
+    <Category onClick={(e) => productFilterHandler(e, name)}>
       <ImgContainer>
         <CategoryImage src={categoryImgFullURL} alt=""></CategoryImage>
       </ImgContainer>

@@ -6,7 +6,7 @@ import recomendedThree from "../assets/images/products/SoundLink Color Bluetooth
 import CategoryForMainPage from "../shared/CategoryForMainPage";
 import axios from "axios";
 import LoadingCard from "../shared/LoadingCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -72,9 +72,7 @@ const RecProduct = styled.article`
   height: 400px;
 `;
 
-
-
-const HowtoBuy = styled.div`
+const Present = styled.div`
   max-width: 1020px;
   margin: 0 auto;
   display: grid;
@@ -83,7 +81,7 @@ const HowtoBuy = styled.div`
   margin-top: 48px;
   margin-bottom: 48px;
 `;
-const HowToBuyTitle = styled.div`
+const PresentTitle = styled.div`
   display: flex;
   justify-content: center;
   flex-basis: 50%;
@@ -97,7 +95,7 @@ const HowToBuyTitle = styled.div`
     font-size: 24px;
   }
 `;
-const HowToBuyContent = styled.div`
+const PresentContent = styled.div`
   flex-basis: 50%;
 `;
 
@@ -136,7 +134,44 @@ const RecPrice = styled.p`
   color: #120907;
 `;
 
-const HomePage = ({ searchParams, setSearchParams }) => {
+const presents = [
+  {
+    title: "Dress to Impress",
+    content:
+      "Dress to impress and make the best of every day no matter what ithas in store. With fashions hottest must haves and accessories, you can find what youve been looking for on eBay.",
+  },
+  {
+    title: "Fashionably Perfect",
+    content:
+      "The stylish range of mens and womens clothing and shoes sizzle from head to toe, no matter the season. Its easier than ever to browse handbags, watches, and special occasion outfits by style, brand, orprice. Search on eBay for womens fashion, mens fashion, clothes,shoes, handbags, jewelry, watches, jackets and more.",
+  },
+  {
+    title: "Top Fashion Brands",
+    content: `If brands are your thing, you can surf eBay to find handbags by Vera
+    Bradley, watches by Rolex, athletic apparel by Nike, shoes from Nine
+    West, jackets from Michael Kors, and shoes from Puma. Its all here
+    in the eBay Fashion Department.`,
+  },
+  {
+    title: "Mens Fashion",
+    content: `Dont skimp when it comes to menswear that looks sharp and stylish.
+    Beef up your closet with fashionable jeans, sweaters, and suits.
+    eBay has a selection of accessories to fit your fancy, including
+    hats, ties, wallets, and sunglasses. Grab a new briefcase for work
+    or find the perfect backpack that holds all of your hiking supplies.`,
+  },
+  {
+    title: "Womens Fashion",
+    content: `Browse the wide selection of style pieces on eBay, and unearth a
+    world of trendy treasures for women and girls. Check out boots,
+    heels, sandals, and athletic footwear that will keep you and your
+    entire family moving year round. You can find sales that include top
+    picks for fashionistas, or discover daily deals that add oomph to
+    your closet without breaking the bank.`,
+  },
+];
+
+const HomePage = () => {
   const [categories, setCategories] = useState(null);
   const [recProducts, setRecProducts] = useState(null);
 
@@ -168,46 +203,39 @@ const HomePage = ({ searchParams, setSearchParams }) => {
       <RecommendedTitle>Recommended</RecommendedTitle>
 
       <RecommendedProducts>
-      
         {!recProducts ? (
           <LoadingCard></LoadingCard>
         ) : (
           recProducts.map(
-            ({_id,images,main_category,price,priceCurrency,title,
-            }) => {
+            ({ _id, images, main_category, price, priceCurrency, title }) => {
               return (
-                <RecProduct onClick={() => navigate(`/products/${_id}`)}>
+                <RecProduct
+                  onClick={() => navigate(`/products/${_id}`)}
+                  key={_id}
+                >
                   <RecImageContainer>
-                    <RecPhoto
-                      src={images}
-                      alt="Recommended"
-                    ></RecPhoto>
+                    <RecPhoto src={images} alt="Recommended"></RecPhoto>
                   </RecImageContainer>
                   <RecTitle>{title}</RecTitle>
                   <RecCategory>{main_category}</RecCategory>
-                  <RecPrice>{price + " " +priceCurrency}</RecPrice>
+                  <RecPrice>{price + " " + priceCurrency}</RecPrice>
                 </RecProduct>
-              )
+              );
             }
           )
         )}
-
       </RecommendedProducts>
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
         {categories ? (
-          categories.map((elem, idx) => {
-            if (idx < 6) {
-              return (
-                <CategoryForMainPage
-                  searchParams={searchParams}
-                  setSearchParams={setSearchParams}
-                  name={elem.main_category}
-                  image={elem.image}
-                  key={elem._id}
-                ></CategoryForMainPage>
-              );
-            }
+          categories.slice(6, 12).map(({ main_category, image, _id }) => {
+            return (
+              <CategoryForMainPage
+                name={main_category}
+                image={image}
+                key={_id}
+              ></CategoryForMainPage>
+            );
           })
         ) : (
           <LoadingCard></LoadingCard>
@@ -215,54 +243,19 @@ const HomePage = ({ searchParams, setSearchParams }) => {
       </CategoriesContainer>
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>
-        <HowtoBuy>
-          <HowToBuyTitle>Dress to Impress</HowToBuyTitle>
-          <HowToBuyContent>
-            Dress to impress and make the best of every day no matter what it
-            has in store. With fashions hottest must haves and accessories, you
-            can find what youve been looking for on eBay.
-          </HowToBuyContent>
-        </HowtoBuy>
-        <HowtoBuy>
-          <HowToBuyContent>
-            The stylish range of mens and womens clothing and shoes sizzle from
-            head to toe, no matter the season. Its easier than ever to browse
-            handbags, watches, and special occasion outfits by style, brand, or
-            price. Search on eBay for womens fashion, mens fashion, clothes,
-            shoes, handbags, jewelry, watches, jackets and more.
-          </HowToBuyContent>
-          <HowToBuyTitle>Fashionably Perfect</HowToBuyTitle>
-        </HowtoBuy>
-        <HowtoBuy>
-          <HowToBuyTitle>Top Fashion Brands</HowToBuyTitle>
-          <HowToBuyContent>
-            If brands are your thing, you can surf eBay to find handbags by Vera
-            Bradley, watches by Rolex, athletic apparel by Nike, shoes from Nine
-            West, jackets from Michael Kors, and shoes from Puma. Its all here
-            in the eBay Fashion Department.
-          </HowToBuyContent>
-        </HowtoBuy>
-        <HowtoBuy>
-          <HowToBuyContent>
-            Dont skimp when it comes to menswear that looks sharp and stylish.
-            Beef up your closet with fashionable jeans, sweaters, and suits.
-            eBay has a selection of accessories to fit your fancy, including
-            hats, ties, wallets, and sunglasses. Grab a new briefcase for work
-            or find the perfect backpack that holds all of your hiking supplies.
-          </HowToBuyContent>
-          <HowToBuyTitle>Mens Fashion</HowToBuyTitle>
-        </HowtoBuy>
-        <HowtoBuy>
-          <HowToBuyTitle>Womens Fashion</HowToBuyTitle>
-          <HowToBuyContent>
-            Browse the wide selection of style pieces on eBay, and unearth a
-            world of trendy treasures for women and girls. Check out boots,
-            heels, sandals, and athletic footwear that will keep you and your
-            entire family moving year round. You can find sales that include top
-            picks for fashionistas, or discover daily deals that add oomph to
-            your closet without breaking the bank.
-          </HowToBuyContent>
-        </HowtoBuy>
+        {presents.map(({ title, content }, idx) => {
+          return idx % 2 != 0 ? (
+            <Present>
+              <PresentTitle>{title}</PresentTitle>
+              <PresentContent>{content}</PresentContent>
+            </Present>
+          ) : (
+            <Present>
+              <PresentContent>{content}</PresentContent>
+              <PresentTitle>{title}</PresentTitle>
+            </Present>
+          );
+        })}
       </MainDescription>
     </BodyContainer>
   );

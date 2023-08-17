@@ -4,12 +4,13 @@ import axios from "axios";
 import ProductCard from "../shared/ProductCard";
 import FilterProducts from "../shared/FilterProducts";
 import LoadingCard from "../shared/LoadingCard";
+import { useSearchParams } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  max-width: 100%;;
+  max-width: 100%;
   width: 100%;
   min-height: 100vh;
   background-color: white;
@@ -36,8 +37,8 @@ const ProductsCounter = styled.span`
   color: gray;
 `;
 
-
-const ProductsPage = ({ searchParams }) => {
+const ProductsPage = () => {
+  let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [responsedProduct, setresponsedProduct] = useState(null);
   const fetchData = async () => {

@@ -3,7 +3,7 @@ import "./App.css";
 import HomePage from "./pages/Home";
 import Footer from "./components/Footer";
 import styled from "styled-components";
-import { Routes, Route, useSearchParams } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProductsPage from "./pages/Products";
 import ProductPage from "./pages/Product";
 import Header from "./components/Header";
@@ -55,7 +55,6 @@ function App() {
     password: null,
   });
   const [token, setToken] = useState(null);
-  let [searchParams, setSearchParams] = useSearchParams();
   const [scroll, setScroll] = useState(0);
   const [isOpenedMenu, setIsopenedMenu] = useState(false);
   const handleScroll = () => {
@@ -85,32 +84,11 @@ function App() {
       <OuterContainer>
         <Container>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage
-                  searchParams={searchParams}
-                  setSearchParams={setSearchParams}
-                ></HomePage>
-              }
-            />
-            <Route
-              path="/products"
-              element={
-                <ProductsPage
-                  searchParams={searchParams}
-                  setSearchParams={setSearchParams}
-                />
-              }
-            />
+            <Route path="/" element={<HomePage></HomePage>} />
+            <Route path="/products" element={<ProductsPage />} />
             <Route
               path="/categories"
-              element={
-                <CategoriesPage
-                  searchParams={searchParams}
-                  setSearchParams={setSearchParams}
-                ></CategoriesPage>
-              }
+              element={<CategoriesPage></CategoriesPage>}
             />
             <Route path="/products/:product_id" element={<ProductPage />} />
           </Routes>
