@@ -6,6 +6,7 @@ import recomendedThree from "../assets/images/products/SoundLink Color Bluetooth
 import CategoryForMainPage from "../shared/CategoryForMainPage";
 import axios from "axios";
 import LoadingCard from "../shared/LoadingCard";
+import { useNavigate } from "react-router-dom";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -56,19 +57,23 @@ const RecommendedTitle = styled.h2`
 `;
 const RecommendedProducts = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   height: 100%;
   margin-top: 20px;
 `;
-const Product = styled.article`
+const RecProduct = styled.article`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 20%;
   height: 400px;
 `;
+
+
+
 const HowtoBuy = styled.div`
   max-width: 1020px;
   margin: 0 auto;
@@ -95,22 +100,37 @@ const HowToBuyTitle = styled.div`
 const HowToBuyContent = styled.div`
   flex-basis: 50%;
 `;
-const ProductPhoto = styled.img`
+
+const RecImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  margin-top: 10px;
+  overflow: hidden;
+`;
+
+const RecPhoto = styled.img`
   width: 100%;
   margin-bottom: 32px;
+  transition: all 0.3s;
+  &:hover {
+    width: 116%;
+  }
 `;
-const ProductTitle = styled.h3`
+const RecTitle = styled.h3`
   margin-top: 0;
   margin-bottom: 8px;
   font-size: 16px;
   line-height: 140%;
   color: #120907;
 `;
-const ProductCategory = styled.p`
+const RecCategory = styled.p`
   margin-top: 0;
   margin-bottom: 12px;
 `;
-const ProductPrice = styled.p`
+const RecPrice = styled.p`
   margin: 0;
   font-weight: bold;
   color: #120907;
@@ -119,6 +139,9 @@ const ProductPrice = styled.p`
 const HomePage = ({ searchParams, setSearchParams }) => {
   const [categories, setCategories] = useState(null);
   const [recProducts, setRecProducts] = useState(null);
+
+  const navigate = useNavigate();
+
   const fetchData = async () => {
     try {
       //Get array with images for categories
@@ -132,7 +155,6 @@ const HomePage = ({ searchParams, setSearchParams }) => {
       );
       const { data } = recProducts;
       setRecProducts(data);
-      console.log(data);
     } catch (e) {
       console.log("Error Home page: ", e);
     }
@@ -151,25 +173,20 @@ const HomePage = ({ searchParams, setSearchParams }) => {
           <LoadingCard></LoadingCard>
         ) : (
           recProducts.map(
-            ({
-              availability,
-              brand,
-              images,
-              main_category,
-              price,
-              priceCurrency,
-              title,
+            ({_id,images,main_category,price,priceCurrency,title,
             }) => {
               return (
-                <Product>
-                  <ProductPhoto
-                    src={images}
-                    alt="Recommended"
-                  ></ProductPhoto>
-                  <ProductTitle>{title}</ProductTitle>
-                  <ProductCategory>{main_category}</ProductCategory>
-                  <ProductPrice>{price + " " +priceCurrency}</ProductPrice>
-                </Product>
+                <RecProduct onClick={() => navigate(`/products/${_id}`)}>
+                  <RecImageContainer>
+                    <RecPhoto
+                      src={images}
+                      alt="Recommended"
+                    ></RecPhoto>
+                  </RecImageContainer>
+                  <RecTitle>{title}</RecTitle>
+                  <RecCategory>{main_category}</RecCategory>
+                  <RecPrice>{price + " " +priceCurrency}</RecPrice>
+                </RecProduct>
               )
             }
           )
