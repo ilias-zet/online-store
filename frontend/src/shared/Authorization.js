@@ -29,6 +29,9 @@ const FormContainer = styled.div`
   margin-top: 10%;
   margin-right: auto;
   margin-left: auto;
+  @media (max-width:480px) {
+    margin-top: 20%;
+  }
 `;
 
 const CloseForm = styled.span`
@@ -216,7 +219,7 @@ const Authorization = ({
       <FormContainer>
         {!isSignIn ? (
           <>
-            <CloseForm onClick={() => close()}>x</CloseForm>
+            <CloseForm onClick={close}>x</CloseForm>
             <FormMainText>Create account</FormMainText>
             <NameAndSurnameMainContainer>
               <NameAndSurnameSubContainer>
