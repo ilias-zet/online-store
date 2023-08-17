@@ -36,7 +36,7 @@ const ProductsCounter = styled.span`
   color: gray;
 `;
 
-//Компонент рендера разных страниц категории, рендерится то, что находится в определенной категории
+
 const ProductsPage = ({ searchParams }) => {
   const category = searchParams.get("category");
   const [responsedProduct, setresponsedProduct] = useState(null);
@@ -59,7 +59,6 @@ const ProductsPage = ({ searchParams }) => {
     <Container>
       <H1>{category}</H1>
       <FilterProducts></FilterProducts>
-      {/* <LoadingCard></LoadingCard> */}
       {!responsedProduct ? (
         <LoadingCard></LoadingCard>
       ) : (

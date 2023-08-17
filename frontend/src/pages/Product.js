@@ -20,7 +20,7 @@ const ImageAndTitleContainer = styled.div`
 display: flex;
 `
 
-const ProductCardImageContainer = styled.div`
+const CardImageContainer = styled.div`
 margin-top: 20px;
 height: 100%;
 width: 50%;
@@ -30,11 +30,12 @@ const Image = styled.img`
 width: 100%;
 `
 
-const ProductCardTitleAndDesc = styled.div`
+const CardTitleAndDesc = styled.div`
 display: flex;
 flex-direction: column;
 width: 50%;
 margin: 10px;
+gap: 10px;
 `
 
 const Title = styled.h2`
@@ -43,7 +44,7 @@ const Title = styled.h2`
 }
 `
 
-const ProductCardTime = styled.span`
+const CardTime = styled.span`
 width: 100%;
 color: gray;
 font-size: 14px;
@@ -51,7 +52,7 @@ font-size: 14px;
   font-size: 10px;
 }
 `
-const ProductCardPrice = styled.div`
+const CardPrice = styled.div`
 width: 100%;
 margin-top: 10px;
 font-size: 20px;
@@ -68,7 +69,7 @@ font-size: 14px;
   font-size: 10px;
 }
 `
-const ProductCardDesc = styled.span`
+const CardDesc = styled.span`
 width: 100%;
 margin-top: 10px;
 margin-bottom: 10px;
@@ -77,17 +78,15 @@ margin-bottom: 10px;
   margin-top: 0;
 }
 `
-const ProductCardBrand = styled.span`
+const CardBrand = styled.span`
 width: 100%;
-margin-top: 10px;
 @media (max-width:480px) {
   font-size: 10px;
   margin-top: 0;
 }
 `
-const ProductCardAvailability = styled.span`
+const CardAvailability = styled.span`
 width: 100%;
-margin-top: 10px;
 @media (max-width:480px) {
   font-size: 10px;
   margin-top: 0;
@@ -96,19 +95,29 @@ margin-top: 10px;
 
 const HR = styled.hr`
 width: 100%;
-margin-top: 10px;
 `
 
-
+const INITIAL_PRODUCT = {
+  _id:null,
+  images:null,
+  title:null,
+  crawled_at:null,
+  brand:null,
+  priceCurrency:null,
+  price:null,
+  description:null,
+  availability:null,
+}
 
 const ProductPage = () => {
   const { product_id } = useParams()
-  const [responsedProduct, setresponsedProduct] = useState(null)
+  const [product, setProduct] = useState(INITIAL_PRODUCT)
+  const {images,title,crawled_at,brand,priceCurrency,price,description,availability,} = product;
   const fetchData = async () => {
   try {
     const res = await axios.get("http://localhost:8000/getFullProduct",{params: { product_id }}) 
-    const resProductData = await res.data
-    setresponsedProduct(resProductData[0])
+    const {data} = await res
+    setProduct(data[0])
     
 
   } catch(e) {
@@ -120,24 +129,25 @@ useEffect(() => {
 },[])
   return (
     <Container>
-      {!responsedProduct? <LoadingCard /> : (
+      {product && product.availability ?  (
         <>
         <ImageAndTitleContainer>
-          <ProductCardImageContainer>
-            <Image src={responsedProduct.images} alt=""></Image>
-          </ProductCardImageContainer>
-          <ProductCardTitleAndDesc>
-            <Title>{responsedProduct.title}</Title>
-            <ProductCardTime>{responsedProduct.crawled_at}</ProductCardTime>
-            <ProductCardPrice><PriceSpan>Price: </PriceSpan>{responsedProduct.price + responsedProduct.priceCurrency}</ProductCardPrice>
-            <ProductCardBrand><b>Brand: </b>{responsedProduct.brand}</ProductCardBrand>
-            <ProductCardAvailability><b>Availability: </b>{responsedProduct.availability}</ProductCardAvailability>
+          <CardImageContainer>
+            <Image src={images} alt=""></Image>
+          </CardImageContainer>
+          <CardTitleAndDesc>
+            <Title>{title}</Title>
+            <CardTime>{crawled_at}</CardTime>
+            <CardPrice><PriceSpan>Price: </PriceSpan>{price + " " + priceCurrency}</CardPrice>
+            {brand? <CardBrand><b>Brand: </b>{brand}</CardBrand>:null}
+            <CardAvailability><b>Availability: </b>{availability}</CardAvailability>
             <HR></HR>
-            </ProductCardTitleAndDesc>
+            </CardTitleAndDesc>
             </ImageAndTitleContainer>
-            <ProductCardDesc>{responsedProduct.description}</ProductCardDesc>
-          
+            <CardDesc>{description}</CardDesc>
         </>
+      ): (
+        <LoadingCard />
       )}
     </Container>
   )
