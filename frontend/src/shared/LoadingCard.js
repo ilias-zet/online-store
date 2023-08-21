@@ -5,14 +5,14 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 100%;
   min-height: 100%;
   flex-wrap: wrap;
 `;
 
 
 
-const LoadingCard = ({ loadingCardFor }) => {
+const LoadingCard = () => {
   return (
     <LoadingContainer>
       <div className="loading-block">
