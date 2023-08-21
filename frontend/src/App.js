@@ -48,12 +48,13 @@ const Button = styled.div`
 
 function App() {
   const { isOpened, open, close, isSignIn } = useSignUp(false);
-  const [user, setUser] = useState({
+  const userInit = {
     name: null,
     surname: null,
     email: null,
     password: null,
-  });
+  };
+  const [user, setUser] = useState(userInit);
   const [token, setToken] = useState(null);
   const [scroll, setScroll] = useState(0);
   const [isOpenedMenu, setIsopenedMenu] = useState(false);
@@ -73,11 +74,10 @@ function App() {
   return (
     <>
       <Header
-        isOpened={isOpened}
         open={open}
-        close={close}
         user={user}
         setUser={setUser}
+        userInit={userInit}
         isOpenedMenu={isOpenedMenu}
         setIsopenedMenu={setIsopenedMenu}
       ></Header>
@@ -98,7 +98,6 @@ function App() {
             close={close}
             setUser={setUser}
             setToken={setToken}
-            scroll={scroll}
           ></Authorization>
           <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
             Go Up
