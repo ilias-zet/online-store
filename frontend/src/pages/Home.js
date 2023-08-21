@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import recomendedOne from "../assets/images/products/Bose portable Smart speaker.png";
-import recomendedTwo from "../assets/images/products/SoundLink Flex Bluetooth speaker.png";
-import recomendedThree from "../assets/images/products/SoundLink Color Bluetooth speaker II.png";
-import CategoryForMainPage from "../shared/CategoryForMainPage";
+import Category from "../shared/Category";
 import axios from "axios";
 import LoadingCard from "../shared/LoadingCard";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -75,12 +72,14 @@ const RecProduct = styled.article`
 const Present = styled.div`
   max-width: 1020px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100% 100%;
+  display: flex;
   margin-top: 48px;
   margin-bottom: 48px;
+  &:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
 `;
+
 const PresentTitle = styled.div`
   display: flex;
   justify-content: center;
@@ -207,21 +206,19 @@ const HomePage = () => {
           <LoadingCard></LoadingCard>
         ) : (
           recProducts.map(
-            ({ _id, images, main_category, price, priceCurrency, title }) => {
-              return (
-                <RecProduct
-                  onClick={() => navigate(`/products/${_id}`)}
-                  key={_id}
-                >
-                  <RecImageContainer>
-                    <RecPhoto src={images} alt="Recommended"></RecPhoto>
-                  </RecImageContainer>
-                  <RecTitle>{title}</RecTitle>
-                  <RecCategory>{main_category}</RecCategory>
-                  <RecPrice>{price + " " + priceCurrency}</RecPrice>
-                </RecProduct>
-              );
-            }
+            ({ _id, images, main_category, price, priceCurrency, title }) => (
+              <RecProduct
+                onClick={() => navigate(`/products/${_id}`)}
+                key={_id}
+              >
+                <RecImageContainer>
+                  <RecPhoto src={images} alt="Recommended"></RecPhoto>
+                </RecImageContainer>
+                <RecTitle>{title}</RecTitle>
+                <RecCategory>{main_category}</RecCategory>
+                <RecPrice>{price + " " + priceCurrency}</RecPrice>
+              </RecProduct>
+            )
           )
         )}
       </RecommendedProducts>
@@ -230,11 +227,7 @@ const HomePage = () => {
         {categories ? (
           categories.slice(6, 12).map(({ main_category, image, _id }) => {
             return (
-              <CategoryForMainPage
-                name={main_category}
-                image={image}
-                key={_id}
-              ></CategoryForMainPage>
+              <Category name={main_category} image={image} key={_id}></Category>
             );
           })
         ) : (
@@ -243,16 +236,11 @@ const HomePage = () => {
       </CategoriesContainer>
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>
-        {presents.map(({ title, content }, idx) => {
-          return idx % 2 != 0 ? (
+        {presents.map(({ title, content }) => {
+          return (
             <Present>
               <PresentTitle>{title}</PresentTitle>
               <PresentContent>{content}</PresentContent>
-            </Present>
-          ) : (
-            <Present>
-              <PresentContent>{content}</PresentContent>
-              <PresentTitle>{title}</PresentTitle>
             </Present>
           );
         })}
