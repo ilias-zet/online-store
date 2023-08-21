@@ -76,7 +76,10 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
 
   return (
-    <CardContainer onClick={() => navigate(`/products/${product._id}`)}>
+    <CardContainer onClick={() => {
+      navigate(`/products/${product._id}`)
+      window.scrollTo(0,0)
+    }}>
       <CardImageContainer>
         {product.images ? <CardImage src={product.images}></CardImage> : null}
       </CardImageContainer>
