@@ -12,7 +12,7 @@ router.get('/getProducts',async (request, response) => {
 // Get all information about a product. The return value - product
 router.get('/getFullProduct',async (request, response) => {
   const { product_id } = request.query
-  let product = await Products.find({"_id":product_id})
+  let product = await Products.findOne({"_id":product_id})
   response.json(product)
 })
 

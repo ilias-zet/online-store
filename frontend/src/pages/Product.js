@@ -98,15 +98,15 @@ const HR = styled.hr`
 `;
 
 const INITIAL_PRODUCT = {
-  _id: null,
-  images: null,
-  title: null,
-  crawled_at: null,
-  brand: null,
-  priceCurrency: null,
-  price: null,
-  description: null,
-  availability: null,
+  _id: 0, // Number
+  images: '', // String
+  title: '', // String
+  crawled_at: '', // String
+  brand: '', // String
+  priceCurrency: '', // String
+  price: 0, // Number
+  description: '', // String
+  availability: '', // String
 };
 
 const ProductPage = () => {
@@ -127,8 +127,8 @@ const ProductPage = () => {
       const res = await axios.get("http://localhost:8000/getFullProduct", {
         params: { product_id },
       });
-      const { data } = await res;
-      setProduct(data[0]);
+      const { data } = res;
+      setProduct(data);
     } catch (e) {
       console.log("Error on fetchData const:  ", e);
     }
