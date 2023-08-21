@@ -180,7 +180,7 @@ const BurgerBtn = styled.svg`
   filter: invert(100%);
 `;
 
-const Header = ({ open, user, setUser, isOpenedMenu, setIsopenedMenu }) => {
+const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu }) => {
   const navigate = useNavigate();
 
   return (
@@ -221,16 +221,7 @@ const Header = ({ open, user, setUser, isOpenedMenu, setIsopenedMenu }) => {
                 <UserImgBtn>{user.name[0] + " " + user.surname[0]}</UserImgBtn>
                 <UserFullname>{user.name + " " + user.surname}</UserFullname>
               </UserBtnContainer>
-              <LogoutBtn
-                onClick={() =>
-                  setUser({
-                    name: null,
-                    surname: null,
-                    email: null,
-                    password: null,
-                  })
-                }
-              >
+              <LogoutBtn onClick={() => setUser(userInit)}>
                 <LogoutImg src="https://cdn-icons-png.flaticon.com/512/152/152534.png"></LogoutImg>
               </LogoutBtn>
             </>
@@ -258,9 +249,7 @@ const Header = ({ open, user, setUser, isOpenedMenu, setIsopenedMenu }) => {
           )}
         </BtnsContainer>
         <BurgerBtnContainer
-          onClick={() =>
-            isOpenedMenu ? setIsopenedMenu(false) : setIsopenedMenu(true)
-          }
+          onClick={() =>  setIsopenedMenu(prev => !prev)}
         >
           {isOpenedMenu ? (
             <BurgerBtn
