@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import CategoryForMainPage from "../shared/CategoryForMainPage";
+import Category from "../shared/Category";
 import LoadingCard from "../shared/LoadingCard";
 
 const Container = styled.div`
@@ -11,6 +11,7 @@ const Container = styled.div`
   align-items: center;
   min-height: 100%;
   margin-top: 80px;
+  padding: 40px;
 `;
 
 const CategoriesContainer = styled.div`
@@ -32,10 +33,9 @@ const CategoriesPage = () => {
   const [categories, setCategories] = useState(null);
   const fetchData = async () => {
     try {
-      //Get array with images for categories
-      const resImgs = await axios.get("http://localhost:8000/getCategories")
-      const imgsAndNameCategoriesArr = resImgs.data;
-      setCategories(imgsAndNameCategoriesArr);
+      const resCategories = await axios.get("http://localhost:8000/getCategories")
+      const {data} = resCategories;
+      setCategories(data);
     } catch (e) {
       console.log("Error PageWithCategories: ", e);
     }
@@ -55,11 +55,11 @@ const CategoriesPage = () => {
         <CategoriesContainer>
           {categories.map(({main_category,image,_id}) => {
             return (
-              <CategoryForMainPage
+              <Category
                 name={main_category}
                 image={image}
                 key={_id}
-              ></CategoryForMainPage>
+              ></Category>
             );
           })}
         </CategoriesContainer>

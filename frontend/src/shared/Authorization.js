@@ -29,7 +29,7 @@ const FormContainer = styled.div`
   margin-top: 10%;
   margin-right: auto;
   margin-left: auto;
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     margin-top: 20%;
   }
 `;
@@ -124,22 +124,14 @@ const SignBtn = styled.div`
   border-radius: 10px;
 `;
 
-const Authorization = ({
-  isSignIn,
-  isOpened,
-  close,
-  setUser,
-  setToken,
-}) => {
+const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
+  const userName = useInput();
+  const userSurname = useInput();
+  const userEmail = useInput();
+  const userPassword = useInput();
+  const userRepeatPassword = useInput();
 
-
-  const userName = useInput("");
-  const userSurname = useInput("");
-  const userEmail = useInput("");
-  const userPassword = useInput("");
-  const userRepeatPassword = useInput("");
-
-  const clickHandlerForSignUpBtn = () => {
+  const handlerSignBtns = () => {
     let userData;
     const name = userName.value;
     const surname = userSurname.value;
@@ -156,12 +148,7 @@ const Authorization = ({
         repeatpassword &&
         password === repeatpassword
       ) {
-        userData = {
-          name,
-          surname,
-          email,
-          password,
-        };
+        userData = {name,surname,email,password,};
       }
       try {
         const res = await axios.post(
@@ -171,10 +158,10 @@ const Authorization = ({
             params: { userData },
           }
         );
-        const resUser = await res.data;
-        if (resUser.user) {
-          setUser(resUser.user);
-          alert("Успешная регистрация!");
+        const {data} = res;
+        if (data.user) {
+          setUser(data.user);
+          alert("Successfull registration!");
         }
       } catch (e) {
         const err =
@@ -203,15 +190,15 @@ const Authorization = ({
         if (user) {
           setUser(user);
           setToken(token);
-          alert("Успешный вход");
+          alert("Successfull sign in!");
         }
       } catch (e) {
         console.log(e);
         alert(e);
       }
     };
-    isSignIn? fetchDataSignIn() : fetchDataSignUp()
-    close()
+    isSignIn ? fetchDataSignIn() : fetchDataSignUp();
+    close();
   };
 
   return (
@@ -252,9 +239,7 @@ const Authorization = ({
               <Text>Repeat password*:</Text>
               <OtherInput {...userRepeatPassword}></OtherInput>
             </OtherContainer>
-            <SignBtn onClick={clickHandlerForSignUpBtn}>
-              Sign Up
-            </SignBtn>
+            <SignBtn onClick={handlerSignBtns}>Sign Up</SignBtn>
           </>
         ) : (
           <>
@@ -271,9 +256,7 @@ const Authorization = ({
               <Text>Password*:</Text>
               <OtherInput {...userPassword}></OtherInput>
             </OtherContainer>
-            <SignBtn onClick={clickHandlerForSignUpBtn}>
-              Log in
-            </SignBtn>
+            <SignBtn onClick={handlerSignBtns}>Log in</SignBtn>
           </>
         )}
       </FormContainer>

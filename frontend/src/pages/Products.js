@@ -40,14 +40,14 @@ const ProductsCounter = styled.span`
 const ProductsPage = () => {
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-  const [responsedProduct, setresponsedProduct] = useState(null);
+  const [product, setProduct] = useState(null);
   const fetchData = async () => {
     try {
       const res = await axios.get("http://localhost:8000/getProducts", {
         params: { category },
       });
-      const resProductData = await res.data;
-      setresponsedProduct(resProductData);
+      const {data} = res;
+      setProduct(data);
     } catch (e) {
       console.log("Error on MainCagegoryPage:  ", e);
     }
@@ -60,20 +60,19 @@ const ProductsPage = () => {
     <Container>
       <H1>{category}</H1>
       <FilterProducts></FilterProducts>
-      {!responsedProduct ? (
+      {!product ? (
         <LoadingCard></LoadingCard>
       ) : (
         <CardsContainer>
           <ProductsCounter>
-            {"Finded " +
-              responsedProduct.length +
-              (responsedProduct.length > 1 ? " results:" : " result:")}
+            {"Found " +
+              product.length +
+              (product.length > 1 ? " results:" : " result:")}
           </ProductsCounter>
-          {responsedProduct.map((product) => {
+          {product.map((product) => {
             return (
               <ProductCard
                 product={product}
-                category={category}
                 key={product._id}
               ></ProductCard>
             );
