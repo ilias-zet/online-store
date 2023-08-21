@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const Category = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -41,7 +41,7 @@ const CategoryNameA = styled.div`
   }
 `;
 
-const CategoryForMainPage = ({ name, image }) => {
+const Category = ({ name, image }) => {
   const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
   let categoryImgFullURL = `http://localhost:8000/${image}`;
@@ -52,13 +52,13 @@ const CategoryForMainPage = ({ name, image }) => {
     navigate(`/products?${searchParams.toString()}`);
   };
   return (
-    <Category onClick={(e) => productFilterHandler(e, name)}>
+    <Container onClick={(e) => productFilterHandler(e, name)}>
       <ImgContainer>
         <CategoryImage src={categoryImgFullURL} alt=""></CategoryImage>
       </ImgContainer>
       <CategoryNameA>{name}</CategoryNameA>
-    </Category>
+    </Container>
   );
 };
 
-export default CategoryForMainPage;
+export default Category;
