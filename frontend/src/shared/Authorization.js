@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useInput from "./useInput";
 import axios from "axios";
@@ -112,90 +112,80 @@ const Input = styled.input`
 `;
 
 const SignBtn = styled.div`
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "" : "pointer")};
   display: flex;
   justify-content: center;
   align-items: center;
   width: 80px;
   height: 50px;
-  background-color: black;
+  background-color: ${({ disabled }) => (disabled ? "gray" : "black")};
   color: white;
   font-size: 20px;
   border-radius: 10px;
 `;
 
 const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
-  const userName = useInput();
-  const userSurname = useInput();
-  const userEmail = useInput();
-  const userPassword = useInput();
-  const userRepeatPassword = useInput();
+  const [name, onNameChange] = useInput();
+  const [surname, onSurnameChange] = useInput();
+  const [email, onEmailChange] = useInput();
+  const [password, onPasswordChange] = useInput();
+  const [repeatPassword, onRepeatPasswordChange] = useInput();
+  const disabled = !name || !surname || !email || !password || !repeatPassword;
 
   const handlerSignBtns = () => {
-    let userData;
-    const name = userName.value;
-    const surname = userSurname.value;
-    const email = userEmail.value;
-    const password = userPassword.value;
-    const repeatpassword = userRepeatPassword.value;
-    console.log(name,surname,email,password)
+    if (!disabled) {
+      let userData;
 
-    const fetchDataSignUp = async () => {
-      if (
-        name &&
-        surname &&
-        email &&
-        password &&
-        repeatpassword &&
-        password === repeatpassword
-      ) {
-        userData = {name,surname,email,password,};
-      }
-      try {
-        const res = await axios.post(
-          "http://localhost:8000/auth/registration",
-          userData,
-          {
-            params: { userData },
+      const fetchDataSignUp = async () => {
+        userData = { name, surname, email, password };
+        try {
+          const res = await axios.post(
+            "http://localhost:8000/auth/registration",
+            userData,
+            {
+              params: { userData },
+            }
+          );
+          const { data } = res;
+          if (data.user) {
+            setUser(data.user);
+            alert("Successfull registration!");
           }
-        );
-        const {data} = res;
-        if (data.user) {
-          setUser(data.user);
-          alert("Successfull registration!");
+        } catch (e) {
+          const err = e?.response.data?.errors.errors
+            ? e?.response.data?.errors.errors
+            : "Unexpected registration error";
+          alert(err.map(({ msg }) => msg));
+          console.log(err.map(({ msg }) => msg));
         }
-      } catch (e) {
-        const err = e?.response.data?.errors.errors? e?.response.data?.errors.errors: "Unexpected registration error";
-        alert(err.map(({msg}) => msg))
-        console.log(err.map(({msg}) => msg));
-      }
-    };
-    const fetchDataSignIn = async () => {
-      if (email && password) {
-        userData = {
-          email,
-          password,
-        };
-      }
-      try {
-        const res = await axios.post(
-          "http://localhost:8000/auth/login",
-          userData,
-        );
-        const {data} = res;
-        const { user, token } = data;
-        if (user) {
-          setUser(user);
-          setToken(token);
-          alert("Successfull sign in!");
+      };
+      const fetchDataSignIn = async () => {
+        if (email && password) {
+          userData = {
+            email,
+            password,
+          };
         }
-      } catch (e) {
-        console.log(e);
-        alert(e);
-      }
-    };
-    isSignIn ? fetchDataSignIn() : fetchDataSignUp();
-    close();
+        try {
+          const res = await axios.post(
+            "http://localhost:8000/auth/login",
+            userData
+          );
+          const { data } = res;
+          const { user, token } = data;
+          if (user) {
+            setUser(user);
+            setToken(token);
+            alert("Successfull sign in!");
+          }
+        } catch (e) {
+          console.log(e);
+          alert(e);
+        }
+      };
+      isSignIn ? fetchDataSignIn() : fetchDataSignUp();
+      close();
+    }
   };
 
   return (
@@ -209,14 +199,16 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
               <NameSurnameInner>
                 <Text>Name*:</Text>
                 <NameSurnameInput
-                  {...userName}
+                  value={name}
+                  onChange={onNameChange}
                   placeholder="Ivan"
                 ></NameSurnameInput>
               </NameSurnameInner>
               <NameSurnameInner>
                 <Text>Surname*:</Text>
                 <NameSurnameInput
-                  {...userSurname}
+                  value={surname}
+                  onChange={onSurnameChange}
                   placeholder="Ivanov"
                 ></NameSurnameInput>
               </NameSurnameInner>
@@ -224,19 +216,25 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
             <InputContainer>
               <Text>E-mail*:</Text>
               <Input
-                {...userEmail}
+                value={email}
+                onChange={onEmailChange}
                 placeholder="ivanivanov@mail.com"
               ></Input>
             </InputContainer>
             <InputContainer>
               <Text>Password*:</Text>
-              <Input {...userPassword}></Input>
+              <Input value={password} onChange={onPasswordChange}></Input>
             </InputContainer>
             <InputContainer>
               <Text>Repeat password*:</Text>
-              <Input {...userRepeatPassword}></Input>
+              <Input
+                value={repeatPassword}
+                onChange={onRepeatPasswordChange}
+              ></Input>
             </InputContainer>
-            <SignBtn onClick={handlerSignBtns}>Sign Up</SignBtn>
+            <SignBtn onClick={handlerSignBtns} disabled={disabled}>
+              Sign Up
+            </SignBtn>
           </>
         ) : (
           <>
@@ -245,15 +243,18 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
             <InputContainer>
               <Text>E-mail*:</Text>
               <Input
-                {...userEmail}
+                value={email}
+                onChange={onEmailChange}
                 placeholder="ivanivanov@mail.com"
               ></Input>
             </InputContainer>
             <InputContainer>
               <Text>Password*:</Text>
-              <Input {...userPassword}></Input>
+              <Input value={password} onChange={onPasswordChange}></Input>
             </InputContainer>
-            <SignBtn onClick={handlerSignBtns}>Log in</SignBtn>
+            <SignBtn onClick={handlerSignBtns} disabled={disabled}>
+              Log in
+            </SignBtn>
           </>
         )}
       </FormContainer>
