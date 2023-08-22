@@ -55,14 +55,14 @@ const FormMainText = styled.span`
   font-weight: 1000;
 `;
 
-const NameAndSurnameMainContainer = styled.div`
+const NameSurnameOuter = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
   height: 80px;
 `;
 
-const NameAndSurnameSubContainer = styled.div`
+const NameSurnameInner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -75,7 +75,7 @@ const Text = styled.span`
   color: #292929;
 `;
 
-const NameAndSurnameInput = styled.input`
+const NameSurnameInput = styled.input`
   border: 1px solid black;
   border-radius: 5px;
   height: 30px;
@@ -88,7 +88,7 @@ const NameAndSurnameInput = styled.input`
   }
 `;
 
-const OtherContainer = styled.div`
+const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,7 +97,7 @@ const OtherContainer = styled.div`
   height: 80px;
 `;
 
-const OtherInput = styled.input`
+const Input = styled.input`
   border-radius: 5px;
   border: 1px solid black;
   width: 100%;
@@ -138,6 +138,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
     const email = userEmail.value;
     const password = userPassword.value;
     const repeatpassword = userRepeatPassword.value;
+    console.log(name,surname,email,password)
 
     const fetchDataSignUp = async () => {
       if (
@@ -164,11 +165,9 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
           alert("Successfull registration!");
         }
       } catch (e) {
-        const err =
-          e?.response.data?.message && e?.response.data?.candidate
-            ? `${e?.response.data?.message}`
-            : "Unexpected registration error";
-        alert(err);
+        const err = e?.response.data?.errors.errors? e?.response.data?.errors.errors: "Unexpected registration error";
+        alert(err.map(({msg}) => msg))
+        console.log(err.map(({msg}) => msg));
       }
     };
     const fetchDataSignIn = async () => {
@@ -182,11 +181,9 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
         const res = await axios.post(
           "http://localhost:8000/auth/login",
           userData,
-          {
-            params: { userData },
-          }
         );
-        const { user, token } = await res.data;
+        const {data} = res;
+        const { user, token } = data;
         if (user) {
           setUser(user);
           setToken(token);
@@ -208,54 +205,54 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
           <>
             <CloseForm onClick={close}>x</CloseForm>
             <FormMainText>Create account</FormMainText>
-            <NameAndSurnameMainContainer>
-              <NameAndSurnameSubContainer>
+            <NameSurnameOuter>
+              <NameSurnameInner>
                 <Text>Name*:</Text>
-                <NameAndSurnameInput
+                <NameSurnameInput
                   {...userName}
                   placeholder="Ivan"
-                ></NameAndSurnameInput>
-              </NameAndSurnameSubContainer>
-              <NameAndSurnameSubContainer>
+                ></NameSurnameInput>
+              </NameSurnameInner>
+              <NameSurnameInner>
                 <Text>Surname*:</Text>
-                <NameAndSurnameInput
+                <NameSurnameInput
                   {...userSurname}
                   placeholder="Ivanov"
-                ></NameAndSurnameInput>
-              </NameAndSurnameSubContainer>
-            </NameAndSurnameMainContainer>
-            <OtherContainer>
+                ></NameSurnameInput>
+              </NameSurnameInner>
+            </NameSurnameOuter>
+            <InputContainer>
               <Text>E-mail*:</Text>
-              <OtherInput
+              <Input
                 {...userEmail}
                 placeholder="ivanivanov@mail.com"
-              ></OtherInput>
-            </OtherContainer>
-            <OtherContainer>
+              ></Input>
+            </InputContainer>
+            <InputContainer>
               <Text>Password*:</Text>
-              <OtherInput {...userPassword}></OtherInput>
-            </OtherContainer>
-            <OtherContainer>
+              <Input {...userPassword}></Input>
+            </InputContainer>
+            <InputContainer>
               <Text>Repeat password*:</Text>
-              <OtherInput {...userRepeatPassword}></OtherInput>
-            </OtherContainer>
+              <Input {...userRepeatPassword}></Input>
+            </InputContainer>
             <SignBtn onClick={handlerSignBtns}>Sign Up</SignBtn>
           </>
         ) : (
           <>
             <CloseForm onClick={() => close()}>x</CloseForm>
             <FormMainText>Log in</FormMainText>
-            <OtherContainer>
+            <InputContainer>
               <Text>E-mail*:</Text>
-              <OtherInput
+              <Input
                 {...userEmail}
                 placeholder="ivanivanov@mail.com"
-              ></OtherInput>
-            </OtherContainer>
-            <OtherContainer>
+              ></Input>
+            </InputContainer>
+            <InputContainer>
               <Text>Password*:</Text>
-              <OtherInput {...userPassword}></OtherInput>
-            </OtherContainer>
+              <Input {...userPassword}></Input>
+            </InputContainer>
             <SignBtn onClick={handlerSignBtns}>Log in</SignBtn>
           </>
         )}
