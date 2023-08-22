@@ -20,6 +20,8 @@ const Container = styled.div`
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   min-height: 100%;
 `;

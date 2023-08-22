@@ -130,7 +130,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   const [email, onEmailChange] = useInput();
   const [password, onPasswordChange] = useInput();
   const [repeatPassword, onRepeatPasswordChange] = useInput();
-  const disabled = !name || !surname || !email || !password || !repeatPassword;
+  const disabled = !name || !surname || !email || !password || !repeatPassword || password!==repeatPassword;
 
   const handlerSignBtns = () => {
     if (!disabled) {
