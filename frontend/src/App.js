@@ -89,6 +89,7 @@ function App() {
           userInit={userInit}
           isOpenedMenu={isOpenedMenu}
           setIsopenedMenu={setIsopenedMenu}
+          theme={theme}
           switchTheme={switchTheme}
         ></Header>
         <OuterContainer>

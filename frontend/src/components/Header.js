@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import logo from "../images/Logo.png";
 import { useNavigate } from "react-router-dom";
-import burgerImg from '../images/icons/Icon-Burger-menu.png'
+import burgerImg from "../images/icons/Icon-Burger-menu.png";
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -145,8 +145,6 @@ const NavMenu = styled.nav`
   }
 `;
 
-
-
 const NavBtn = styled.span`
   display: flex;
   justify-content: center;
@@ -183,7 +181,45 @@ const BurgerBtn = styled.img`
   filter: invert(100%);
 `;
 
-const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu, switchTheme }) => {
+const SwitchThemeBtn = styled.div`
+  display: flex;
+  width: 80px;
+  height: 50%;
+  border-radius: 10px;
+  border: 2px solid white;
+  background-color: gray;
+  transition: opacity 0.3s;
+  @media (max-width: 480px) {
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    top: 70px;
+    left: 80%;
+    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+  }
+`;
+
+const Switcher = styled.div`
+  cursor: pointer;
+  transition: transform 0.3s;
+  transform: ${({ theme }) => (theme === "dark" ? "translateX(100%)" : "0")};
+  width: 50%;
+  height: 100%;
+  background-color: ${({ theme }) => (theme === "dark" ? "black" : "white")};
+  border-radius: 50%;
+  border: 1px solid black;
+`;
+
+const Header = ({
+  open,
+  user,
+  setUser,
+  userInit,
+  isOpenedMenu,
+  setIsopenedMenu,
+  theme,
+  switchTheme,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -251,16 +287,16 @@ const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu, s
             </>
           )}
         </BtnsContainer>
-        <BurgerBtnContainer
-          onClick={() =>  setIsopenedMenu(prev => !prev)}
-        >
+        <BurgerBtnContainer onClick={() => setIsopenedMenu((prev) => !prev)}>
           {isOpenedMenu ? (
             <BurgerBtn src={burgerImg}></BurgerBtn>
           ) : (
-            <BurgerBtn src={burgerImg} ></BurgerBtn>
+            <BurgerBtn src={burgerImg}></BurgerBtn>
           )}
         </BurgerBtnContainer>
-        <button onClick={switchTheme}>Switch Theme</button>
+        <SwitchThemeBtn isOpenedMenu={isOpenedMenu}>
+          <Switcher onClick={switchTheme} theme={theme}></Switcher>
+        </SwitchThemeBtn>
       </Container>
     </OuterContainer>
   );
