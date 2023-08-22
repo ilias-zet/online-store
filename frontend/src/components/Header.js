@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import logo from "../assets/images/Logo.png";
+import logo from "../images/Logo.png";
 import { useNavigate } from "react-router-dom";
+import burgerImg from '../images/icons/Icon-Burger-menu.png'
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -144,6 +145,8 @@ const NavMenu = styled.nav`
   }
 `;
 
+
+
 const NavBtn = styled.span`
   display: flex;
   justify-content: center;
@@ -176,7 +179,7 @@ const BurgerBtnContainer = styled.div`
   }
 `;
 
-const BurgerBtn = styled.svg`
+const BurgerBtn = styled.img`
   filter: invert(100%);
 `;
 
@@ -252,31 +255,9 @@ const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu })
           onClick={() =>  setIsopenedMenu(prev => !prev)}
         >
           {isOpenedMenu ? (
-            <BurgerBtn
-              xmlns="http://www.w3.org/2000/svg"
-              class="ionicon"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="32"
-                d="M368 368L144 144M368 144L144 368"
-              />
-            </BurgerBtn>
+            <BurgerBtn src={burgerImg}></BurgerBtn>
           ) : (
-            <BurgerBtn xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-miterlimit="10"
-                stroke-width="32"
-                d="M80 160h352M80 256h352M80 352h352"
-              />
-            </BurgerBtn>
+            <BurgerBtn src={burgerImg} ></BurgerBtn>
           )}
         </BurgerBtnContainer>
       </Container>
