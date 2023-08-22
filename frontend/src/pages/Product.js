@@ -16,11 +16,11 @@ const Container = styled.div`
   padding: 40px;
 `;
 
-const ImageAndTitleContainer = styled.div`
+const InnerContainer = styled.div`
   display: flex;
 `;
 
-const CardImageContainer = styled.div`
+const ImgContainer = styled.div`
   margin-top: 20px;
   height: 100%;
   width: 50%;
@@ -30,7 +30,7 @@ const Image = styled.img`
   width: 100%;
 `;
 
-const CardTitleAndDesc = styled.div`
+const Info = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -44,7 +44,7 @@ const Title = styled.h2`
   }
 `;
 
-const CardTime = styled.span`
+const Time = styled.span`
   width: 100%;
   color: gray;
   font-size: 14px;
@@ -52,7 +52,7 @@ const CardTime = styled.span`
     font-size: 10px;
   }
 `;
-const CardPrice = styled.div`
+const Price = styled.div`
   width: 100%;
   margin-top: 10px;
   font-size: 20px;
@@ -69,7 +69,7 @@ const PriceSpan = styled.span`
     font-size: 10px;
   }
 `;
-const CardDesc = styled.span`
+const Desc = styled.span`
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -78,14 +78,14 @@ const CardDesc = styled.span`
     margin-top: 0;
   }
 `;
-const CardBrand = styled.span`
+const Brand = styled.span`
   width: 100%;
   @media (max-width: 480px) {
     font-size: 10px;
     margin-top: 0;
   }
 `;
-const CardAvailability = styled.span`
+const Availability = styled.span`
   width: 100%;
   @media (max-width: 480px) {
     font-size: 10px;
@@ -112,16 +112,7 @@ const INITIAL_PRODUCT = {
 const ProductPage = () => {
   const { product_id } = useParams();
   const [product, setProduct] = useState(INITIAL_PRODUCT);
-  const {
-    images,
-    title,
-    crawled_at,
-    brand,
-    priceCurrency,
-    price,
-    description,
-    availability,
-  } = product;
+  const {images,title,crawled_at,brand,priceCurrency,price,description,availability,} = product;
   const fetchData = async () => {
     try {
       const res = await axios.get("http://localhost:8000/getFullProduct", {
@@ -140,31 +131,31 @@ const ProductPage = () => {
     <Container>
       {product && product.availability ? (
         <>
-          <ImageAndTitleContainer>
-            <CardImageContainer>
+          <InnerContainer>
+            <ImgContainer>
               <Image src={images} alt=""></Image>
-            </CardImageContainer>
-            <CardTitleAndDesc>
+            </ImgContainer>
+            <Info>
               <Title>{title}</Title>
-              <CardTime>{crawled_at}</CardTime>
-              <CardPrice>
+              <Time>{crawled_at}</Time>
+              <Price>
                 <PriceSpan>Price: </PriceSpan>
                 {price + " " + priceCurrency}
-              </CardPrice>
+              </Price>
               {brand ? (
-                <CardBrand>
+                <Brand>
                   <b>Brand: </b>
                   {brand}
-                </CardBrand>
+                </Brand>
               ) : null}
-              <CardAvailability>
+              <Availability>
                 <b>Availability: </b>
                 {availability}
-              </CardAvailability>
+              </Availability>
               <HR></HR>
-            </CardTitleAndDesc>
-          </ImageAndTitleContainer>
-          <CardDesc>{description}</CardDesc>
+            </Info>
+          </InnerContainer>
+          <Desc>{description}</Desc>
         </>
       ) : (
         <LoadingCard />
