@@ -183,7 +183,7 @@ const BurgerBtn = styled.img`
   filter: invert(100%);
 `;
 
-const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu }) => {
+const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu, switchTheme }) => {
   const navigate = useNavigate();
 
   return (
@@ -260,6 +260,7 @@ const Header = ({ open, user, setUser,userInit, isOpenedMenu, setIsopenedMenu })
             <BurgerBtn src={burgerImg} ></BurgerBtn>
           )}
         </BurgerBtnContainer>
+        <button onClick={switchTheme}>Switch Theme</button>
       </Container>
     </OuterContainer>
   );

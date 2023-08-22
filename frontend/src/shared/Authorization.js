@@ -41,6 +41,7 @@ const CloseForm = styled.span`
   width: 100%;
   font-weight: 1000;
   font-size: 20px;
+  color: black;
 `;
 
 const FormMainText = styled.span`
@@ -189,7 +190,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   };
 
   return (
-    <FormBg isOpened={isOpened}>
+    <FormBg isOpened={isOpened} onClick={() => close()}>
       <FormContainer>
         {!isSignIn ? (
           <>

@@ -10,7 +10,6 @@ const Container = styled.div`
   width: 220px;
   height: 250px;
   margin: 10px;
-  background-color: white;
 `;
 
 const ImgContainer = styled.div`
@@ -32,9 +31,7 @@ const CategoryNameA = styled.div`
   display: flex;
   justify-content: center;
   width: 200px;
-  background-color: white;
   text-decoration: none;
-  color: #120907;
   font-size: 20px;
   &:hover {
     text-decoration: underline;

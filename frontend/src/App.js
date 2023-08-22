@@ -10,6 +10,8 @@ import Header from "./components/Header";
 import useSignUp from "./shared/useSignUp";
 import CategoriesPage from "./pages/Categories";
 import Authorization from "./shared/Authorization";
+import { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme, GlobalStyles } from "./shared/theme";
 
 const OuterContainer = styled.div`
   display: flex;
@@ -47,6 +49,7 @@ const Button = styled.div`
 `;
 
 function App() {
+  const [theme, setTheme] = useState("light");
   const { isOpened, open, close, isSignIn } = useSignUp(false);
   const userInit = {
     name: null,
@@ -71,40 +74,48 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const switchTheme = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+
   return (
     <>
-      <Header
-        open={open}
-        user={user}
-        setUser={setUser}
-        userInit={userInit}
-        isOpenedMenu={isOpenedMenu}
-        setIsopenedMenu={setIsopenedMenu}
-      ></Header>
-      <OuterContainer>
-        <Container>
-          <Routes>
-            <Route path="/" element={<HomePage></HomePage>} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route
-              path="/categories"
-              element={<CategoriesPage></CategoriesPage>}
-            />
-            <Route path="/products/:product_id" element={<ProductPage />} />
-          </Routes>
-          <Authorization
-            isSignIn={isSignIn}
-            isOpened={isOpened}
-            close={close}
-            setUser={setUser}
-            setToken={setToken}
-          ></Authorization>
-          <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
-            Go Up
-          </Button>
-        </Container>
-      </OuterContainer>
-      <Footer />
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyles />
+        <Header
+          open={open}
+          user={user}
+          setUser={setUser}
+          userInit={userInit}
+          isOpenedMenu={isOpenedMenu}
+          setIsopenedMenu={setIsopenedMenu}
+          switchTheme={switchTheme}
+        ></Header>
+        <OuterContainer>
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomePage></HomePage>} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route
+                path="/categories"
+                element={<CategoriesPage></CategoriesPage>}
+              />
+              <Route path="/products/:product_id" element={<ProductPage />} />
+            </Routes>
+            <Authorization
+              isSignIn={isSignIn}
+              isOpened={isOpened}
+              close={close}
+              setUser={setUser}
+              setToken={setToken}
+            ></Authorization>
+            <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
+              Go Up
+            </Button>
+          </Container>
+        </OuterContainer>
+        <Footer />
+      </ThemeProvider>
     </>
   );
 }

@@ -12,7 +12,7 @@ const BodyContainer = styled.div`
   width: 100%;
   padding-top: 20px;
   min-height: 100%;
-  background-color: white;
+  /* background-color: white; */
   margin-top: 80px;
   padding-left: 40px;
   padding-right: 40px;
@@ -32,7 +32,6 @@ const CategoriesContainer = styled.div`
   width: 70%;
   min-height: 500px;
   border-radius: 10px;
-  background-color: white;
   margin-top: 20px;
 `;
 
@@ -47,7 +46,6 @@ const RecommendedTitle = styled.h2`
   font-weight: bold;
   text-align: center;
   letter-spacing: -1.5px;
-  color: #120907;
   @media (max-width: 480px) {
     font-size: 32px;
   }
@@ -121,7 +119,6 @@ const RecTitle = styled.h3`
   margin-bottom: 8px;
   font-size: 16px;
   line-height: 140%;
-  color: #120907;
 `;
 const RecCategory = styled.p`
   margin-top: 0;
@@ -130,7 +127,6 @@ const RecCategory = styled.p`
 const RecPrice = styled.p`
   margin: 0;
   font-weight: bold;
-  color: #120907;
 `;
 
 const presents = [
