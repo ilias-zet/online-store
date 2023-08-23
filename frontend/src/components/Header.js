@@ -2,6 +2,8 @@ import styled from "styled-components";
 import logo from "../images/Logo.png";
 import { useNavigate } from "react-router-dom";
 import burgerImg from "../images/icons/Icon-Burger-menu.png";
+import ligthImg from '../images/icons/sunny-outline.svg'
+import darkImg from '../images/icons/moon-outline.svg'
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -203,14 +205,15 @@ const BurgerBtn = styled.img`
 const SwitchThemeBtn = styled.div`
   display: flex;
   width: 80px;
-  height: 50%;
+  height: 40px;
   border-radius: 10px;
   border: 2px solid white;
-  background-color: gray;
   transition: opacity 0.3s;
+  background-color: gray;
+  padding: 2px;
   @media (max-width: 480px) {
     position: absolute;
-    width: 50px;
+    width: 35px;
     height: 20px;
     top: 70px;
     left: 80%;
@@ -218,8 +221,13 @@ const SwitchThemeBtn = styled.div`
   }
 `;
 
+const SwitchImg = styled.img`
+width: 50%;
+`
+
 const Switcher = styled.div`
   cursor: pointer;
+  position: absolute;
   transition: transform 0.3s;
   ${({ theme }) => theme === "dark" ? (`
     transform: translateX(100%);
@@ -228,10 +236,13 @@ const Switcher = styled.div`
     transform: 0;
     background-color: white;
   `)}
-  width: 50%;
-  height: 100%;
+  width: 33px;
+  height: 33px;
   border-radius: 50%;
-  border: 1px solid black;
+  @media (max-width:480px) {
+    width: 13px;
+    height: 13px;
+  }
 `;
 
 const Header = ({
@@ -319,7 +330,9 @@ const Header = ({
           )}
         </BurgerBtnContainer>
         <SwitchThemeBtn isOpenedMenu={isOpenedMenu}>
-          <Switcher onClick={switchTheme} theme={theme}></Switcher>
+          <SwitchImg src={ligthImg}></SwitchImg>
+          <SwitchImg src={darkImg}></SwitchImg>
+          <Switcher onClick={switchTheme} isOpenedMenu={isOpenedMenu} theme={theme}></Switcher>
         </SwitchThemeBtn>
       </Container>
     </OuterContainer>

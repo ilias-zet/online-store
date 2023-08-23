@@ -53,6 +53,7 @@ const RecommendedTitle = styled.h2`
 const RecommendedProducts = styled.div`
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -63,8 +64,9 @@ const RecProduct = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 20%;
+  width: 200px;
   height: 400px;
+  padding: 10px;
 `;
 
 const Present = styled.div`

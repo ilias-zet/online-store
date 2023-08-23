@@ -190,7 +190,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   };
 
   return (
-    <FormBg isOpened={isOpened} onClick={() => close()}>
+    <FormBg isOpened={isOpened}>
       <FormContainer>
         {!isSignIn ? (
           <>
