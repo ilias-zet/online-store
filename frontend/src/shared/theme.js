@@ -1,8 +1,8 @@
 import {createGlobalStyle} from "styled-components" 
 export const darkTheme = {
-  body: "#000",
-  textColor: "#fff",
-  headingColor: "lightblue",
+  body: "#121212",
+  textColor: "#f3f3f3",
+  headingColor: "#f3f3f3",
   hover: "white",
 }
 export const lightTheme = {

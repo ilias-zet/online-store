@@ -48,12 +48,16 @@ const BtnsContainer = styled.div`
     width: 100%;
     position: absolute;
     top: 60px;
-
     transition: all 0.3s;
-    transform: ${({ isOpenedMenu }) =>
-      isOpenedMenu ? "translateY(0%)" : "translateY(-100%)"};
-    height: ${({ isOpenedMenu }) => (isOpenedMenu ? "40px" : "0")};
-    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+      transform: translateY(0%);
+      height:40px;
+      opacity:1;
+    `):(`
+      transform: translateY(-100%);
+      height:0;
+      opacity:0;
+    `)}
   }
 `;
 
@@ -70,8 +74,13 @@ const BtnContainer = styled.div`
   @media (max-width: 480px) {
     transition: all 0.5s;
     width: 60px;
-    height: ${({ isOpenedMenu }) => (isOpenedMenu ? "50%" : "0")};
-    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+      height:50%;
+      opacity:1;
+    `):(`
+      height:0;
+      opacity:0;
+    `)}
   }
 `;
 const TextBtn = styled.div`
@@ -135,10 +144,15 @@ const NavMenu = styled.nav`
     flex-direction: column;
     position: absolute;
     width: 100%;
-    height: ${({ isOpenedMenu }) => (isOpenedMenu ? "100px" : "0")};
+    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+      height:120px;
+      padding-top:40px;
+    `):(`
+      height:0;
+      padding-top:0;
+    `)}
     top: 60px;
     left: auto;
-    padding-top: ${({ isOpenedMenu }) => (isOpenedMenu ? "40px" : "0")};
     backdrop-filter: blur(5px);
     background-color: rgb(0, 0, 0, 0.7);
     z-index: -1;
@@ -161,8 +175,13 @@ const NavBtn = styled.span`
     font-size: 10px;
   }
   @media (max-width: 480px) {
-    font-size: ${({ isOpenedMenu }) => (isOpenedMenu ? "10px" : "0")};
-    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+      font-size:10px;
+      opacity:1;
+    `):(`
+      font-size:0;
+      opacity:0;
+    `)}
   }
 `;
 
@@ -202,10 +221,15 @@ const SwitchThemeBtn = styled.div`
 const Switcher = styled.div`
   cursor: pointer;
   transition: transform 0.3s;
-  transform: ${({ theme }) => (theme === "dark" ? "translateX(100%)" : "0")};
+  ${({ theme }) => theme === "dark" ? (`
+    transform: translateX(100%);
+    background-color: #121212;
+  `):(`
+    transform: 0;
+    background-color: white;
+  `)}
   width: 50%;
   height: 100%;
-  background-color: ${({ theme }) => (theme === "dark" ? "black" : "white")};
   border-radius: 50%;
   border: 1px solid black;
 `;
