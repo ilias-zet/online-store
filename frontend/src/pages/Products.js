@@ -13,7 +13,6 @@ const Container = styled.div`
   max-width: 100%;
   width: 100%;
   min-height: 100vh;
-  background-color: white;
   margin-top: 80px;
   padding-left: 220px;
 `;
@@ -40,6 +39,8 @@ const ProductsCounter = styled.span`
 `;
 
 const ProductsPage = () => {
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(9999)
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [product, setProduct] = useState(null);
@@ -61,23 +62,29 @@ const ProductsPage = () => {
   return (
     <Container>
       <H1>{category}</H1>
-      <FilterProducts></FilterProducts>
+      <FilterProducts 
+        product={product}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+        setMinPrice={setMinPrice}
+        setMaxPrice={setMaxPrice}
+        ></FilterProducts>
       {!product ? (
         <LoadingCard></LoadingCard>
       ) : (
         <CardsContainer>
           <ProductsCounter>
             {"Found " +
-              product.length +
+              product.filter(product => product.price>minPrice && product.price<maxPrice).length +
               (product.length > 1 ? " results:" : " result:")}
           </ProductsCounter>
-          {product.map((product) => {
+          {product.filter(product => product.price>minPrice && product.price<maxPrice).map((product) => {
             return (
               <ProductCard
                 product={product}
                 key={product._id}
               ></ProductCard>
-            );
+            )
           })}
         </CardsContainer>
       )}
