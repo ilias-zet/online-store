@@ -49,7 +49,7 @@ const FilterProducts = ({ price, setPrice }) => {
           max={max - 1}
           value={min}
           onInput={(e) => setPrice((prev) => ({
-            ...prev.price,
+            ...prev,
             max:max,
             min: e.target.value,
           }))}
@@ -66,7 +66,7 @@ const FilterProducts = ({ price, setPrice }) => {
           value={max}
           max="9999"
           onInput={(e) => setPrice((prev) => ({
-            ...prev.price,
+            ...prev,
             min:min,
             max: e.target.value,
           }))}

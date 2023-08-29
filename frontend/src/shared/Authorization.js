@@ -76,19 +76,6 @@ const Text = styled.span`
   color: #292929;
 `;
 
-// const NameSurnameInput = styled.input`
-//   border: 1px solid black;
-//   border-radius: 5px;
-//   height: 30px;
-//   &:focus {
-//     outline: none;
-//     border: 1px solid gray;
-//     -webkit-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
-//     -moz-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
-//     box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
-//   }
-// `;
-
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -114,13 +101,21 @@ const Input = styled.input`
 `;
 
 const SignBtn = styled.div`
-  cursor: ${({ disabled }) => (disabled ? "" : "pointer")};
+  ${({ disabled }) =>
+    disabled
+      ? `
+  cursor:"";
+  background-color:"gray";
+  `
+      : `
+  cursor:"pointer";
+  background-color:"black";
+  `};
   display: flex;
   justify-content: center;
   align-items: center;
   width: 80px;
   height: 50px;
-  background-color: ${({ disabled }) => (disabled ? "gray" : "black")};
   color: white;
   font-size: 20px;
   border-radius: 10px;
@@ -132,7 +127,13 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   const [email, onEmailChange] = useInput();
   const [password, onPasswordChange] = useInput();
   const [repeatPassword, onRepeatPasswordChange] = useInput();
-  const disabled = !name || !surname || !email || !password || !repeatPassword || password!==repeatPassword;
+  const disabled =
+    !name ||
+    !surname ||
+    !email ||
+    !password ||
+    !repeatPassword ||
+    password !== repeatPassword;
 
   const handlerSignBtns = () => {
     if (!disabled) {
@@ -141,11 +142,10 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
       const fetchDataSignUp = async () => {
         userData = { name, surname, email, password };
         try {
-          const res = await axios.post(
+          const {data} = await axios.post(
             "http://localhost:8000/auth/registration",
-            userData,
+            userData
           );
-          const { data } = res;
           if (data.user) {
             setUser(data.user);
             alert("Successfull registration!");

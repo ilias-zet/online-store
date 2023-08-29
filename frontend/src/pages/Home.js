@@ -129,24 +129,25 @@ const presents = [
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [recProducts, setRecProducts] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const fetchData = async () => {
     try {
-      //Get array with categories
-      const {data:categoriesArr} = await axios.get("http://localhost:8000/getCategories");
-      setCategories(categoriesArr);
-
       //Get array with recommended products
-      const {data:recProductsArr} = await axios.get(
+      const { data: recProductsArr } = await axios.get(
         "http://localhost:8000/getRecommendedProducts"
       );
       setRecProducts(recProductsArr);
+
+      //Get array with categories
+      const { data: recCategoriesArr } = await axios.get(
+        "http://localhost:8000/getRecommendedCategories"
+      );
+      setCategories(recCategoriesArr);
     } catch (e) {
       console.log("Error Home page: ", e);
-    }
-    finally {
-      setIsLoaded(true)
+    } finally {
+      setIsLoaded(true);
     }
   };
 
@@ -168,11 +169,10 @@ const HomePage = () => {
       </RecommendedProducts>
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
-        {categories ? (
-          categories.slice(6, 12).map(({ main_category, image, _id }) => (
-              <Category name={main_category} image={image} key={_id}></Category>
-            )
-          )
+        {categories.length? (
+          categories.map(({ main_category, image, _id }) => (
+            <Category name={main_category} image={image} key={_id}></Category>
+          ))
         ) : (
           <LoadingCard></LoadingCard>
         )}
