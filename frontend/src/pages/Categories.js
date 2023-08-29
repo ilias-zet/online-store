@@ -50,7 +50,7 @@ const CategoriesPage = () => {
     <Container>
       <H1>All categories</H1>
  
-      {categories.lenght===0 ? (
+      {categories.length===0 ? (
         <LoadingCard></LoadingCard>
       ) : (
         <CategoriesContainer>

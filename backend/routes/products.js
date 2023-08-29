@@ -17,19 +17,9 @@ router.get('/getFullProduct',async (request, response) => {
 })
 
 router.get('/getRecommendedProducts', async (req,res) => {
-  const findParams = [
-    {
-      _id: "64987992e4498b4d8473f158"
-    },
-    {
-      _id: "64987992e4498b4d8473f15f"
-    },
-    {
-      _id: "64987992e4498b4d8473f15b"
-    },
-  ]
+  const findParams = ["64987992e4498b4d8473f158","64987992e4498b4d8473f15f","64987992e4498b4d8473f15b"]
   const passFields = '-crawled_at -breadcrumbs -description -sku'
-  const recProducts = await Products.find({$or: findParams},passFields);
+  const recProducts = await Products.find({_id:{$in: findParams}},passFields);
   res.json(recProducts)
 })
 
