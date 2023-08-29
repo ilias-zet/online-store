@@ -39,8 +39,8 @@ const ProductsCounter = styled.span`
 `;
 
 const ProductsPage = () => {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(9999)
+  const [price, setPrice] = useState({ min:0, max:9999 });
+  const { min, max } = price;
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [product, setProduct] = useState(null);
@@ -64,10 +64,8 @@ const ProductsPage = () => {
       <H1>{category}</H1>
       <FilterProducts 
         product={product}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        setMinPrice={setMinPrice}
-        setMaxPrice={setMaxPrice}
+        price={price}
+        setPrice={setPrice}
         ></FilterProducts>
       {!product ? (
         <LoadingCard></LoadingCard>
@@ -75,10 +73,10 @@ const ProductsPage = () => {
         <CardsContainer>
           <ProductsCounter>
             {"Found " +
-              product.filter(product => product.price>minPrice && product.price<maxPrice).length +
+              product.filter(product => product.price>min && product.price<max).length +
               (product.length > 1 ? " results:" : " result:")}
           </ProductsCounter>
-          {product.filter(product => product.price>minPrice && product.price<maxPrice).map((product) => {
+          {product.filter(product => product.price>min && product.price<max).map((product) => {
             return (
               <ProductCard
                 product={product}

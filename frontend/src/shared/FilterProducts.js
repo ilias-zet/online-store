@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -29,48 +29,50 @@ const FilterTitle = styled.div`
   border-radius: 10px 10px 0 0;
 `;
 
-
-const RangeContainer = styled.div``;
-
-const Label = styled.label``;
-
 const RangeInput = styled.input`
-width: 100%;
+  width: 100%;
 `;
 
-const FilterProducts = ({
-  minPrice,
-  maxPrice,
-  setMinPrice,
-  setMaxPrice,
-}) => {
+const FilterProducts = ({ price, setPrice }) => {
+  const {min,max} = price;
+
   return (
     <Container>
       <FilterTitle>Filter by price:</FilterTitle>
-      <RangeContainer>
-        <Label for="cowbell">Min price</Label>
+      <div>
+        <label for="cowbell">Min price</label>
         <RangeInput
           type="range"
           id="cowbell"
           name="cowbell"
           min="0"
-          max={maxPrice}
-          onInput={(e) => setMinPrice(e.target.value)}
+          max={max - 1}
+          value={min}
+          onInput={(e) => setPrice((prev) => ({
+            ...prev.price,
+            max:max,
+            min: e.target.value,
+          }))}
         />
-        {minPrice ? <div>{minPrice}</div> : null}
-      </RangeContainer>
-      <RangeContainer>
-        <Label for="cowbell">Max price</Label>
+        {min || min===0 ? <div>{min}</div> : null}
+      </div>
+      <div>
+        <label for="cowbell">Max price</label>
         <RangeInput
           type="range"
           id="cowbell"
           name="cowbell"
-          min={minPrice}
+          min={min}
+          value={max}
           max="9999"
-          onInput={(e) => setMaxPrice(e.target.value)}
+          onInput={(e) => setPrice((prev) => ({
+            ...prev.price,
+            min:min,
+            max: e.target.value,
+          }))}
         />
-        {maxPrice ? <div>{maxPrice}</div> : null}
-      </RangeContainer>
+        {max ? <div>{max}</div> : null}
+      </div>
     </Container>
   );
 };
