@@ -40,8 +40,8 @@ const CategoryNameA = styled.div`
 
 const Category = ({ name, image }) => {
   const navigate = useNavigate();
-  let [searchParams, setSearchParams] = useSearchParams();
-  let categoryImgFullURL = `http://localhost:8000/${image}`;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const imgURL = `http://localhost:8000/${image}`;
   const productFilterHandler = (e, category) => {
     e.preventDefault();
     searchParams.set("category", category);
@@ -51,7 +51,7 @@ const Category = ({ name, image }) => {
   return (
     <Container onClick={(e) => productFilterHandler(e, name)}>
       <ImgContainer>
-        <CategoryImage src={categoryImgFullURL} alt=""></CategoryImage>
+        <CategoryImage src={imgURL} alt="" />
       </ImgContainer>
       <CategoryNameA>{name}</CategoryNameA>
     </Container>

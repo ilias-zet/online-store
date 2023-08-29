@@ -90,7 +90,7 @@ const ProductCard = ({ product }) => {
       </CardTitle>
       <CardPrice>{product.price + "$"}</CardPrice>
       <CardIsAmazonSeller>
-        {product.availability ? product.availability : null}
+        {product.availability}
       </CardIsAmazonSeller>
     </CardContainer>
   );
