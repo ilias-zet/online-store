@@ -58,7 +58,7 @@ function App() {
     password: null,
   };
   const [user, setUser] = useState(userInit);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState("");
   const [scroll, setScroll] = useState(0);
   const [isOpenedMenu, setIsopenedMenu] = useState(false);
   const handleScroll = () => {

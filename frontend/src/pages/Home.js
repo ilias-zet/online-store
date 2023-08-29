@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Category from "../shared/Category";
 import axios from "axios";
 import LoadingCard from "../shared/LoadingCard";
-import { useNavigate } from "react-router-dom";
+import ProductCard from "../shared/ProductCard";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -59,15 +59,6 @@ const RecommendedProducts = styled.div`
   height: 100%;
   margin-top: 20px;
 `;
-const RecProduct = styled.article`
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 200px;
-  height: 400px;
-  padding: 10px;
-`;
 
 const Present = styled.div`
   max-width: 1020px;
@@ -96,39 +87,6 @@ const PresentTitle = styled.div`
 `;
 const PresentContent = styled.div`
   flex-basis: 50%;
-`;
-
-const RecImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 200px;
-  margin-top: 10px;
-  overflow: hidden;
-`;
-
-const RecPhoto = styled.img`
-  width: 100%;
-  margin-bottom: 32px;
-  transition: all 0.3s;
-  &:hover {
-    width: 116%;
-  }
-`;
-const RecTitle = styled.h3`
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 16px;
-  line-height: 140%;
-`;
-const RecCategory = styled.p`
-  margin-top: 0;
-  margin-bottom: 12px;
-`;
-const RecPrice = styled.p`
-  margin: 0;
-  font-weight: bold;
 `;
 
 const presents = [
@@ -169,26 +127,26 @@ const presents = [
 ];
 
 const HomePage = () => {
-  const [categories, setCategories] = useState(null);
-  const [recProducts, setRecProducts] = useState(null);
-
-  const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [recProducts, setRecProducts] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const fetchData = async () => {
     try {
-      //Get array with images for categories
-      const resImgs = await axios.get("http://localhost:8000/getCategories");
-      const imgsAndNameCategoriesArr = resImgs.data;
-      setCategories(imgsAndNameCategoriesArr);
+      //Get array with categories
+      const {data:categoriesArr} = await axios.get("http://localhost:8000/getCategories");
+      setCategories(categoriesArr);
 
       //Get array with recommended products
-      const recProducts = await axios.get(
+      const {data:recProductsArr} = await axios.get(
         "http://localhost:8000/getRecommendedProducts"
       );
-      const { data } = recProducts;
-      setRecProducts(data);
+      setRecProducts(recProductsArr);
     } catch (e) {
       console.log("Error Home page: ", e);
+    }
+    finally {
+      setIsLoaded(true)
     }
   };
 
@@ -200,48 +158,33 @@ const HomePage = () => {
       <RecommendedTitle>Recommended</RecommendedTitle>
 
       <RecommendedProducts>
-        {!recProducts ? (
+        {!isLoaded ? (
           <LoadingCard></LoadingCard>
         ) : (
-          recProducts.map(
-            ({ _id, images, main_category, price, priceCurrency, title }) => (
-              <RecProduct
-                onClick={() => navigate(`/products/${_id}`)}
-                key={_id}
-              >
-                <RecImageContainer>
-                  <RecPhoto src={images} alt="Recommended"></RecPhoto>
-                </RecImageContainer>
-                <RecTitle>{title}</RecTitle>
-                <RecCategory>{main_category}</RecCategory>
-                <RecPrice>{price + " " + priceCurrency}</RecPrice>
-              </RecProduct>
-            )
-          )
+          recProducts.map((product) => (
+            <ProductCard product={product}></ProductCard>
+          ))
         )}
       </RecommendedProducts>
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
         {categories ? (
-          categories.slice(6, 12).map(({ main_category, image, _id }) => {
-            return (
+          categories.slice(6, 12).map(({ main_category, image, _id }) => (
               <Category name={main_category} image={image} key={_id}></Category>
-            );
-          })
+            )
+          )
         ) : (
           <LoadingCard></LoadingCard>
         )}
       </CategoriesContainer>
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>
-        {presents.map(({ title, content }) => {
-          return (
-            <Present>
-              <PresentTitle>{title}</PresentTitle>
-              <PresentContent>{content}</PresentContent>
-            </Present>
-          );
-        })}
+        {presents.map(({ title, content }) => (
+          <Present>
+            <PresentTitle>{title}</PresentTitle>
+            <PresentContent>{content}</PresentContent>
+          </Present>
+        ))}
       </MainDescription>
     </BodyContainer>
   );

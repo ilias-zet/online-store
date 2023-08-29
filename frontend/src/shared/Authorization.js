@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import useInput from "./useInput";
 import axios from "axios";
@@ -56,14 +56,14 @@ const FormMainText = styled.span`
   font-weight: 1000;
 `;
 
-const NameSurnameOuter = styled.div`
+const Outer = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
   height: 80px;
 `;
 
-const NameSurnameInner = styled.div`
+const Inner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -76,18 +76,18 @@ const Text = styled.span`
   color: #292929;
 `;
 
-const NameSurnameInput = styled.input`
-  border: 1px solid black;
-  border-radius: 5px;
-  height: 30px;
-  &:focus {
-    outline: none;
-    border: 1px solid gray;
-    -webkit-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
-    box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
-  }
-`;
+// const NameSurnameInput = styled.input`
+//   border: 1px solid black;
+//   border-radius: 5px;
+//   height: 30px;
+//   &:focus {
+//     outline: none;
+//     border: 1px solid gray;
+//     -webkit-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
+//     -moz-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
+//     box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
+//   }
+// `;
 
 const InputContainer = styled.div`
   display: flex;
@@ -99,6 +99,7 @@ const InputContainer = styled.div`
 `;
 
 const Input = styled.input`
+  display: flex;
   border-radius: 5px;
   border: 1px solid black;
   width: 100%;
@@ -143,9 +144,6 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
           const res = await axios.post(
             "http://localhost:8000/auth/registration",
             userData,
-            {
-              params: { userData },
-            }
           );
           const { data } = res;
           if (data.user) {
@@ -157,7 +155,6 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
             ? e?.response.data?.errors.errors
             : "Unexpected registration error";
           alert(err.map(({ msg }) => msg));
-          console.log(err.map(({ msg }) => msg));
         }
       };
       const fetchDataSignIn = async () => {
@@ -180,7 +177,6 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
             alert("Successfull sign in!");
           }
         } catch (e) {
-          console.log(e);
           alert(e);
         }
       };
@@ -192,28 +188,48 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   return (
     <FormBg isOpened={isOpened}>
       <FormContainer>
-        {!isSignIn ? (
+        {isSignIn ? (
+          <>
+            <CloseForm onClick={() => close()}>x</CloseForm>
+            <FormMainText>Log in</FormMainText>
+            <InputContainer>
+              <Text>E-mail*:</Text>
+              <Input
+                value={email}
+                onChange={onEmailChange}
+                placeholder="ivanivanov@mail.com"
+              ></Input>
+            </InputContainer>
+            <InputContainer>
+              <Text>Password*:</Text>
+              <Input value={password} onChange={onPasswordChange}></Input>
+            </InputContainer>
+            <SignBtn onClick={handlerSignBtns} disabled={disabled}>
+              Log in
+            </SignBtn>
+          </>
+        ) : (
           <>
             <CloseForm onClick={close}>x</CloseForm>
             <FormMainText>Create account</FormMainText>
-            <NameSurnameOuter>
-              <NameSurnameInner>
+            <Outer>
+              <Inner>
                 <Text>Name*:</Text>
-                <NameSurnameInput
+                <Input
                   value={name}
                   onChange={onNameChange}
                   placeholder="Ivan"
-                ></NameSurnameInput>
-              </NameSurnameInner>
-              <NameSurnameInner>
+                ></Input>
+              </Inner>
+              <Inner>
                 <Text>Surname*:</Text>
-                <NameSurnameInput
+                <Input
                   value={surname}
                   onChange={onSurnameChange}
                   placeholder="Ivanov"
-                ></NameSurnameInput>
-              </NameSurnameInner>
-            </NameSurnameOuter>
+                ></Input>
+              </Inner>
+            </Outer>
             <InputContainer>
               <Text>E-mail*:</Text>
               <Input
@@ -235,26 +251,6 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
             </InputContainer>
             <SignBtn onClick={handlerSignBtns} disabled={disabled}>
               Sign Up
-            </SignBtn>
-          </>
-        ) : (
-          <>
-            <CloseForm onClick={() => close()}>x</CloseForm>
-            <FormMainText>Log in</FormMainText>
-            <InputContainer>
-              <Text>E-mail*:</Text>
-              <Input
-                value={email}
-                onChange={onEmailChange}
-                placeholder="ivanivanov@mail.com"
-              ></Input>
-            </InputContainer>
-            <InputContainer>
-              <Text>Password*:</Text>
-              <Input value={password} onChange={onPasswordChange}></Input>
-            </InputContainer>
-            <SignBtn onClick={handlerSignBtns} disabled={disabled}>
-              Log in
             </SignBtn>
           </>
         )}

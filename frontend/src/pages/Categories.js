@@ -26,15 +26,16 @@ const CategoriesContainer = styled.div`
 
 const H1 = styled.h1`
   width: 100%;
-  padding-left:10%;
+  padding-left: 10%;
 `;
 
 const CategoriesPage = () => {
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState([]);
   const fetchData = async () => {
     try {
-      const resCategories = await axios.get("http://localhost:8000/getCategories")
-      const {data} = resCategories;
+      const { data } = await axios.get(
+        "http://localhost:8000/getCategories"
+      );
       setCategories(data);
     } catch (e) {
       console.log("Error PageWithCategories: ", e);
@@ -48,18 +49,14 @@ const CategoriesPage = () => {
   return (
     <Container>
       <H1>All categories</H1>
-      
-      {!categories ? (
+ 
+      {categories.lenght===0 ? (
         <LoadingCard></LoadingCard>
       ) : (
         <CategoriesContainer>
-          {categories.map(({main_category,image,_id}) => {
+          {categories.map(({ main_category, image, _id }) => {
             return (
-              <Category
-                name={main_category}
-                image={image}
-                key={_id}
-              ></Category>
+              <Category name={main_category} image={image} key={_id}></Category>
             );
           })}
         </CategoriesContainer>
