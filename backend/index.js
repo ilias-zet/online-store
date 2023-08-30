@@ -52,7 +52,6 @@ app.get("/getCategories", async (req, res) => {
 
 app.get("/getRecommendedCategories", async (req, res) => {
   const randomDoc = await Images.aggregate([{ $sample: { size: 6 } }]);
-  console.log(randomDoc);
   res.json(randomDoc);
 });
 
