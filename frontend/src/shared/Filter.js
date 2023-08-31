@@ -74,8 +74,8 @@ const Filter = ({ setPrice }) => {
           onInput={(e) =>
             setInputsValue((prev) => ({
               ...prev,
-              maxValue: maxValue,
-              minValue: e.target.value,
+              maxValue: Number(maxValue),
+              minValue: Number(e.target.value),
             }))
           }
         />
@@ -84,28 +84,28 @@ const Filter = ({ setPrice }) => {
       <InputContainer>
         <label>Max price</label>
         <Input
-          min={minValue}
+          min={Number(minValue)}
           type="number"
           value={maxValue}
           onInput={(e) =>
             setInputsValue((prev) => ({
               ...prev,
-              minValue: minValue,
-              maxValue: e.target.value,
+              minValue: Number(minValue),
+              maxValue: Number(e.target.value),
             }))
           }
         />
         {maxValue || maxValue === 0 ? <div>{maxValue}</div> : null}
       </InputContainer>
       <SubmitPrice
-        minValue={minValue}
-        maxValue={maxValue}
+        minValue={Number(minValue)}
+        maxValue={Number(maxValue)}
         onClick={() => {
           if (maxValue > minValue) {
             setPrice((prev) => ({
               ...prev,
-              max: maxValue,
-              min: minValue,
+              max: Number(maxValue),
+              min: Number(minValue),
             }));
           }
         }}
