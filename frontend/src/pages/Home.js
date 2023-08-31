@@ -169,7 +169,6 @@ const HomePage = () => {
   return (
     <BodyContainer>
       <RecommendedTitle>Recommended</RecommendedTitle>
-
       <RecommendedProducts>
         {!isLoaded ? (
           <LoadingCard></LoadingCard>
