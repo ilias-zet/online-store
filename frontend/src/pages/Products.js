@@ -58,9 +58,7 @@ const ProductsPage = () => {
   return (
     <Container>
       <H1>{category}</H1>
-      <Filter 
-        product={product}
-        price={price}
+      <Filter
         setPrice={setPrice}
         ></Filter>
       {!product ? (
@@ -69,10 +67,10 @@ const ProductsPage = () => {
         <CardsContainer>
           <ProductsCounter>
             {"Found " +
-              product.filter(product => product.price>min && product.price<max).length +
-              (product.length > 1 ? " results:" : " result:")}
+              product.filter(elem => elem.price>min && elem.price<max).length +
+              (product.filter(elem => elem.price>min && elem.price<max).length > 1 ? " results:" : " result:")}
           </ProductsCounter>
-          {product.filter(product => product.price>min && product.price<max).map((product) => {
+          {product.filter(elem => elem.price>min && elem.price<max).map((product) => {
             return (
               <ProductCard
                 product={product}

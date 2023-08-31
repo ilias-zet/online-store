@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -29,50 +29,80 @@ const FilterTitle = styled.div`
   border-radius: 10px 10px 0 0;
 `;
 
-const RangeInput = styled.input`
+const Input = styled.input`
   width: 100%;
 `;
 
-const Filter = ({ price, setPrice }) => {
-  const {min,max} = price;
+const SubmitPrice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 40px;
+  color: white;
+  ${({ minValue, maxValue }) =>
+    maxValue > minValue
+      ? `
+  cursor: pointer;
+  background-color: black;
+  `
+      : `
+  background-color: gray;
+  `};
+`;
 
+const Filter = ({ setPrice }) => {
+  const [inputsValue, setInputsValue] = useState({
+    minValue: 0,
+    maxValue: 9999,
+  });
+  const { minValue, maxValue } = inputsValue;
   return (
     <Container>
       <FilterTitle>Filter by price:</FilterTitle>
       <div>
         <label>Min price</label>
-        <RangeInput
-          type="range"
-          id="cowbell"
-          name="cowbell"
-          min="0"
-          max={max - 1}
-          value={min}
-          onInput={(e) => setPrice((prev) => ({
-            ...prev,
-            max:max,
-            min: e.target.value,
-          }))}
+        <Input
+          value={minValue}
+          onInput={(e) =>
+            setInputsValue((prev) => ({
+              ...prev,
+              maxValue: maxValue,
+              minValue: e.target.value,
+            }))
+          }
         />
-        {min || min===0 ? <div>{min}</div> : null}
+        {minValue || minValue === 0 ? <div>{minValue}</div> : null}
       </div>
       <div>
         <label>Max price</label>
-        <RangeInput
-          type="range"
-          id="cowbell"
-          name="cowbell"
-          min={min}
-          value={max}
-          max="9999"
-          onInput={(e) => setPrice((prev) => ({
-            ...prev,
-            min:min,
-            max: e.target.value,
-          }))}
+        <Input
+          value={maxValue}
+          onInput={(e) =>
+            setInputsValue((prev) => ({
+              ...prev,
+              minValue: minValue,
+              maxValue: e.target.value,
+            }))
+          }
         />
-        {max ? <div>{max}</div> : null}
+        {maxValue || maxValue === 0 ? <div>{maxValue}</div> : null}
       </div>
+      <SubmitPrice
+        minValue={minValue}
+        maxValue={maxValue}
+        onClick={() => {
+          if (maxValue > minValue) {
+            setPrice((prev) => ({
+              ...prev,
+              max: maxValue,
+              min: minValue,
+            }));
+          }
+        }}
+      >
+        Change
+      </SubmitPrice>
     </Container>
   );
 };
