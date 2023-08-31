@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/getProducts',async (request, response) => {
   const { category } = request.query
   let products = await Products.find({"main_category":category}).limit(100)
-  console.log(category)
   response.json(products)
 })
 

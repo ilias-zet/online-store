@@ -11,7 +11,7 @@ const Container = styled.div`
   left: 20px;
   border: 2px solid black;
   width: 20%;
-  height: 200px;
+  height: 300px;
   border-radius: 10px;
 `;
 const FilterTitle = styled.div`
@@ -29,6 +29,10 @@ const FilterTitle = styled.div`
   border-radius: 10px 10px 0 0;
 `;
 
+const InputContainer = styled.div`
+margin: 10px;
+`
+
 const Input = styled.input`
   width: 100%;
 `;
@@ -37,6 +41,7 @@ const SubmitPrice = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 10px;
   width: 50%;
   height: 40px;
   color: white;
@@ -60,7 +65,7 @@ const Filter = ({ setPrice }) => {
   return (
     <Container>
       <FilterTitle>Filter by price:</FilterTitle>
-      <div>
+      <InputContainer>
         <label>Min price</label>
         <Input
           type="number"
@@ -75,8 +80,8 @@ const Filter = ({ setPrice }) => {
           }
         />
         {minValue || minValue === 0 ? <div>{minValue}</div> : null}
-      </div>
-      <div>
+      </InputContainer>
+      <InputContainer>
         <label>Max price</label>
         <Input
           min={minValue}
@@ -91,7 +96,7 @@ const Filter = ({ setPrice }) => {
           }
         />
         {maxValue || maxValue === 0 ? <div>{maxValue}</div> : null}
-      </div>
+      </InputContainer>
       <SubmitPrice
         minValue={minValue}
         maxValue={maxValue}
