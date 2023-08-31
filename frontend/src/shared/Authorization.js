@@ -124,11 +124,11 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   const [password, onPasswordChange] = useInput();
   const [repeatPassword, onRepeatPasswordChange] = useInput();
   const disabled =
-    (!name ||
+    ((!name ||
     !surname ||
     !email ||
     !password ||
-    !repeatPassword && !isSignIn) || (!email || !password);
+    !repeatPassword) && !isSignIn) || (!email || !password);
 
   const handlerSignBtns = () => {
     if (!disabled) {

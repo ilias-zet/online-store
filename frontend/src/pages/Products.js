@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ProductCard from "../shared/ProductCard";
-import FilterProducts from "../shared/Filter";
+import Filter from "../shared/Filter";
 import LoadingCard from "../shared/LoadingCard";
 import { useSearchParams } from "react-router-dom";
 const { getProducts } = require("../shared/utils")
@@ -58,11 +58,11 @@ const ProductsPage = () => {
   return (
     <Container>
       <H1>{category}</H1>
-      <FilterProducts 
+      <Filter 
         product={product}
         price={price}
         setPrice={setPrice}
-        ></FilterProducts>
+        ></Filter>
       {!product ? (
         <LoadingCard></LoadingCard>
       ) : (
