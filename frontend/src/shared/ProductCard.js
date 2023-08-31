@@ -40,10 +40,10 @@ const CardImage = styled.img`
 const CardTitle = styled.a`
   cursor: pointer;
   position: relative;
-  display: flex;
   justify-content: center;
   margin-top: 10px;
-  width: 100%;
+  width : 220px;
+  display: inline-block;
   height: 88px;
   font-family: Bradley Hand;
   text-decoration: none;
