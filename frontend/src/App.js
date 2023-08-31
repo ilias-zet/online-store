@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import ProductsPage from "./pages/Products";
 import ProductPage from "./pages/Product";
 import Header from "./components/Header";
-import useSignUp from "./shared/useSignUp";
+import useSignUp from "./customHooks/useSignUp";
 import CategoriesPage from "./pages/Categories";
 import Authorization from "./shared/Authorization";
 import { ThemeProvider } from "styled-components";

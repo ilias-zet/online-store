@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Category from "../shared/Category";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
 const { getCategories } = require("../shared/utils");
 
 const Container = styled.div`
@@ -14,6 +15,15 @@ const Container = styled.div`
   margin-top: 80px;
   padding: 40px;
 `;
+
+const Back = styled.span`
+cursor: pointer;
+margin: 10px;
+width: 100%;
+text-decoration: underline;
+color: gray;
+`
+
 
 const CategoriesContainer = styled.div`
   display: flex;
@@ -31,6 +41,7 @@ const H1 = styled.h1`
 `;
 
 const CategoriesPage = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const getData = async () => {
     const categories = await getCategories();
@@ -45,6 +56,7 @@ const CategoriesPage = () => {
 
   return (
     <Container>
+      <Back onClick={() => navigate("/")}>{`<- Back to "Home"`}</Back>
       <H1>All categories</H1>
       {categories?.length === 0 ? (
         <Skeleton

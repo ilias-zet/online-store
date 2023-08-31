@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import useInput from "./useInput";
+import useInput from "../customHooks/useInput";
 const { getSignIn,getSignUp } = require("../shared/utils")
 
 const FormBg = styled.div`
