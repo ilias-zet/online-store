@@ -31,25 +31,13 @@ const H1 = styled.h1`
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
-  // const fetchData = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       "http://localhost:8000/getCategories"
-  //     );
-  //     setCategories(data);
-  //   } catch (e) {
-  //     console.log("Error PageWithCategories: ", e);
-  //   }
-  // };
   const getData = async () => {
     const categories = await getCategories();
     return categories;
   };
 
   useEffect(() => {
-    // fetchData();
     getData().then((categories) => {
-      console.log(categories);
       setCategories(categories);
     });
   }, []);

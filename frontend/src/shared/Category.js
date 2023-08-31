@@ -40,13 +40,10 @@ const CategoryNameA = styled.div`
 
 const Category = ({ name, image }) => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const imgURL = `http://localhost:8000/${image}`;
-  const productFilterHandler = (e, category) => {
+  const productFilterHandler = (e, name) => {
     e.preventDefault();
-    searchParams.set("category", category);
-    setSearchParams(searchParams);
-    navigate(`/products?${searchParams.toString()}`);
+    navigate(`/products?${name}`);
   };
   return (
     <Container onClick={(e) => productFilterHandler(e, name)}>
