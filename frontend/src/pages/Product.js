@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -19,6 +19,14 @@ const Container = styled.div`
 const InnerContainer = styled.div`
   display: flex;
 `;
+
+const Back = styled.span`
+cursor: pointer;
+margin: 10px;
+width: 100%;
+text-decoration: underline;
+color: gray;
+`
 
 const ImgContainer = styled.div`
   margin-top: 20px;
@@ -116,7 +124,9 @@ const INITIAL_PRODUCT = {
 };
 
 const ProductPage = () => {
+  const navigate = useNavigate();
   const { product_id } = useParams();
+  let [searchParams] = useSearchParams();
   const [product, setProduct] = useState(INITIAL_PRODUCT);
   const {images,title,crawled_at,brand,priceCurrency,price,description,availability,} = product;
 
@@ -134,6 +144,10 @@ const ProductPage = () => {
     <Container>
       {product && product.availability ? (
         <>
+        <Back onClick={() => {
+          searchParams.set("category",product.main_category)
+          navigate(`/products?${searchParams.toString()}`);
+          }}>{`<- Back to "${product.main_category}" category`}</Back>
           <InnerContainer>
             <ImgContainer>
               <Image src={images} alt=""></Image>

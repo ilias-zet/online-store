@@ -4,7 +4,7 @@ import ProductCard from "../shared/ProductCard";
 import Filter from "../shared/Filter";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 const { getProducts } = require("../shared/utils");
 
 const Container = styled.div`
@@ -17,6 +17,15 @@ const Container = styled.div`
   margin-top: 80px;
   padding-left: 220px;
 `;
+
+const Back = styled.span`
+cursor: pointer;
+margin: 10px;
+width: 100%;
+text-decoration: underline;
+color: gray;
+`
+
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -43,11 +52,11 @@ const SkeletonContainer = styled.div`
 `;
 
 const ProductsPage = () => {
+  const navigate = useNavigate();
   const [price, setPrice] = useState({ min: 0, max: 9999 });
   const { min, max } = price;
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-  console.log(category);
   const [product, setProduct] = useState(null);
   const getData = async () => {
     const products = await getProducts(category);
@@ -62,6 +71,7 @@ const ProductsPage = () => {
   }, []);
   return (
     <Container>
+      <Back onClick={() => navigate(`/categories`)}>{'<- Back to "Categories"'}</Back>
       <H1>{category}</H1>
       <Filter setPrice={setPrice}></Filter>
       {!product ? (

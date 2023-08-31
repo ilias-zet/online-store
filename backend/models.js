@@ -15,6 +15,7 @@ const productSchema = new Schema({
   breadcrumbs: [String],
   images: String,
   crawled_at: String,
+  main_category:String,
 });
 const imgSchema = new Schema({
   main_category: { type: String, required: true },
