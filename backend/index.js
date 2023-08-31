@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { Images } = require("./models");
+const { Products } = require('./models')
 const authRouter = require("./routes/auth");
 const productsRoutes = require("./routes/products");
 const cors = require("cors");
@@ -50,9 +51,16 @@ app.get("/getCategories", async (req, res) => {
   res.json(categories);
 });
 
-app.get("/getRecommendedCategories", async (req, res) => {
-  const randomDoc = await Images.aggregate([{ $sample: { size: 6 } }]);
-  res.json(randomDoc);
+app.get("/getRecommended", async (req, res) => {
+  const randomCategories = await Images.aggregate([{ $sample: { size: 6 } }]);
+  const findParams = ["64987992e4498b4d8473f158","64987992e4498b4d8473f15f","64987992e4498b4d8473f15b"]
+  const passFields = '-crawled_at -breadcrumbs -description -sku'
+  const products = await Products.find({_id:{$in: findParams}},passFields);
+  const recomended = {
+    randomCategories,
+    products,
+  }
+  res.json(recomended);
 });
 
 app.use(productsRoutes);
