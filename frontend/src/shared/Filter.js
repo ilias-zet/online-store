@@ -63,6 +63,8 @@ const Filter = ({ setPrice }) => {
       <div>
         <label>Min price</label>
         <Input
+          type="number"
+          min="0"
           value={minValue}
           onInput={(e) =>
             setInputsValue((prev) => ({
@@ -77,6 +79,8 @@ const Filter = ({ setPrice }) => {
       <div>
         <label>Max price</label>
         <Input
+          min={minValue}
+          type="number"
           value={maxValue}
           onInput={(e) =>
             setInputsValue((prev) => ({

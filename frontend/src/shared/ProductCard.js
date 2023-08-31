@@ -11,6 +11,7 @@ const CardContainer = styled.div`
   height: 350px;
   background-color: #b5b8b6;
   margin: 10px;
+  padding: 10px;
   border-radius: 10px;
   transition: all 0.2s;
   &:hover {
@@ -21,7 +22,7 @@ const CardImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 200px;
   margin-top: 10px;
   overflow: hidden;
@@ -42,13 +43,17 @@ const CardTitle = styled.a`
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  width: 90%;
+  width: 100%;
   height: 88px;
   font-family: Bradley Hand;
   text-decoration: none;
   color: #120907;
   font-size: 16px;
   font-family: "Inter", sans-serif;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 1.2em; 
+  white-space: nowrap;
   &:hover {
     color: wheat;
   }
@@ -56,7 +61,7 @@ const CardTitle = styled.a`
 const CardPrice = styled.div`
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 100%;
   font-weight: 1000;
   font-family: Bradley Hand;
   font-size: 20px;
@@ -66,7 +71,7 @@ const CardPrice = styled.div`
 const CardIsAmazonSeller = styled.div`
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 100%;
   font-family: Bradley Hand;
   color: rgb(74, 74, 74);
   margin-top: 10px;
@@ -83,11 +88,7 @@ const ProductCard = ({ product }) => {
       <CardImageContainer>
         {product.images ? <CardImage src={product.images}></CardImage> : null}
       </CardImageContainer>
-      <CardTitle>
-        {product.title.length > 41
-          ? product.title.substr(0, 41) + "..."
-          : product.title}
-      </CardTitle>
+      <CardTitle>{product.title}</CardTitle>
       <CardPrice>{product.price + "$"}</CardPrice>
       <CardIsAmazonSeller>
         {product.availability}

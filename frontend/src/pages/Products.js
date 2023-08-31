@@ -20,8 +20,6 @@ const Container = styled.div`
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   min-height: 100%;
 `;
@@ -39,12 +37,17 @@ const ProductsCounter = styled.span`
   color: gray;
 `;
 
+const SkeletonContainer = styled.div`
+  width: 100%;
+  min-height: 100%;
+`;
+
 const ProductsPage = () => {
   const [price, setPrice] = useState({ min: 0, max: 9999 });
   const { min, max } = price;
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-  console.log(category)
+  console.log(category);
   const [product, setProduct] = useState(null);
   const getData = async () => {
     const products = await getProducts(category);
@@ -62,14 +65,16 @@ const ProductsPage = () => {
       <H1>{category}</H1>
       <Filter setPrice={setPrice}></Filter>
       {!product ? (
-        <Skeleton
-          style={{ margin: "20px" }}
-          count={15}
-          width={250}
-          height={350}
-          borderRadius={10}
-          inline={true}
-        ></Skeleton>
+        <SkeletonContainer>
+          <Skeleton
+            style={{ margin: "10px" }}
+            count={15}
+            width={230}
+            height={350}
+            borderRadius={10}
+            inline={true}
+          ></Skeleton>
+        </SkeletonContainer>
       ) : (
         <CardsContainer>
           <ProductsCounter>
