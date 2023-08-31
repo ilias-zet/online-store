@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import LoadingCard from "../shared/LoadingCard";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const { getProduct } = require("../shared/utils");
 
 const Container = styled.div`
@@ -96,6 +97,12 @@ const HR = styled.hr`
   width: 100%;
 `;
 
+const SkeletonContainer = styled.div`
+padding: 20px;
+width: 100%;
+height: 700px;
+`
+
 const INITIAL_PRODUCT = {
   _id: 0, // Number
   images: "", // String
@@ -154,7 +161,23 @@ const ProductPage = () => {
           <Desc>{description}</Desc>
         </>
       ) : (
-        <LoadingCard />
+        <SkeletonContainer>
+          <Skeleton
+          style={{ margin: "10px"}}
+          count={2}
+          width={"47%"}
+          height={"80%"}
+          borderRadius={10}
+          inline={true}
+        ></Skeleton>
+        <Skeleton
+          style={{ margin: "10px"}}
+          count={1}
+          width={"100%"}
+          height={"20%"}
+          borderRadius={10}
+        ></Skeleton>
+        </SkeletonContainer>
       )}
     </Container>
   );

@@ -13,7 +13,7 @@ const OuterContainer = styled.div`
   background-color: rgb(0, 0, 0, 0.7);
   width: 100%;
   height: 80px;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   backdrop-filter: blur(5px);
   @media (max-width: 480px) {

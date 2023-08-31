@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ProductCard from "../shared/ProductCard";
 import Filter from "../shared/Filter";
-import LoadingCard from "../shared/LoadingCard";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useSearchParams } from "react-router-dom";
-const { getProducts } = require("../shared/utils")
+const { getProducts } = require("../shared/utils");
 
 const Container = styled.div`
   display: flex;
@@ -39,10 +40,11 @@ const ProductsCounter = styled.span`
 `;
 
 const ProductsPage = () => {
-  const [price, setPrice] = useState({ min:0, max:9999 });
+  const [price, setPrice] = useState({ min: 0, max: 9999 });
   const { min, max } = price;
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
+  console.log(category)
   const [product, setProduct] = useState(null);
   const getData = async () => {
     const products = await getProducts(category);
@@ -58,26 +60,34 @@ const ProductsPage = () => {
   return (
     <Container>
       <H1>{category}</H1>
-      <Filter
-        setPrice={setPrice}
-        ></Filter>
+      <Filter setPrice={setPrice}></Filter>
       {!product ? (
-        <LoadingCard></LoadingCard>
+        <Skeleton
+          style={{ margin: "20px" }}
+          count={15}
+          width={250}
+          height={350}
+          borderRadius={10}
+          inline={true}
+        ></Skeleton>
       ) : (
         <CardsContainer>
           <ProductsCounter>
             {"Found " +
-              product.filter(elem => elem.price>min && elem.price<max).length +
-              (product.filter(elem => elem.price>min && elem.price<max).length > 1 ? " results:" : " result:")}
+              product.filter((elem) => elem.price > min && elem.price < max)
+                .length +
+              (product.filter((elem) => elem.price > min && elem.price < max)
+                .length > 1
+                ? " results:"
+                : " result:")}
           </ProductsCounter>
-          {product.filter(elem => elem.price>min && elem.price<max).map((product) => {
-            return (
-              <ProductCard
-                product={product}
-                key={product._id}
-              ></ProductCard>
-            )
-          })}
+          {product
+            .filter((elem) => elem.price > min && elem.price < max)
+            .map((product) => {
+              return (
+                <ProductCard product={product} key={product._id}></ProductCard>
+              );
+            })}
         </CardsContainer>
       )}
     </Container>

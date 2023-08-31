@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Category from "../shared/Category";
-import LoadingCard from "../shared/LoadingCard";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const { getCategories } = require("../shared/utils");
 
 const Container = styled.div`
@@ -45,9 +46,15 @@ const CategoriesPage = () => {
   return (
     <Container>
       <H1>All categories</H1>
-
       {categories?.length === 0 ? (
-        <LoadingCard></LoadingCard>
+        <Skeleton
+          style={{ margin: "20px" }}
+          count={30}
+          width={250}
+          height={350}
+          borderRadius={10}
+          inline={true}
+        ></Skeleton>
       ) : (
         <CategoriesContainer>
           {categories.map(({ main_category, image, _id }) => {

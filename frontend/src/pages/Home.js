@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Category from "../shared/Category";
-import LoadingCard from "../shared/LoadingCard";
 import ProductCard from "../shared/ProductCard";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 const { getRecommended } = require("../shared/utils");
 
 const BodyContainer = styled.div`
@@ -52,11 +53,13 @@ const RecommendedTitle = styled.h2`
 const RecommendedProducts = styled.div`
   display: flex;
   justify-content: space-evenly;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
   height: 100%;
   margin-top: 20px;
+  gap: 10px;
 `;
 
 const Present = styled.div`
@@ -130,33 +133,12 @@ const HomePage = () => {
   const [recProducts, setRecProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // const fetchData = async () => {
-  //   try {
-  //     //Get array with recommended products
-  //     const { data: recProductsArr } = await axios.get(
-  //       "http://localhost:8000/getRecommendedProducts"
-  //     );
-  //     setRecProducts(recProductsArr);
-
-  //     //Get array with categories
-  //     const { data: recCategoriesArr } = await axios.get(
-  //       "http://localhost:8000/getRecommendedCategories"
-  //     );
-  //     setCategories(recCategoriesArr);
-  //   } catch (e) {
-  //     console.log("Error Home page: ", e);
-  //   } finally {
-  //     setIsLoaded(true);
-  //   }
-  // };
-
   const getData = async () => {
     const recommended = await getRecommended();
     return recommended;
   };
 
   useEffect(() => {
-    // fetchData();
     getData()
       .then((recommended) => {
         const { randomCategories, products } = recommended;
@@ -171,7 +153,14 @@ const HomePage = () => {
       <RecommendedTitle>Recommended</RecommendedTitle>
       <RecommendedProducts>
         {!isLoaded ? (
-          <LoadingCard></LoadingCard>
+          <Skeleton
+            style={{ margin: "20px" }}
+            count={3}
+            width={250}
+            height={350}
+            borderRadius={10}
+            inline={true}
+          ></Skeleton>
         ) : (
           recProducts.map((product) => (
             <ProductCard product={product}></ProductCard>
@@ -185,7 +174,14 @@ const HomePage = () => {
             <Category name={main_category} image={image} key={_id}></Category>
           ))
         ) : (
-          <LoadingCard></LoadingCard>
+          <Skeleton
+            style={{ margin: "20px" }}
+            count={6}
+            width={250}
+            height={350}
+            borderRadius={10}
+            inline={true}
+          ></Skeleton>
         )}
       </CategoriesContainer>
       <MainDescription>
