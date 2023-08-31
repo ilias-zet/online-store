@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import Category from "../shared/Category";
 import LoadingCard from "../shared/LoadingCard";
+const { getCategories } = require("../shared/utils");
 
 const Container = styled.div`
   display: flex;
@@ -31,26 +31,34 @@ const H1 = styled.h1`
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
-  const fetchData = async () => {
-    try {
-      const { data } = await axios.get(
-        "http://localhost:8000/getCategories"
-      );
-      setCategories(data);
-    } catch (e) {
-      console.log("Error PageWithCategories: ", e);
-    }
+  // const fetchData = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       "http://localhost:8000/getCategories"
+  //     );
+  //     setCategories(data);
+  //   } catch (e) {
+  //     console.log("Error PageWithCategories: ", e);
+  //   }
+  // };
+  const getData = async () => {
+    const categories = await getCategories();
+    return categories;
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
+    getData().then((categories) => {
+      console.log(categories);
+      setCategories(categories);
+    });
   }, []);
 
   return (
     <Container>
       <H1>All categories</H1>
- 
-      {categories.length===0 ? (
+
+      {categories?.length === 0 ? (
         <LoadingCard></LoadingCard>
       ) : (
         <CategoriesContainer>

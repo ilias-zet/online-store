@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import useInput from "./useInput";
-import axios from "axios";
+const { getSignIn,getSignUp } = require("../shared/utils")
 
 const FormBg = styled.div`
   display: ${(props) => (props.isOpened ? "block" : "none")};
@@ -101,16 +101,12 @@ const Input = styled.input`
 `;
 
 const SignBtn = styled.div`
-  ${({ disabled }) =>
-    disabled
-      ? `
-  cursor:"";
-  background-color:"gray";
-  `
-      : `
-  cursor:"pointer";
-  background-color:"black";
-  `};
+  ${({ disabled }) => disabled ? (`
+      background-color: gray;
+    `):(`
+    background-color: black;
+    cursor:pointer;
+    `)}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,59 +124,40 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
   const [password, onPasswordChange] = useInput();
   const [repeatPassword, onRepeatPasswordChange] = useInput();
   const disabled =
-    !name ||
+    (!name ||
     !surname ||
     !email ||
     !password ||
-    !repeatPassword ||
-    password !== repeatPassword;
+    !repeatPassword && !isSignIn) || (!email || !password);
 
   const handlerSignBtns = () => {
     if (!disabled) {
       let userData;
 
-      const fetchDataSignUp = async () => {
-        userData = { name, surname, email, password };
-        try {
-          const {data} = await axios.post(
-            "http://localhost:8000/auth/registration",
-            userData
-          );
-          if (data.user) {
-            setUser(data.user);
-            alert("Successfull registration!");
-          }
-        } catch (e) {
-          const err = e?.response.data?.errors.errors
-            ? e?.response.data?.errors.errors
-            : "Unexpected registration error";
-          alert(err.map(({ msg }) => msg));
-        }
+      const getDataSignUp = async () => {
+        const msgAndUser = await getSignUp(name, surname, email, password,userData);
+        return msgAndUser;
       };
-      const fetchDataSignIn = async () => {
-        if (email && password) {
-          userData = {
-            email,
-            password,
-          };
-        }
-        try {
-          const res = await axios.post(
-            "http://localhost:8000/auth/login",
-            userData
-          );
-          const { data } = res;
-          const { user, token } = data;
-          if (user) {
-            setUser(user);
-            setToken(token);
-            alert("Successfull sign in!");
-          }
-        } catch (e) {
-          alert(e);
-        }
+
+      const getDataSignIn = async () => {
+        const tokenAndUser = await getSignIn(userData,email,password);
+        return tokenAndUser;
       };
-      isSignIn ? fetchDataSignIn() : fetchDataSignUp();
+    
+      if(isSignIn) {
+        getDataSignIn().then(({token,user}) => {
+          setUser(user)
+          setToken(token)
+          alert("Successfull sign in!")
+        })
+      } else {
+        getDataSignUp().then(res => {
+          if(res) {
+            setUser(res.user)
+            alert(res.message)
+          }
+        });
+      } 
       close();
     }
   };
@@ -249,7 +226,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
                 onChange={onRepeatPasswordChange}
               ></Input>
             </InputContainer>
-            <SignBtn onClick={handlerSignBtns} disabled={disabled}>
+            <SignBtn onClick={() => !disabled? handlerSignBtns():null} disabled={disabled}>
               Sign Up
             </SignBtn>
           </>

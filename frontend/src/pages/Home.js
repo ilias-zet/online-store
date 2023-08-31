@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Category from "../shared/Category";
-import axios from "axios";
 import LoadingCard from "../shared/LoadingCard";
 import ProductCard from "../shared/ProductCard";
+const { getRecommended } = require("../shared/utils");
 
 const BodyContainer = styled.div`
   display: flex;
@@ -12,7 +12,6 @@ const BodyContainer = styled.div`
   width: 100%;
   padding-top: 20px;
   min-height: 100%;
-  /* background-color: white; */
   margin-top: 80px;
   padding-left: 40px;
   padding-right: 40px;
@@ -131,28 +130,41 @@ const HomePage = () => {
   const [recProducts, setRecProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const fetchData = async () => {
-    try {
-      //Get array with recommended products
-      const { data: recProductsArr } = await axios.get(
-        "http://localhost:8000/getRecommendedProducts"
-      );
-      setRecProducts(recProductsArr);
+  // const fetchData = async () => {
+  //   try {
+  //     //Get array with recommended products
+  //     const { data: recProductsArr } = await axios.get(
+  //       "http://localhost:8000/getRecommendedProducts"
+  //     );
+  //     setRecProducts(recProductsArr);
 
-      //Get array with categories
-      const { data: recCategoriesArr } = await axios.get(
-        "http://localhost:8000/getRecommendedCategories"
-      );
-      setCategories(recCategoriesArr);
-    } catch (e) {
-      console.log("Error Home page: ", e);
-    } finally {
-      setIsLoaded(true);
-    }
+  //     //Get array with categories
+  //     const { data: recCategoriesArr } = await axios.get(
+  //       "http://localhost:8000/getRecommendedCategories"
+  //     );
+  //     setCategories(recCategoriesArr);
+  //   } catch (e) {
+  //     console.log("Error Home page: ", e);
+  //   } finally {
+  //     setIsLoaded(true);
+  //   }
+  // };
+
+  const getData = async () => {
+    const recommended = await getRecommended();
+    return recommended;
   };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
+    getData()
+      .then((recommended) => {
+        const { randomCategories, products } = recommended;
+        setRecProducts(products);
+        setCategories(randomCategories);
+        setIsLoaded(true);
+      })
+      .finally(setIsLoaded(true));
   }, []);
   return (
     <BodyContainer>
@@ -169,7 +181,7 @@ const HomePage = () => {
       </RecommendedProducts>
       <RecommendedTitle>Popular Categories</RecommendedTitle>
       <CategoriesContainer>
-        {categories.length? (
+        {categories.length ? (
           categories.map(({ main_category, image, _id }) => (
             <Category name={main_category} image={image} key={_id}></Category>
           ))

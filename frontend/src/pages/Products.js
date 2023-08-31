@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import ProductCard from "../shared/ProductCard";
-import FilterProducts from "../shared/FilterProducts";
+import FilterProducts from "../shared/Filter";
 import LoadingCard from "../shared/LoadingCard";
 import { useSearchParams } from "react-router-dom";
+const { getProducts } = require("../shared/utils")
 
 const Container = styled.div`
   display: flex;
@@ -44,20 +44,16 @@ const ProductsPage = () => {
   let [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [product, setProduct] = useState(null);
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/getProducts", {
-        params: { category },
-      });
-      const {data} = res;
-      setProduct(data);
-    } catch (e) {
-      console.log("Error on MainCagegoryPage:  ", e);
-    }
+  const getData = async () => {
+    const products = await getProducts(category);
+    return products;
   };
+
   useEffect(() => {
-    fetchData();
-    window.scrollTo(0, 0);
+    getData().then((products) => {
+      setProduct(products);
+      window.scrollTo(0, 0);
+    });
   }, []);
   return (
     <Container>

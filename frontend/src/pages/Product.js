@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import LoadingCard from "../shared/LoadingCard";
+const { getProduct } = require("../shared/utils");
 
 const Container = styled.div`
   display: flex;
@@ -98,33 +99,30 @@ const HR = styled.hr`
 
 const INITIAL_PRODUCT = {
   _id: 0, // Number
-  images: '', // String
-  title: '', // String
-  crawled_at: '', // String
-  brand: '', // String
-  priceCurrency: '', // String
+  images: "", // String
+  title: "", // String
+  crawled_at: "", // String
+  brand: "", // String
+  priceCurrency: "", // String
   price: 0, // Number
-  description: '', // String
-  availability: '', // String
+  description: "", // String
+  availability: "", // String
 };
 
 const ProductPage = () => {
   const { product_id } = useParams();
   const [product, setProduct] = useState(INITIAL_PRODUCT);
   const {images,title,crawled_at,brand,priceCurrency,price,description,availability,} = product;
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/getFullProduct", {
-        params: { product_id },
-      });
-      const { data } = res;
-      setProduct(data);
-    } catch (e) {
-      console.log("Error on fetchData const:  ", e);
-    }
+
+  const getData = async () => {
+    const categories = await getProduct(product_id);
+    return categories;
   };
+
   useEffect(() => {
-    fetchData();
+    getData().then((product) => {
+      setProduct(product);
+    });
   }, []);
   return (
     <Container>
