@@ -33,14 +33,14 @@ const RangeInput = styled.input`
   width: 100%;
 `;
 
-const FilterProducts = ({ price, setPrice }) => {
+const Filter = ({ price, setPrice }) => {
   const {min,max} = price;
 
   return (
     <Container>
       <FilterTitle>Filter by price:</FilterTitle>
       <div>
-        <label for="cowbell">Min price</label>
+        <label>Min price</label>
         <RangeInput
           type="range"
           id="cowbell"
@@ -57,7 +57,7 @@ const FilterProducts = ({ price, setPrice }) => {
         {min || min===0 ? <div>{min}</div> : null}
       </div>
       <div>
-        <label for="cowbell">Max price</label>
+        <label>Max price</label>
         <RangeInput
           type="range"
           id="cowbell"
@@ -77,4 +77,4 @@ const FilterProducts = ({ price, setPrice }) => {
   );
 };
 
-export default FilterProducts;
+export default Filter;
