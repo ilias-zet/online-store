@@ -70,7 +70,7 @@ const BtnContainer = styled.div`
   align-items: center;
   width: 100px;
   height: 60%;
-  background-color: #7f8377;
+  background-color: #afb7b6;
   border-radius: 4px;
   margin: 10px;
   @media (max-width: 480px) {
@@ -203,6 +203,7 @@ const BurgerBtn = styled.img`
 `;
 
 const SwitchThemeBtn = styled.div`
+  cursor: pointer;
   display: flex;
   width: 80px;
   height: 40px;
@@ -226,7 +227,7 @@ width: 50%;
 `
 
 const Switcher = styled.div`
-  cursor: pointer;
+
   position: absolute;
   transition: transform 0.3s;
   ${({ theme }) => theme === "dark" ? (`
@@ -329,10 +330,10 @@ const Header = ({
             <BurgerBtn src={burgerImg}></BurgerBtn>
           )}
         </BurgerBtnContainer>
-        <SwitchThemeBtn isOpenedMenu={isOpenedMenu}>
+        <SwitchThemeBtn onClick={switchTheme} isOpenedMenu={isOpenedMenu}>
           <SwitchImg src={ligthImg}></SwitchImg>
           <SwitchImg src={darkImg}></SwitchImg>
-          <Switcher onClick={switchTheme} isOpenedMenu={isOpenedMenu} theme={theme}></Switcher>
+          <Switcher isOpenedMenu={isOpenedMenu} theme={theme}></Switcher>
         </SwitchThemeBtn>
       </Container>
     </OuterContainer>

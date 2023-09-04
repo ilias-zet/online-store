@@ -1,12 +1,12 @@
 import {createGlobalStyle} from "styled-components" 
 export const darkTheme = {
-  body: "#121212",
+  body: "#111415",
   textColor: "#f3f3f3",
   headingColor: "#f3f3f3",
   hover: "white",
 }
 export const lightTheme = {
-  body: "#fff",
+  body: "#f9f9f9",
   textColor: "#120907",
   headingColor: "#120907",
   hover: "black",
