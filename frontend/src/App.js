@@ -53,13 +53,13 @@ function App() {
   const [theme, setTheme] = useState("light");
   const { isOpened, open, close, isSignIn } = useSignUp(false);
   const userInit = {
-    name: null,
-    surname: null,
-    email: null,
-    password: null,
+    name: "", // String
+    surname: "", // String
+    email: "", // String
+    password: "", // String
+    token: "", // String
   };
   const [user, setUser] = useState(userInit);
-  const [token, setToken] = useState("");
   const [scroll, setScroll] = useState(0);
   const [isOpenedMenu, setIsopenedMenu] = useState(false);
   const handleScroll = () => {
@@ -109,7 +109,6 @@ function App() {
               isOpened={isOpened}
               close={close}
               setUser={setUser}
-              setToken={setToken}
             ></Authorization>
             <Button scroll={scroll} onClick={() => window.scrollTo(0, 0)}>
               Go Up

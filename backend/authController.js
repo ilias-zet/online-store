@@ -27,10 +27,16 @@ class authController {
           .json({ message: "User with this email is already registered",candidate});
       }
       const hashPassword = bcrypt.hashSync(password, 7);
-      const user = new Users({ name, surname,email, password:hashPassword });
+      let user = new Users({ name, surname,email, password:hashPassword });
       await user.save()
+      const token = generateAccessToken(user._id)
+      const filter = { email };
+      const update = { token };
+      user = await Users.findOneAndUpdate(filter, update, {new:true});
+      console.log(user)
       return res.json({ message: "User successful registered!",user })
     } catch (e) {
+      console.log("in catch")
       res.status(400).json({ message: "Registration error" ,e});
     }
   }
@@ -39,7 +45,12 @@ class authController {
     try {
       const { email, password } = req.body;
       const body = req.body
-      const user = await Users.findOne({ email });
+      let user = await Users.findOne({ email });
+      const token = generateAccessToken(user._id)
+      const filter = { email };
+      const update = { token };
+      user = await Users.findOneAndUpdate(filter, update, {new:true});
+      console.log(user)
       if(!user) {
         return res.status(400).json({message:`User with e-mail ${email} is not found`})
       }
@@ -47,8 +58,7 @@ class authController {
       if(!validPassword) {
         return res.status(400).json({message:"Password is not valid"})
       }
-      const token = generateAccessToken(user._id)
-      return res.json({token,user})
+      return res.json({user})
     } catch (e) {
       res.status(400).json({ message: "Login error",e });
     }

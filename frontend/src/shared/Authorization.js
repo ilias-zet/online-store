@@ -117,7 +117,7 @@ const SignBtn = styled.div`
   border-radius: 10px;
 `;
 
-const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
+const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
   const [name, onNameChange] = useInput();
   const [surname, onSurnameChange] = useInput();
   const [email, onEmailChange] = useInput();
@@ -145,9 +145,8 @@ const Authorization = ({ isSignIn, isOpened, close, setUser, setToken }) => {
       };
     
       if(isSignIn) {
-        getDataSignIn().then(({token,user}) => {
+        getDataSignIn().then(({user}) => {
           setUser(user)
-          setToken(token)
           alert("Successfull sign in!")
         })
       } else {
