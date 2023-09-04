@@ -79,19 +79,19 @@ const CardIsAmazonSeller = styled.div`
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-
+  const { _id,images,title,availability,price } = product;
   return (
     <CardContainer onClick={() => {
-      navigate(`/products/${product._id}`)
+      navigate(`/products/${_id}`)
       window.scrollTo(0,0)
     }}>
       <CardImageContainer>
-        {product.images ? <CardImage src={product.images}></CardImage> : null}
+        {images ? <CardImage src={images}></CardImage> : null}
       </CardImageContainer>
-      <CardTitle>{product.title}</CardTitle>
-      <CardPrice>{product.price + "$"}</CardPrice>
+      <CardTitle>{title}</CardTitle>
+      <CardPrice>{price + "$"}</CardPrice>
       <CardIsAmazonSeller>
-        {product.availability}
+        {availability}
       </CardIsAmazonSeller>
     </CardContainer>
   );
