@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import logo from "../images/Logo.png";
-import { useNavigate } from "react-router-dom";
-import burgerImg from "../images/icons/Icon-Burger-menu.png";
+import styled from 'styled-components'
+import logo from '../images/Logo.png'
+import { useNavigate } from 'react-router-dom'
+import burgerImg from '../images/icons/Icon-Burger-menu.png'
 import ligthImg from '../images/icons/sunny-outline.svg'
 import darkImg from '../images/icons/moon-outline.svg'
 
@@ -19,7 +19,7 @@ const OuterContainer = styled.div`
   @media (max-width: 480px) {
     height: 60px;
   }
-`;
+`
 
 const Container = styled.div`
   display: flex;
@@ -28,17 +28,17 @@ const Container = styled.div`
   max-width: 1024px;
   width: 100%;
   height: 100%;
-`;
+`
 
 const LogoContainer = styled.div`
   cursor: pointer;
   display: flex;
   margin-left: 20px;
   width: 200px;
-`;
+`
 const Logo = styled.img`
   width: 100%;
-`;
+`
 
 const BtnsContainer = styled.div`
   display: flex;
@@ -51,17 +51,20 @@ const BtnsContainer = styled.div`
     position: absolute;
     top: 60px;
     transition: all 0.3s;
-    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+    ${({ isOpenedMenu }) =>
+      isOpenedMenu
+        ? `
       transform: translateY(0%);
       height:40px;
       opacity:1;
-    `):(`
+    `
+        : `
       transform: translateY(-100%);
       height:0;
       opacity:0;
-    `)}
+    `}
   }
-`;
+`
 
 const BtnContainer = styled.div`
   cursor: pointer;
@@ -76,24 +79,27 @@ const BtnContainer = styled.div`
   @media (max-width: 480px) {
     transition: all 0.5s;
     width: 60px;
-    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+    ${({ isOpenedMenu }) =>
+      isOpenedMenu
+        ? `
       height:50%;
       opacity:1;
-    `):(`
+    `
+        : `
       height:0;
       opacity:0;
-    `)}
+    `}
   }
-`;
+`
 const TextBtn = styled.div`
   font-size: 16px;
   font-weight: 1000;
   color: white;
   @media (max-width: 480px) {
     transition: font-size;
-    font-size: ${({ isOpenedMenu }) => (isOpenedMenu ? "10px" : "0")};
+    font-size: ${({ isOpenedMenu }) => (isOpenedMenu ? '10px' : '0')};
   }
-`;
+`
 
 const UserBtnContainer = styled.div`
   display: flex;
@@ -101,7 +107,7 @@ const UserBtnContainer = styled.div`
   align-items: center;
   width: 200px;
   height: 100%;
-`;
+`
 
 const UserImgBtn = styled.div`
   cursor: pointer;
@@ -114,14 +120,14 @@ const UserImgBtn = styled.div`
   background-color: black;
   font-size: 24px;
   color: white;
-`;
+`
 
 const UserFullname = styled.span`
   color: #f2f3f4;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
   line-height: 140%;
-`;
+`
 
 const LogoutBtn = styled.div`
   cursor: pointer;
@@ -131,10 +137,10 @@ const LogoutBtn = styled.div`
   width: 50px;
   height: 50%;
   border-radius: 10px;
-`;
+`
 const LogoutImg = styled.img`
   width: 100%;
-`;
+`
 
 const NavMenu = styled.nav`
   cursor: pointer;
@@ -146,20 +152,23 @@ const NavMenu = styled.nav`
     flex-direction: column;
     position: absolute;
     width: 100%;
-    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+    ${({ isOpenedMenu }) =>
+      isOpenedMenu
+        ? `
       height:120px;
       padding-top:40px;
-    `):(`
+    `
+        : `
       height:0;
       padding-top:0;
-    `)}
+    `}
     top: 60px;
     left: auto;
     backdrop-filter: blur(5px);
     background-color: rgb(0, 0, 0, 0.7);
     z-index: -1;
   }
-`;
+`
 
 const NavBtn = styled.span`
   display: flex;
@@ -177,15 +186,18 @@ const NavBtn = styled.span`
     font-size: 10px;
   }
   @media (max-width: 480px) {
-    ${({ isOpenedMenu }) => isOpenedMenu ? (`
+    ${({ isOpenedMenu }) =>
+      isOpenedMenu
+        ? `
       font-size:10px;
       opacity:1;
-    `):(`
+    `
+        : `
       font-size:0;
       opacity:0;
-    `)}
+    `}
   }
-`;
+`
 
 const BurgerBtnContainer = styled.div`
   display: flex;
@@ -196,11 +208,11 @@ const BurgerBtnContainer = styled.div`
   @media (min-width: 480px) {
     display: none;
   }
-`;
+`
 
 const BurgerBtn = styled.img`
   filter: invert(100%);
-`;
+`
 
 const SwitchThemeBtn = styled.div`
   cursor: pointer;
@@ -218,33 +230,35 @@ const SwitchThemeBtn = styled.div`
     height: 20px;
     top: 70px;
     left: 80%;
-    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? "1" : "0")};
+    opacity: ${({ isOpenedMenu }) => (isOpenedMenu ? '1' : '0')};
   }
-`;
+`
 
 const SwitchImg = styled.img`
-width: 50%;
+  width: 50%;
 `
 
 const Switcher = styled.div`
-
   position: absolute;
   transition: transform 0.3s;
-  ${({ theme }) => theme === "dark" ? (`
+  ${({ theme }) =>
+    theme === 'dark'
+      ? `
     transform: translateX(100%);
     background-color: #121212;
-  `):(`
+  `
+      : `
     transform: 0;
     background-color: white;
-  `)}
+  `}
   width: 33px;
   height: 33px;
   border-radius: 50%;
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     width: 13px;
     height: 13px;
   }
-`;
+`
 
 const Header = ({
   open,
@@ -256,21 +270,21 @@ const Header = ({
   theme,
   switchTheme,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <OuterContainer>
       <Container>
         <LogoContainer onClick={() => navigate(`/`)}>
-          <Logo alt="" src={logo}></Logo>
+          <Logo alt='' src={logo}></Logo>
         </LogoContainer>
         <NavMenu isOpenedMenu={isOpenedMenu}>
           <NavBtn
             isOpenedMenu={isOpenedMenu}
             onClick={() => {
-              navigate(`/`);
-              window.scrollTo(0, 0);
-              setIsopenedMenu(false);
+              navigate(`/`)
+              window.scrollTo(0, 0)
+              setIsopenedMenu(false)
             }}
           >
             Main page
@@ -278,14 +292,14 @@ const Header = ({
           <NavBtn
             isOpenedMenu={isOpenedMenu}
             onClick={() => {
-              navigate(`/categories`);
-              window.scrollTo(0, 0);
-              setIsopenedMenu(false);
+              navigate(`/categories`)
+              window.scrollTo(0, 0)
+              setIsopenedMenu(false)
             }}
           >
             Categories
           </NavBtn>
-          <NavBtn isOpenedMenu={isOpenedMenu} href="#">
+          <NavBtn isOpenedMenu={isOpenedMenu} href='#'>
             Contacts
           </NavBtn>
         </NavMenu>
@@ -293,11 +307,11 @@ const Header = ({
           {user && user.email ? (
             <>
               <UserBtnContainer>
-                <UserImgBtn>{user.name[0] + " " + user.surname[0]}</UserImgBtn>
-                <UserFullname>{user.name + " " + user.surname}</UserFullname>
+                <UserImgBtn>{user.name[0] + ' ' + user.surname[0]}</UserImgBtn>
+                <UserFullname>{user.name + ' ' + user.surname}</UserFullname>
               </UserBtnContainer>
               <LogoutBtn onClick={() => setUser(userInit)}>
-                <LogoutImg src="https://cdn-icons-png.flaticon.com/512/152/152534.png"></LogoutImg>
+                <LogoutImg src='https://cdn-icons-png.flaticon.com/512/152/152534.png'></LogoutImg>
               </LogoutBtn>
             </>
           ) : (
@@ -305,8 +319,8 @@ const Header = ({
               <BtnContainer
                 isOpenedMenu={isOpenedMenu}
                 onClick={() => {
-                  open(false);
-                  setIsopenedMenu(false);
+                  open(false)
+                  setIsopenedMenu(false)
                 }}
               >
                 <TextBtn isOpenedMenu={isOpenedMenu}>Sign Up</TextBtn>
@@ -314,8 +328,8 @@ const Header = ({
               <BtnContainer
                 isOpenedMenu={isOpenedMenu}
                 onClick={() => {
-                  open(true);
-                  setIsopenedMenu(false);
+                  open(true)
+                  setIsopenedMenu(false)
                 }}
               >
                 <TextBtn isOpenedMenu={isOpenedMenu}>Log In</TextBtn>
@@ -337,7 +351,7 @@ const Header = ({
         </SwitchThemeBtn>
       </Container>
     </OuterContainer>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

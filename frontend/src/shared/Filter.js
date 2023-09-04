@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
 const Container = styled.div`
   position: fixed;
@@ -13,7 +13,7 @@ const Container = styled.div`
   width: 20%;
   height: 300px;
   border-radius: 10px;
-`;
+`
 const FilterTitle = styled.div`
   display: flex;
   justify-content: center;
@@ -25,17 +25,17 @@ const FilterTitle = styled.div`
   font-family: Bradley Hand;
   font-size: 16px;
   color: black;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   border-radius: 10px 10px 0 0;
-`;
+`
 
 const InputContainer = styled.div`
-margin: 10px;
+  margin: 10px;
 `
 
 const Input = styled.input`
   width: 100%;
-`;
+`
 
 const SubmitPrice = styled.div`
   display: flex;
@@ -54,22 +54,22 @@ const SubmitPrice = styled.div`
       : `
   background-color: gray;
   `};
-`;
+`
 
 const Filter = ({ setPrice }) => {
   const [inputsValue, setInputsValue] = useState({
     minValue: 0,
     maxValue: 9999,
-  });
-  const { minValue, maxValue } = inputsValue;
+  })
+  const { minValue, maxValue } = inputsValue
   return (
     <Container>
       <FilterTitle>Filter by price:</FilterTitle>
       <InputContainer>
         <label>Min price</label>
         <Input
-          type="number"
-          min="0"
+          type='number'
+          min='0'
           value={minValue}
           onInput={(e) =>
             setInputsValue((prev) => ({
@@ -85,7 +85,7 @@ const Filter = ({ setPrice }) => {
         <label>Max price</label>
         <Input
           min={Number(minValue)}
-          type="number"
+          type='number'
           value={maxValue}
           onInput={(e) =>
             setInputsValue((prev) => ({
@@ -106,14 +106,14 @@ const Filter = ({ setPrice }) => {
               ...prev,
               max: Number(maxValue),
               min: Number(minValue),
-            }));
+            }))
           }
         }}
       >
         Change
       </SubmitPrice>
     </Container>
-  );
-};
+  )
+}
 
-export default Filter;
+export default Filter

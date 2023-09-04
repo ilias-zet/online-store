@@ -12,6 +12,7 @@ coverage
 build
 
 # misc
+.prettierrc
 .DS_Store
 .env
 .env.local

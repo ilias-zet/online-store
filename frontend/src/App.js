@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import HomePage from "./pages/Home";
-import Footer from "./components/Footer";
-import styled from "styled-components";
-import { Routes, Route } from "react-router-dom";
-import ProductsPage from "./pages/Products";
-import ProductPage from "./pages/Product";
-import Header from "./components/Header";
-import useSignUp from "./customHooks/useSignUp";
-import CategoriesPage from "./pages/Categories";
-import Authorization from "./shared/Authorization";
-import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme, GlobalStyles } from "./shared/theme";
+import React, { useEffect, useState } from 'react'
+import './App.css'
+import HomePage from './pages/Home'
+import Footer from './components/Footer'
+import styled from 'styled-components'
+import { Routes, Route } from 'react-router-dom'
+import ProductsPage from './pages/Products'
+import ProductPage from './pages/Product'
+import Header from './components/Header'
+import useSignUp from './customHooks/useSignUp'
+import CategoriesPage from './pages/Categories'
+import Authorization from './shared/Authorization'
+import { ThemeProvider } from 'styled-components'
+import { darkTheme, lightTheme, GlobalStyles } from './shared/theme'
 
 const OuterContainer = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const OuterContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-`;
+`
 
 const Container = styled.div`
   position: relative;
@@ -29,12 +29,12 @@ const Container = styled.div`
   min-height: 100%;
   width: 100%;
   max-width: 1024px;
-`;
+`
 
 const Button = styled.div`
   cursor: pointer;
   transition: all 0.5s;
-  bottom: ${({ scroll }) => (scroll ? "3rem" : "-10rem")};
+  bottom: ${({ scroll }) => (scroll ? '3rem' : '-10rem')};
   padding: 1rem 2rem;
   margin: 1rem;
   border-radius: 1rem;
@@ -47,41 +47,41 @@ const Button = styled.div`
   @media (max-width: 480px) {
     right: 1rem;
   }
-`;
+`
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const { isOpened, open, close, isSignIn } = useSignUp(false);
+  const [theme, setTheme] = useState('light')
+  const { isOpened, open, close, isSignIn } = useSignUp(false)
   const userInit = {
-    name: "", // String
-    surname: "", // String
-    email: "", // String
-    password: "", // String
-    token: "", // String
-  };
-  const [user, setUser] = useState(userInit);
-  const [scroll, setScroll] = useState(0);
-  const [isOpenedMenu, setIsopenedMenu] = useState(false);
+    name: '', // String
+    surname: '', // String
+    email: '', // String
+    password: '', // String
+    token: '', // String
+  }
+  const [user, setUser] = useState(userInit)
+  const [scroll, setScroll] = useState(0)
+  const [isOpenedMenu, setIsopenedMenu] = useState(false)
   const handleScroll = () => {
-    setScroll(window.scrollY);
+    setScroll(window.scrollY)
     if (window.scrollY) {
-      setScroll(true);
-      setIsopenedMenu(false);
+      setScroll(true)
+      setIsopenedMenu(false)
     }
-  };
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const switchTheme = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
-  };
+    theme === 'light' ? setTheme('dark') : setTheme('light')
+  }
 
   return (
     <>
-      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <GlobalStyles />
         <Header
           open={open}
@@ -96,13 +96,13 @@ function App() {
         <OuterContainer>
           <Container>
             <Routes>
-              <Route path="/" element={<HomePage></HomePage>} />
-              <Route path="/products" element={<ProductsPage />} />
+              <Route path='/' element={<HomePage></HomePage>} />
+              <Route path='/products' element={<ProductsPage />} />
               <Route
-                path="/categories"
+                path='/categories'
                 element={<CategoriesPage></CategoriesPage>}
               />
-              <Route path="/products/:product_id" element={<ProductPage />} />
+              <Route path='/products/:product_id' element={<ProductPage />} />
             </Routes>
             <Authorization
               isSignIn={isSignIn}
@@ -118,7 +118,7 @@ function App() {
         <Footer />
       </ThemeProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
