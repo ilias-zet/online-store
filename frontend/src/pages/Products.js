@@ -51,7 +51,7 @@ const SkeletonContainer = styled.div`
   min-height: 100%;
 `
 
-const ProductsPage = ({ user,setUser, bascket, setBasket }) => {
+const ProductsPage = ({ user,setUser }) => {
   const navigate = useNavigate()
   const [price, setPrice] = useState({ min: 0, max: 9999 })
   const { min, max } = price
@@ -106,8 +106,6 @@ const ProductsPage = ({ user,setUser, bascket, setBasket }) => {
                   user={user}
                   setUser={setUser}
                   product={product}
-                  bascket={bascket}
-                  setBasket={setBasket}
                   key={product._id}
                 ></ProductCard>
               )

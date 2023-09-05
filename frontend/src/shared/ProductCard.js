@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { getBasket } from './utils'
 
 const CardContainer = styled.div`
@@ -95,26 +95,27 @@ const AddToBasket = styled.div`
   }
 `
 
-const ProductCard = ({ user,setUser, product, basket, setBasket }) => {
+const ProductCard = ({ user, setUser, product }) => {
   const navigate = useNavigate()
   const { _id, images, title, availability, price } = product
-
   const handlerSetBasket = () => {
-    if(basket.find(elem => elem._id === _id)) {
+    if (!user) {
+      alert("You isn't authorized")
+      return
+    }
+    if (user.basket.find((elem) => elem._id === _id)) {
       alert(`This product already in basket: ${title}`)
       return
     }
-    const copyBasket = basket.slice()
-    copyBasket.push(product)
-    setBasket(copyBasket)
-    alert(`Added to basket: ${title}`)
+    const basketCopy = user.basket.slice()
+    basketCopy.push(product)
+    setUser((prevState) => ({
+      ...prevState,
+      basket: basketCopy,
+    }))
+    console.log(user)
   }
-  useEffect(() => {
-    localStorage.setItem('basket', JSON.stringify(basket));
-  }, [basket]);
 
-  // Here should be condition render "user ? render basket button : null", but it isn't work now
-  // I can't find a problem
   return (
     <CardContainer>
       <CardImageContainer
@@ -133,9 +134,11 @@ const ProductCard = ({ user,setUser, product, basket, setBasket }) => {
       >
         {title}
       </CardTitle>
-      <CardPrice>{'$'+ price}</CardPrice>
+      <CardPrice>{'$' + price}</CardPrice>
       <CardIsAmazonSeller>{availability}</CardIsAmazonSeller>
-      <AddToBasket onClick={handlerSetBasket}>Add to basket</AddToBasket>
+      {user && user.email ? (
+        <AddToBasket onClick={handlerSetBasket}>Add to basket</AddToBasket>
+      ) : null}
     </CardContainer>
   )
 }

@@ -22,26 +22,27 @@ const Counter = styled.span`
 `
 
 const Products = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
-const Basket = ({ user, basket, setBasket }) => {
-  useEffect(() => {
-    const basketLS = JSON.parse(localStorage.getItem('basket'))
-    if (basketLS) {
-      setBasket(basketLS)
-    }
-  }, [])
-  useEffect(() => {
-    getBasket(user)
-      .then((basketData) => {
-        console.log(basketData)
-      })
-    console.log(user)
-  }, []);
+const Total = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  font-size: 24px;
+  width: 100%;
+`
+
+const Basket = ({ user }) => {
+  const userLS = JSON.parse(localStorage.getItem('user'))
+  const { basket } = userLS
+  let totalSum = 0
+  basket.forEach((elem) => {
+    totalSum += elem.price
+  })
   return (
     <Container>
       <Title>Your basket</Title>
@@ -51,8 +52,13 @@ const Basket = ({ user, basket, setBasket }) => {
           : 'Basket is empty'}
       </Counter>
       <Products>
-        {basket ? basket.map(product => <ProductInBascket product={product}></ProductInBascket>): null}
+        {basket
+          ? basket.map((product) => (
+              <ProductInBascket product={product}></ProductInBascket>
+            ))
+          : null}
       </Products>
+      {totalSum ? <Total>{`Total sum: $${totalSum}`}</Total> : null}
     </Container>
   )
 }

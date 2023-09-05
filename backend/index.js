@@ -71,16 +71,12 @@ app.get("/getRecommended", async (req, res) => {
 });
 
 app.get("/getBasket", async (req, res) => {
-  const {user} = req.query;
+  const { user } = req.query;
   let findedUser;
-  if(user) {
-    findedUser = await Users.find({email: user.email});
-  }
-  if(findedUser) {
-    console.log(user)
-  }
-  else {
-    console.log("You unsigned")
+  if (user) {
+    findedUser = await Users.find({ email: user.email });
+  } else {
+    console.log("You unsigned");
   }
   res.json(findedUser);
 });

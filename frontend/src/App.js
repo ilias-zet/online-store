@@ -50,19 +50,23 @@ const Button = styled.div`
     right: 1rem;
   }
 `
-
+const userInit = {
+  name: '', // String
+  surname: '', // String
+  email: '', // String
+  password: '', // String
+  token: '', // String
+  basket: [], // Array
+}
+const userLS = JSON.parse(localStorage.getItem('user'))
+if (!userLS || !userLS.email) {
+  localStorage.setItem('user', JSON.stringify(userInit))
+}
 function App() {
   const [theme, setTheme] = useState('light')
   const { isOpened, open, close, isSignIn } = useSignUp(false)
   const [basket, setBasket] = useState([])
-  const userInit = {
-    name: '', // String
-    surname: '', // String
-    email: '', // String
-    password: '', // String
-    token: '', // String
-    basket: [], // Array
-  }
+
   const [user, setUser] = useState(userInit)
   const [scroll, setScroll] = useState(0)
   const [isOpenedMenu, setIsopenedMenu] = useState(false)
@@ -73,6 +77,10 @@ function App() {
       setIsopenedMenu(false)
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user))
+  }, [user])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
@@ -100,13 +108,22 @@ function App() {
         <OuterContainer>
           <Container>
             <Routes>
-              <Route path='/' element={<HomePage basket={basket} setBasket={setBasket}></HomePage>} />
-              <Route path='/products' element={<ProductsPage user={user} setUser={setUser} basket={basket} setBasket={setBasket} />} />
+              <Route
+                path='/'
+                element={<HomePage user={user} setUser={setUser}></HomePage>}
+              />
+              <Route
+                path='/products'
+                element={<ProductsPage user={user} setUser={setUser} />}
+              />
               <Route
                 path='/categories'
                 element={<CategoriesPage></CategoriesPage>}
               />
-              <Route path='/basket' element={<Basket basket={basket} user={user} setUser={setUser} setBasket={setBasket}></Basket>} />
+              <Route
+                path='/basket'
+                element={<Basket user={user} setUser={setUser}></Basket>}
+              />
               <Route path='/products/:product_id' element={<ProductPage />} />
             </Routes>
             <Authorization
