@@ -279,7 +279,7 @@ const Header = ({
     }
   }, [])
   const resetUser = () => {
-    localStorage.setItem('user', JSON.stringify(userInit));
+    localStorage.setItem('user', JSON.stringify(userInit))
     setUser(userInit)
   }
   return (
@@ -309,8 +309,15 @@ const Header = ({
           >
             Categories
           </NavBtn>
-          <NavBtn isOpenedMenu={isOpenedMenu} href='#'>
-            Contacts
+          <NavBtn
+            isOpenedMenu={isOpenedMenu}
+            onClick={() => {
+              navigate(`/basket`)
+              window.scrollTo(0, 0)
+              setIsopenedMenu(false)
+            }}
+          >
+            Basket
           </NavBtn>
         </NavMenu>
         <BtnsContainer isOpenedMenu={isOpenedMenu}>

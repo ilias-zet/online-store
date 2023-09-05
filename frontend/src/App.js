@@ -65,8 +65,6 @@ if (!userLS || !userLS.email) {
 function App() {
   const [theme, setTheme] = useState('light')
   const { isOpened, open, close, isSignIn } = useSignUp(false)
-  const [basket, setBasket] = useState([])
-
   const [user, setUser] = useState(userInit)
   const [scroll, setScroll] = useState(0)
   const [isOpenedMenu, setIsopenedMenu] = useState(false)

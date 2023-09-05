@@ -73,14 +73,3 @@ export const getSignIn = async (userData, email, password) => {
     alert(e)
   }
 }
-
-export const getBasket = async (user) => {
-  try {
-    const { data } = await axios.get('http://localhost:8000/getBasket', {
-      params: { user },
-    })
-    return data
-  } catch (e) {
-    console.log('Error on basket:  ', e)
-  }
-}

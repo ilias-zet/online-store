@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { getBasket } from './utils'
 
 const CardContainer = styled.div`
   display: flex;
@@ -113,7 +111,7 @@ const ProductCard = ({ user, setUser, product }) => {
       ...prevState,
       basket: basketCopy,
     }))
-    console.log(user)
+    alert(`Added to the basket: ${title}`)
   }
 
   return (
