@@ -59,7 +59,7 @@ const userInit = {
   basket: [], // Array
 }
 const userLS = JSON.parse(localStorage.getItem('user'))
-if (!userLS || !userLS.email) {
+if (!userLS || userLS === undefined) {
   localStorage.setItem('user', JSON.stringify(userInit))
 }
 function App() {

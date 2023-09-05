@@ -37,7 +37,7 @@ const Total = styled.div`
 `
 
 // State user for future changes
-const Basket = ({ user }) => {
+const Basket = ({ user,setUser }) => {
   const userLS = JSON.parse(localStorage.getItem('user'))
   const { basket } = userLS
   let totalSum = 0
@@ -46,7 +46,7 @@ const Basket = ({ user }) => {
   })
   return (
     <Container>
-      {basket && user.email ? (
+      {basket ? (
         !basket ?( 
         <Skeleton
           style={{ margin: '10px' }}
@@ -65,7 +65,7 @@ const Basket = ({ user }) => {
           <Products>
             {basket
               ? basket.map((product) => (
-                  <ProductInBascket product={product}></ProductInBascket>
+                  <ProductInBascket user={user} setUser={setUser} product={product}></ProductInBascket>
                 ))
               : null}
           </Products>

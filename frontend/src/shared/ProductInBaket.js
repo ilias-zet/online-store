@@ -77,8 +77,23 @@ const Remove = styled.div`
   border-radius: 5px;
 `
 
-const ProductInBascket = ({ product }) => {
+const ProductInBascket = ({ product,setUser,user }) => {
   const { _id, images, title, price } = product
+  const handlerSetBasket = () => {
+    if (!user.basket.find((elem) => elem._id === _id)) {
+      alert(`This product isn't in the basket: ${title}`)
+      return
+    }
+    const basketCopy = user.basket.slice()
+    const idx = basketCopy.indexOf(product)
+    console.log(idx)
+    // basketCopy.splice(product)
+    // setUser((prevState) => ({
+    //   ...prevState,
+    //   basket: basketCopy,
+    // }))
+    // alert(`Added to the basket: ${title}`)
+  }
   return (
     <Container>
       <ImageContainer>
@@ -87,7 +102,7 @@ const ProductInBascket = ({ product }) => {
       <Title>{title}</Title>
       <Price>{'$' + price}</Price>
       <Buttons>
-        <Remove>-</Remove>
+        <Remove onClick={setUser()}>-</Remove>
       </Buttons>
     </Container>
   )
