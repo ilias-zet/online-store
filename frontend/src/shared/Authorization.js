@@ -129,7 +129,6 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
     !email ||
     !password ||
     !repeatPassword) && !isSignIn) || (!email || !password);
-
   const handlerSignBtns = () => {
     if (!disabled) {
       let userData;
@@ -147,12 +146,14 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
       if(isSignIn) {
         getDataSignIn().then(({user}) => {
           setUser(user)
+          localStorage.setItem('user', JSON.stringify(user));
           alert("Successfull sign in!")
         })
       } else {
         getDataSignUp().then(res => {
           if(res) {
             setUser(res.user)
+            localStorage.setItem('user', JSON.stringify(res.user));
             alert(res.message)
           }
         });

@@ -36,7 +36,7 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  transform: ${({MousePosition}) => `rotateY(${MousePosition.left/30}deg) rotateX(${MousePosition.top/30}deg)`};
+ 
 `
 const Info = styled.div`
   display: flex;

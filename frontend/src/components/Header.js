@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import burgerImg from '../images/icons/Icon-Burger-menu.png'
 import ligthImg from '../images/icons/sunny-outline.svg'
 import darkImg from '../images/icons/moon-outline.svg'
+import { useEffect } from 'react'
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -271,7 +272,16 @@ const Header = ({
   switchTheme,
 }) => {
   const navigate = useNavigate()
-
+  useEffect(() => {
+    let userLS = JSON.parse(localStorage.getItem('user'))
+    if (userLS.email) {
+      setUser(userLS)
+    }
+  }, [])
+  const resetUser = () => {
+    localStorage.setItem('user', JSON.stringify(userInit));
+    setUser(userInit)
+  }
   return (
     <OuterContainer>
       <Container>
@@ -310,7 +320,7 @@ const Header = ({
                 <UserImgBtn>{user.name[0] + ' ' + user.surname[0]}</UserImgBtn>
                 <UserFullname>{user.name + ' ' + user.surname}</UserFullname>
               </UserBtnContainer>
-              <LogoutBtn onClick={() => setUser(userInit)}>
+              <LogoutBtn onClick={() => resetUser()}>
                 <LogoutImg src='https://cdn-icons-png.flaticon.com/512/152/152534.png'></LogoutImg>
               </LogoutBtn>
             </>

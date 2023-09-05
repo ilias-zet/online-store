@@ -128,7 +128,7 @@ const presents = [
   },
 ];
 
-const HomePage = () => {
+const HomePage = ({ basket,setBasket }) => {
   const [categories, setCategories] = useState([]);
   const [recProducts, setRecProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -148,6 +148,13 @@ const HomePage = () => {
       })
       .finally(setIsLoaded(true));
   }, []);
+
+  useEffect(() => {
+    const basketLS = JSON.parse(localStorage.getItem('basket'));
+    if (basketLS) {
+      setBasket(basketLS);
+    }
+  }, []);
   return (
     <BodyContainer>
       <RecommendedTitle>Recommended</RecommendedTitle>
@@ -163,7 +170,7 @@ const HomePage = () => {
           ></Skeleton>
         ) : (
           recProducts.map((product) => (
-            <ProductCard product={product}></ProductCard>
+            <ProductCard basket={basket} setBasket={setBasket} product={product}></ProductCard>
           ))
         )}
       </RecommendedProducts>

@@ -10,6 +10,7 @@ import Header from './components/Header'
 import useSignUp from './customHooks/useSignUp'
 import CategoriesPage from './pages/Categories'
 import Authorization from './shared/Authorization'
+import Basket from './pages/Basket'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme, GlobalStyles } from './shared/theme'
 
@@ -19,6 +20,7 @@ const OuterContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 100%;
 `
 
 const Container = styled.div`
@@ -52,12 +54,14 @@ const Button = styled.div`
 function App() {
   const [theme, setTheme] = useState('light')
   const { isOpened, open, close, isSignIn } = useSignUp(false)
+  const [basket, setBasket] = useState([])
   const userInit = {
     name: '', // String
     surname: '', // String
     email: '', // String
     password: '', // String
     token: '', // String
+    basket: [], // Array
   }
   const [user, setUser] = useState(userInit)
   const [scroll, setScroll] = useState(0)
@@ -96,12 +100,13 @@ function App() {
         <OuterContainer>
           <Container>
             <Routes>
-              <Route path='/' element={<HomePage></HomePage>} />
-              <Route path='/products' element={<ProductsPage />} />
+              <Route path='/' element={<HomePage basket={basket} setBasket={setBasket}></HomePage>} />
+              <Route path='/products' element={<ProductsPage user={user} setUser={setUser} basket={basket} setBasket={setBasket} />} />
               <Route
                 path='/categories'
                 element={<CategoriesPage></CategoriesPage>}
               />
+              <Route path='/basket' element={<Basket basket={basket} user={user} setUser={setUser} setBasket={setBasket}></Basket>} />
               <Route path='/products/:product_id' element={<ProductPage />} />
             </Routes>
             <Authorization

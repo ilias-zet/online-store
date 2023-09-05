@@ -1,9 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { getBasket } from './utils'
 
 const CardContainer = styled.div`
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,8 +18,9 @@ const CardContainer = styled.div`
   &:hover {
     background-color: #7f8377;
   }
-`;
+`
 const CardImageContainer = styled.div`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +29,7 @@ const CardImageContainer = styled.div`
   margin-top: 10px;
   overflow: hidden;
   border-radius: 10px;
-`;
+`
 
 const CardImage = styled.img`
   width: 100%;
@@ -36,28 +38,28 @@ const CardImage = styled.img`
     width: 116%;
     cursor: pointer;
   }
-`;
+`
 const CardTitle = styled.a`
   cursor: pointer;
   position: relative;
   justify-content: center;
   margin-top: 10px;
-  width : 220px;
+  width: 220px;
   display: inline-block;
   height: 88px;
   font-family: Bradley Hand;
   text-decoration: none;
   color: #120907;
   font-size: 16px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   text-overflow: ellipsis;
   overflow: hidden;
-  height: 1.2em; 
+  height: 1.2em;
   white-space: nowrap;
   &:hover {
     color: wheat;
   }
-`;
+`
 const CardPrice = styled.div`
   display: flex;
   align-items: center;
@@ -66,8 +68,8 @@ const CardPrice = styled.div`
   font-family: Bradley Hand;
   font-size: 20px;
   color: #120907;
-  font-family: "Inter", sans-serif;
-`;
+  font-family: 'Inter', sans-serif;
+`
 const CardIsAmazonSeller = styled.div`
   display: flex;
   align-items: center;
@@ -75,26 +77,67 @@ const CardIsAmazonSeller = styled.div`
   font-family: Bradley Hand;
   color: rgb(74, 74, 74);
   margin-top: 10px;
-`;
+`
 
-const ProductCard = ({ product }) => {
-  const navigate = useNavigate();
-  const { _id,images,title,availability,price } = product;
+const AddToBasket = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 60%;
+  height: 40px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  background-color: #58d176;
+  &:hover {
+    background-color: #38824a;
+  }
+`
+
+const ProductCard = ({ user,setUser, product, basket, setBasket }) => {
+  const navigate = useNavigate()
+  const { _id, images, title, availability, price } = product
+
+  const handlerSetBasket = () => {
+    if(basket.find(elem => elem._id === _id)) {
+      alert(`This product already in basket: ${title}`)
+      return
+    }
+    const copyBasket = basket.slice()
+    copyBasket.push(product)
+    setBasket(copyBasket)
+    alert(`Added to basket: ${title}`)
+  }
+  useEffect(() => {
+    localStorage.setItem('basket', JSON.stringify(basket));
+  }, [basket]);
+
+  // Here should be condition render "user ? render basket button : null", but it isn't work now
+  // I can't find a problem
   return (
-    <CardContainer onClick={() => {
-      navigate(`/products/${_id}`)
-      window.scrollTo(0,0)
-    }}>
-      <CardImageContainer>
+    <CardContainer>
+      <CardImageContainer
+        onClick={() => {
+          navigate(`/products/${_id}`)
+          window.scrollTo(0, 0)
+        }}
+      >
         {images ? <CardImage src={images}></CardImage> : null}
       </CardImageContainer>
-      <CardTitle>{title}</CardTitle>
-      <CardPrice>{price + "$"}</CardPrice>
-      <CardIsAmazonSeller>
-        {availability}
-      </CardIsAmazonSeller>
+      <CardTitle
+        onClick={() => {
+          navigate(`/products/${_id}`)
+          window.scrollTo(0, 0)
+        }}
+      >
+        {title}
+      </CardTitle>
+      <CardPrice>{'$'+ price}</CardPrice>
+      <CardIsAmazonSeller>{availability}</CardIsAmazonSeller>
+      <AddToBasket onClick={handlerSetBasket}>Add to basket</AddToBasket>
     </CardContainer>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard
