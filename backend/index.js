@@ -70,15 +70,19 @@ app.get("/getRecommended", async (req, res) => {
   res.json(recomended);
 });
 
-app.get("/getCart", async (req, res) => {
-  const { user } = req.query;
-  let findedUser;
-  if (user) {
-    findedUser = await Users.find({ email: user.email });
+app.post("/saveCart", async (req, res) => {
+  let updatedUser;
+  if (req.body) {
+    const {email,cart} = req.body;
+    const filter = { email };
+    const update = { cart };
+    updatedUser = await Users.findOneAndUpdate(filter, update, {
+      new: true
+    });
   } else {
     console.log("You unsigned");
   }
-  res.json(findedUser);
+  res.json(updatedUser);
 });
 
 app.use(productsRoutes);

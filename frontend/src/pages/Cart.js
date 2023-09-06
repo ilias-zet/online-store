@@ -51,7 +51,7 @@ const Cart = ({ user,setUser }) => {
   const { cart } = user
   let totalSum = 0
   cart.forEach((elem) => {
-    totalSum += elem.price
+    totalSum += Number(elem.price)
   })
   return (
     <Container>

@@ -78,7 +78,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user))
-    console.log(user)
   }, [user])
 
   useEffect(() => {

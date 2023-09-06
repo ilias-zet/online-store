@@ -5,6 +5,7 @@ import burgerImg from '../images/icons/Icon-Burger-menu.png'
 import ligthImg from '../images/icons/sunny-outline.svg'
 import darkImg from '../images/icons/moon-outline.svg'
 import { useEffect } from 'react'
+import { saveCart } from '../shared/utils'
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -327,7 +328,15 @@ const Header = ({
                 <UserImgBtn>{user.name[0] + ' ' + user.surname[0]}</UserImgBtn>
                 <UserFullname>{user.name + ' ' + user.surname}</UserFullname>
               </UserBtnContainer>
-              <LogoutBtn onClick={() => resetUser()}>
+              <LogoutBtn onClick={() =>{ 
+                saveCart(user).then((res) => {
+                  if (res) {
+                    console.log(res)
+                    resetUser()
+                  }
+                })
+                
+                }}>
                 <LogoutImg src='https://cdn-icons-png.flaticon.com/512/152/152534.png'></LogoutImg>
               </LogoutBtn>
             </>
