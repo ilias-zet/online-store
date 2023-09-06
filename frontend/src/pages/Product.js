@@ -137,7 +137,6 @@ const ProductPage = () => {
 
   const resetTransform = () => {
     setMousePosition({left: 0, top: 0})
-    console.log(MousePosition)
   }
 
   function handleMouseMove(e) {

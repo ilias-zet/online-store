@@ -66,6 +66,7 @@ const Buttons = styled.div`
 `
 
 const Remove = styled.div`
+cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
