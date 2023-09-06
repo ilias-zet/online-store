@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -77,22 +77,17 @@ const Remove = styled.div`
   border-radius: 5px;
 `
 
-const ProductInBascket = ({ product,setUser,user }) => {
-  const { _id, images, title, price } = product
-  const handlerSetBasket = () => {
-    if (!user.basket.find((elem) => elem._id === _id)) {
-      alert(`This product isn't in the basket: ${title}`)
-      return
-    }
-    const basketCopy = user.basket.slice()
-    const idx = basketCopy.indexOf(product)
-    console.log(idx)
-    // basketCopy.splice(product)
-    // setUser((prevState) => ({
-    //   ...prevState,
-    //   basket: basketCopy,
-    // }))
-    // alert(`Added to the basket: ${title}`)
+const Cart = ({ product, setUser, user }) => {
+  const { images, title, price } = product
+  const handlerSetCart = () => {
+    const cartCopy = user.cart.slice()
+    const idx = cartCopy.indexOf(product)
+    cartCopy.splice(idx, 1)
+    setUser((prevState) => ({
+      ...prevState,
+      cart: cartCopy,
+    }))
+    alert(`Removed from cart: ${title}`)
   }
   return (
     <Container>
@@ -102,10 +97,10 @@ const ProductInBascket = ({ product,setUser,user }) => {
       <Title>{title}</Title>
       <Price>{'$' + price}</Price>
       <Buttons>
-        <Remove onClick={setUser()}>-</Remove>
+        <Remove onClick={handlerSetCart}>-</Remove>
       </Buttons>
     </Container>
   )
 }
 
-export default ProductInBascket
+export default Cart

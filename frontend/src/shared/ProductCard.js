@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
@@ -77,7 +77,7 @@ const CardIsAmazonSeller = styled.div`
   margin-top: 10px;
 `
 
-const AddToBasket = styled.div`
+const AddToCart = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -96,22 +96,22 @@ const AddToBasket = styled.div`
 const ProductCard = ({ user, setUser, product }) => {
   const navigate = useNavigate()
   const { _id, images, title, availability, price } = product
-  const handlerSetBasket = () => {
+  const handlerSetCart = () => {
     if (!user) {
       alert("You isn't authorized")
       return
     }
-    if (user.basket.find((elem) => elem._id === _id)) {
-      alert(`This product already in basket: ${title}`)
+    if (user.cart.find((elem) => elem._id === _id)) {
+      alert(`This product already in cart: ${title}`)
       return
     }
-    const basketCopy = user.basket.slice()
-    basketCopy.push(product)
+    const cartCopy = user.cart.slice()
+    cartCopy.push(product)
     setUser((prevState) => ({
       ...prevState,
-      basket: basketCopy,
+      cart: cartCopy,
     }))
-    alert(`Added to the basket: ${title}`)
+    alert(`Added to the cart: ${title}`)
   }
 
   return (
@@ -135,7 +135,7 @@ const ProductCard = ({ user, setUser, product }) => {
       <CardPrice>{'$' + price}</CardPrice>
       <CardIsAmazonSeller>{availability}</CardIsAmazonSeller>
       {user && user.email ? (
-        <AddToBasket onClick={handlerSetBasket}>Add to basket</AddToBasket>
+        <AddToCart onClick={handlerSetCart}>Add to cart</AddToCart>
       ) : null}
     </CardContainer>
   )

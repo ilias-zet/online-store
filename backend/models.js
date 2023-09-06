@@ -28,7 +28,7 @@ const User = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   token: { type: String },
-  basket: {type:[
+  cart: {type:[
     {
       id: { type: String,},
       images: { type: String,},

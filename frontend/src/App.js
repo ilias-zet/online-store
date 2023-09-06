@@ -10,7 +10,7 @@ import Header from './components/Header'
 import useSignUp from './customHooks/useSignUp'
 import CategoriesPage from './pages/Categories'
 import Authorization from './shared/Authorization'
-import Basket from './pages/Basket'
+import Cart from './pages/Cart'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme, GlobalStyles } from './shared/theme'
 
@@ -56,10 +56,10 @@ const userInit = {
   email: '', // String
   password: '', // String
   token: '', // String
-  basket: [], // Array
+  cart: [], // Array
 }
 const userLS = JSON.parse(localStorage.getItem('user'))
-if (!userLS || userLS === undefined) {
+if (!userLS) {
   localStorage.setItem('user', JSON.stringify(userInit))
 }
 function App() {
@@ -78,6 +78,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user))
+    console.log(user)
   }, [user])
 
   useEffect(() => {
@@ -119,8 +120,8 @@ function App() {
                 element={<CategoriesPage></CategoriesPage>}
               />
               <Route
-                path='/basket'
-                element={<Basket user={user} setUser={setUser}></Basket>}
+                path='/cart'
+                element={<Cart user={user} setUser={setUser}></Cart>}
               />
               <Route path='/products/:product_id' element={<ProductPage />} />
             </Routes>

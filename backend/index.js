@@ -70,7 +70,7 @@ app.get("/getRecommended", async (req, res) => {
   res.json(recomended);
 });
 
-app.get("/getBasket", async (req, res) => {
+app.get("/getCart", async (req, res) => {
   const { user } = req.query;
   let findedUser;
   if (user) {

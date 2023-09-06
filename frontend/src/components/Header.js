@@ -312,12 +312,12 @@ const Header = ({
           <NavBtn
             isOpenedMenu={isOpenedMenu}
             onClick={() => {
-              navigate(`/basket`)
+              navigate(`/cart`)
               window.scrollTo(0, 0)
               setIsopenedMenu(false)
             }}
           >
-            Basket
+            Cart
           </NavBtn>
         </NavMenu>
         <BtnsContainer isOpenedMenu={isOpenedMenu}>

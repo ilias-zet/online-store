@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import ProductInBascket from '../shared/ProductInBaket'
+import ProductInCart from '../shared/ProductInCart'
 import Skeleton from 'react-loading-skeleton'
 
 const Container = styled.div`
@@ -36,18 +36,27 @@ const Total = styled.div`
   width: 100%;
 `
 
-// State user for future changes
-const Basket = ({ user,setUser }) => {
-  const userLS = JSON.parse(localStorage.getItem('user'))
-  const { basket } = userLS
+const Warning = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+font-size: 20px;
+font-weight: 1000;
+margin-top: 20px;
+`
+
+
+const Cart = ({ user,setUser }) => {
+  const { cart } = user
   let totalSum = 0
-  basket.forEach((elem) => {
+  cart.forEach((elem) => {
     totalSum += elem.price
   })
   return (
     <Container>
-      {basket ? (
-        !basket ?( 
+      {cart && user.email ? (
+        !cart ?( 
         <Skeleton
           style={{ margin: '10px' }}
           count={3}
@@ -56,16 +65,16 @@ const Basket = ({ user,setUser }) => {
           borderRadius={10}
         ></Skeleton>) : (
           <>
-          <Title>Your basket</Title>
+          <Title>Your cart</Title>
           <Counter>
-            {basket
-              ? `Founded ${basket.length} products in basket`
-              : 'Basket is empty'}
+            {cart
+              ? `Founded ${cart.length} products in cart`
+              : 'cart is empty'}
           </Counter>
           <Products>
-            {basket
-              ? basket.map((product) => (
-                  <ProductInBascket user={user} setUser={setUser} product={product}></ProductInBascket>
+            {cart
+              ? cart.map((product) => (
+                  <ProductInCart user={user} setUser={setUser} product={product}></ProductInCart>
                 ))
               : null}
           </Products>
@@ -73,10 +82,10 @@ const Basket = ({ user,setUser }) => {
         </>
         )
       ) : (
-        <h2>"You not logined"</h2>
+        <Warning>"Please, login for access to cart"</Warning>
       )}
     </Container>
   )
 }
 
-export default Basket
+export default Cart
