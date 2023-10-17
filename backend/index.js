@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { Images } = require("./models");
+const { Images, Users } = require("./models");
 const { Products } = require("./models");
 const authRouter = require("./routes/auth");
 const productsRoutes = require("./routes/products");
@@ -68,6 +68,21 @@ app.get("/getRecommended", async (req, res) => {
     products,
   };
   res.json(recomended);
+});
+
+app.post("/saveCart", async (req, res) => {
+  let updatedUser;
+  if (req.body) {
+    const {email,cart} = req.body;
+    const filter = { email };
+    const update = { cart };
+    updatedUser = await Users.findOneAndUpdate(filter, update, {
+      new: true
+    });
+  } else {
+    console.log("You unsigned");
+  }
+  res.json(updatedUser);
 });
 
 app.use(productsRoutes);

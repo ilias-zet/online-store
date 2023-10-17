@@ -10,6 +10,7 @@ import Header from './components/Header'
 import useSignUp from './customHooks/useSignUp'
 import CategoriesPage from './pages/Categories'
 import Authorization from './shared/Authorization'
+import Cart from './pages/Cart'
 import { ThemeProvider } from 'styled-components'
 import { darkTheme, lightTheme, GlobalStyles } from './shared/theme'
 
@@ -19,6 +20,7 @@ const OuterContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 100%;
 `
 
 const Container = styled.div`
@@ -48,17 +50,21 @@ const Button = styled.div`
     right: 1rem;
   }
 `
-
+const userInit = {
+  name: '', // String
+  surname: '', // String
+  email: '', // String
+  password: '', // String
+  token: '', // String
+  cart: [], // Array
+}
+const userLS = JSON.parse(localStorage.getItem('user'))
+if (!userLS) {
+  localStorage.setItem('user', JSON.stringify(userInit))
+}
 function App() {
   const [theme, setTheme] = useState('light')
   const { isOpened, open, close, isSignIn } = useSignUp(false)
-  const userInit = {
-    name: '', // String
-    surname: '', // String
-    email: '', // String
-    password: '', // String
-    token: '', // String
-  }
   const [user, setUser] = useState(userInit)
   const [scroll, setScroll] = useState(0)
   const [isOpenedMenu, setIsopenedMenu] = useState(false)
@@ -69,6 +75,10 @@ function App() {
       setIsopenedMenu(false)
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user))
+  }, [user])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
@@ -96,11 +106,21 @@ function App() {
         <OuterContainer>
           <Container>
             <Routes>
-              <Route path='/' element={<HomePage></HomePage>} />
-              <Route path='/products' element={<ProductsPage />} />
+              <Route
+                path='/'
+                element={<HomePage user={user} setUser={setUser}></HomePage>}
+              />
+              <Route
+                path='/products'
+                element={<ProductsPage user={user} setUser={setUser} />}
+              />
               <Route
                 path='/categories'
                 element={<CategoriesPage></CategoriesPage>}
+              />
+              <Route
+                path='/cart'
+                element={<Cart user={user} setUser={setUser}></Cart>}
               />
               <Route path='/products/:product_id' element={<ProductPage />} />
             </Routes>

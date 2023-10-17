@@ -28,6 +28,15 @@ const User = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   token: { type: String },
+  cart: {type:[
+    {
+      id: { type: String,},
+      images: { type: String,},
+      title: { type: String,},
+      availability: { type: String,}, 
+      price: { type: String,},
+    },
+],},
 });
 
 const Products = mongoose.model("Product", productSchema, "products");

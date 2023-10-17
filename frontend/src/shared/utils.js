@@ -73,3 +73,15 @@ export const getSignIn = async (userData, email, password) => {
     alert(e)
   }
 }
+
+export const saveCart = async (user) => {
+  try {
+    const {data} = await axios.post(
+      'http://localhost:8000/saveCart',
+      user,
+    )
+    return data
+  } catch (e) {
+    alert(e)
+  }
+}

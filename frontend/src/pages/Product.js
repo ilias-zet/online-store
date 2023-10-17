@@ -129,6 +129,20 @@ const ProductPage = () => {
   const [product, setProduct] = useState(INITIAL_PRODUCT);
   const {images,title,crawled_at,brand,priceCurrency,price,description,availability,} = product;
 
+
+  const [MousePosition, setMousePosition] = useState({
+    left: 0,
+    top: 0
+  })
+
+  const resetTransform = () => {
+    setMousePosition({left: 0, top: 0})
+  }
+
+  function handleMouseMove(e) {
+    setMousePosition({left: e.pageX, top: e.pageY})
+   }
+
   const getData = async () => {
     const categories = await getProduct(product_id);
     return categories;

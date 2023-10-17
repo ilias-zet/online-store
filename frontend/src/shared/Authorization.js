@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import useInput from "../customHooks/useInput";
-const { getSignIn,getSignUp } = require("../shared/utils")
+import React from 'react'
+import styled from 'styled-components'
+import useInput from '../customHooks/useInput'
+const { getSignIn, getSignUp } = require('../shared/utils')
 
 const FormBg = styled.div`
-  display: ${(props) => (props.isOpened ? "block" : "none")};
+  display: ${(props) => (props.isOpened ? 'block' : 'none')};
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@ const FormBg = styled.div`
   min-width: 100%;
   height: 100%;
   background-color: rgb(0, 0, 0, 0.7);
-`;
+`
 
 const FormContainer = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const FormContainer = styled.div`
   @media (max-width: 480px) {
     margin-top: 20%;
   }
-`;
+`
 
 const CloseForm = styled.span`
   cursor: pointer;
@@ -42,7 +42,7 @@ const CloseForm = styled.span`
   font-weight: 1000;
   font-size: 20px;
   color: black;
-`;
+`
 
 const FormMainText = styled.span`
   display: flex;
@@ -51,30 +51,30 @@ const FormMainText = styled.span`
   justify-content: center;
   width: 100%;
   font-size: 24px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #292929;
   font-weight: 1000;
-`;
+`
 
 const Outer = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
   height: 80px;
-`;
+`
 
 const Inner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 45%;
-`;
+`
 
 const Text = styled.span`
   width: 100%;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #292929;
-`;
+`
 
 const InputContainer = styled.div`
   display: flex;
@@ -83,7 +83,7 @@ const InputContainer = styled.div`
   justify-content: space-around;
   width: 90%;
   height: 80px;
-`;
+`
 
 const Input = styled.input`
   display: flex;
@@ -98,15 +98,18 @@ const Input = styled.input`
     -moz-box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
     box-shadow: -1px 0px 17px 4px rgba(34, 60, 80, 0.2);
   }
-`;
+`
 
 const SignBtn = styled.div`
-  ${({ disabled }) => disabled ? (`
+  ${({ disabled }) =>
+    disabled
+      ? `
       background-color: gray;
-    `):(`
+    `
+      : `
     background-color: black;
     cursor:pointer;
-    `)}
+    `}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,51 +118,55 @@ const SignBtn = styled.div`
   color: white;
   font-size: 20px;
   border-radius: 10px;
-`;
+`
 
 const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
-  const [name, onNameChange] = useInput();
-  const [surname, onSurnameChange] = useInput();
-  const [email, onEmailChange] = useInput();
-  const [password, onPasswordChange] = useInput();
-  const [repeatPassword, onRepeatPasswordChange] = useInput();
+  const [name, onNameChange] = useInput()
+  const [surname, onSurnameChange] = useInput()
+  const [email, onEmailChange] = useInput()
+  const [password, onPasswordChange] = useInput()
+  const [repeatPassword, onRepeatPasswordChange] = useInput()
   const disabled =
-    ((!name ||
-    !surname ||
+    ((!name || !surname || !email || !password || !repeatPassword) &&
+      !isSignIn) ||
     !email ||
-    !password ||
-    !repeatPassword) && !isSignIn) || (!email || !password);
-
+    !password
   const handlerSignBtns = () => {
     if (!disabled) {
-      let userData;
+      let userData
 
       const getDataSignUp = async () => {
-        const msgAndUser = await getSignUp(name, surname, email, password,userData);
-        return msgAndUser;
-      };
+        const msgAndUser = await getSignUp(
+          name,
+          surname,
+          email,
+          password,
+          userData,
+        )
+        return msgAndUser
+      }
 
       const getDataSignIn = async () => {
-        const tokenAndUser = await getSignIn(userData,email,password);
-        return tokenAndUser;
-      };
-    
-      if(isSignIn) {
-        getDataSignIn().then(({user}) => {
+        const tokenAndUser = await getSignIn(userData, email, password)
+        return tokenAndUser
+      }
+
+      if (isSignIn) {
+        getDataSignIn().then(({ user }) => {
           setUser(user)
-          alert("Successfull sign in!")
+          alert('Successfull sign in!')
         })
       } else {
-        getDataSignUp().then(res => {
-          if(res) {
+        getDataSignUp().then((res) => {
+          if (res) {
             setUser(res.user)
             alert(res.message)
           }
-        });
-      } 
-      close();
+        })
+      }
+      close()
     }
-  };
+  }
 
   return (
     <FormBg isOpened={isOpened}>
@@ -173,7 +180,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
               <Input
                 value={email}
                 onChange={onEmailChange}
-                placeholder="ivanivanov@mail.com"
+                placeholder='ivanivanov@mail.com'
               ></Input>
             </InputContainer>
             <InputContainer>
@@ -194,7 +201,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
                 <Input
                   value={name}
                   onChange={onNameChange}
-                  placeholder="Ivan"
+                  placeholder='Ivan'
                 ></Input>
               </Inner>
               <Inner>
@@ -202,7 +209,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
                 <Input
                   value={surname}
                   onChange={onSurnameChange}
-                  placeholder="Ivanov"
+                  placeholder='Ivanov'
                 ></Input>
               </Inner>
             </Outer>
@@ -211,7 +218,7 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
               <Input
                 value={email}
                 onChange={onEmailChange}
-                placeholder="ivanivanov@mail.com"
+                placeholder='ivanivanov@mail.com'
               ></Input>
             </InputContainer>
             <InputContainer>
@@ -225,14 +232,17 @@ const Authorization = ({ isSignIn, isOpened, close, setUser }) => {
                 onChange={onRepeatPasswordChange}
               ></Input>
             </InputContainer>
-            <SignBtn onClick={() => !disabled? handlerSignBtns():null} disabled={disabled}>
+            <SignBtn
+              onClick={() => (!disabled ? handlerSignBtns() : null)}
+              disabled={disabled}
+            >
               Sign Up
             </SignBtn>
           </>
         )}
       </FormContainer>
     </FormBg>
-  );
-};
+  )
+}
 
-export default Authorization;
+export default Authorization

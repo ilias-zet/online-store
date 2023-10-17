@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Category from "../shared/Category";
-import ProductCard from "../shared/ProductCard";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-const { getRecommended } = require("../shared/utils");
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import Category from '../shared/Category'
+import ProductCard from '../shared/ProductCard'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+const { getRecommended } = require('../shared/utils')
 
 const BodyContainer = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const BodyContainer = styled.div`
     padding-left: 20px;
     padding-right: 20px;
   }
-`;
+`
 
 const CategoriesContainer = styled.div`
   display: flex;
@@ -33,11 +33,11 @@ const CategoriesContainer = styled.div`
   min-height: 500px;
   border-radius: 10px;
   margin-top: 20px;
-`;
+`
 
 const MainDescription = styled.div`
   width: 100%;
-`;
+`
 const RecommendedTitle = styled.h2`
   margin-top: 64px;
   margin-bottom: 0;
@@ -49,7 +49,7 @@ const RecommendedTitle = styled.h2`
   @media (max-width: 480px) {
     font-size: 32px;
   }
-`;
+`
 const RecommendedProducts = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -60,7 +60,7 @@ const RecommendedProducts = styled.div`
   height: 100%;
   margin-top: 20px;
   gap: 10px;
-`;
+`
 
 const Present = styled.div`
   max-width: 1020px;
@@ -71,7 +71,7 @@ const Present = styled.div`
   &:nth-child(odd) {
     flex-direction: row-reverse;
   }
-`;
+`
 
 const PresentTitle = styled.div`
   display: flex;
@@ -86,31 +86,31 @@ const PresentTitle = styled.div`
   @media (max-width: 480px) {
     font-size: 24px;
   }
-`;
+`
 const PresentContent = styled.div`
   flex-basis: 50%;
-`;
+`
 
 const presents = [
   {
-    title: "Dress to Impress",
+    title: 'Dress to Impress',
     content:
-      "Dress to impress and make the best of every day no matter what ithas in store. With fashions hottest must haves and accessories, you can find what youve been looking for on eBay.",
+      'Dress to impress and make the best of every day no matter what ithas in store. With fashions hottest must haves and accessories, you can find what youve been looking for on eBay.',
   },
   {
-    title: "Fashionably Perfect",
+    title: 'Fashionably Perfect',
     content:
-      "The stylish range of mens and womens clothing and shoes sizzle from head to toe, no matter the season. Its easier than ever to browse handbags, watches, and special occasion outfits by style, brand, orprice. Search on eBay for womens fashion, mens fashion, clothes,shoes, handbags, jewelry, watches, jackets and more.",
+      'The stylish range of mens and womens clothing and shoes sizzle from head to toe, no matter the season. Its easier than ever to browse handbags, watches, and special occasion outfits by style, brand, orprice. Search on eBay for womens fashion, mens fashion, clothes,shoes, handbags, jewelry, watches, jackets and more.',
   },
   {
-    title: "Top Fashion Brands",
+    title: 'Top Fashion Brands',
     content: `If brands are your thing, you can surf eBay to find handbags by Vera
     Bradley, watches by Rolex, athletic apparel by Nike, shoes from Nine
     West, jackets from Michael Kors, and shoes from Puma. Its all here
     in the eBay Fashion Department.`,
   },
   {
-    title: "Mens Fashion",
+    title: 'Mens Fashion',
     content: `Dont skimp when it comes to menswear that looks sharp and stylish.
     Beef up your closet with fashionable jeans, sweaters, and suits.
     eBay has a selection of accessories to fit your fancy, including
@@ -118,7 +118,7 @@ const presents = [
     or find the perfect backpack that holds all of your hiking supplies.`,
   },
   {
-    title: "Womens Fashion",
+    title: 'Womens Fashion',
     content: `Browse the wide selection of style pieces on eBay, and unearth a
     world of trendy treasures for women and girls. Check out boots,
     heels, sandals, and athletic footwear that will keep you and your
@@ -126,35 +126,35 @@ const presents = [
     picks for fashionistas, or discover daily deals that add oomph to
     your closet without breaking the bank.`,
   },
-];
+]
 
-const HomePage = () => {
-  const [categories, setCategories] = useState([]);
-  const [recProducts, setRecProducts] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+const HomePage = ({ user, setUser }) => {
+  const [categories, setCategories] = useState([])
+  const [recProducts, setRecProducts] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const getData = async () => {
-    const recommended = await getRecommended();
-    return recommended;
-  };
+    const recommended = await getRecommended()
+    return recommended
+  }
 
   useEffect(() => {
     getData()
       .then((recommended) => {
-        const { randomCategories, products } = recommended;
-        setRecProducts(products);
-        setCategories(randomCategories);
-        setIsLoaded(true);
+        const { randomCategories, products } = recommended
+        setRecProducts(products)
+        setCategories(randomCategories)
+        setIsLoaded(true)
       })
-      .finally(setIsLoaded(true));
-  }, []);
+      .finally(setIsLoaded(true))
+  }, [])
   return (
     <BodyContainer>
       <RecommendedTitle>Recommended</RecommendedTitle>
       <RecommendedProducts>
         {!isLoaded ? (
           <Skeleton
-            style={{ margin: "20px" }}
+            style={{ margin: '20px' }}
             count={3}
             width={250}
             height={350}
@@ -163,7 +163,11 @@ const HomePage = () => {
           ></Skeleton>
         ) : (
           recProducts.map((product) => (
-            <ProductCard product={product}></ProductCard>
+            <ProductCard
+              user={user}
+              setUser={setUser}
+              product={product}
+            ></ProductCard>
           ))
         )}
       </RecommendedProducts>
@@ -175,7 +179,7 @@ const HomePage = () => {
           ))
         ) : (
           <Skeleton
-            style={{ margin: "20px" }}
+            style={{ margin: '20px' }}
             count={6}
             width={250}
             height={350}
@@ -194,7 +198,7 @@ const HomePage = () => {
         ))}
       </MainDescription>
     </BodyContainer>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

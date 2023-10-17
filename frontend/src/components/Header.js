@@ -4,9 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import burgerImg from '../images/icons/Icon-Burger-menu.png'
 import ligthImg from '../images/icons/sunny-outline.svg'
 import darkImg from '../images/icons/moon-outline.svg'
+
+import { useEffect } from 'react'
+import { saveCart } from '../shared/utils'
+
 import homeImg from '../images/icons/home-outline.svg'
 import cartImg from '../images/icons/cart-outline.svg'
 import categoriesImg from '../images/icons/categories-outline.png'
+
 
 const OuterContainer = styled.div`
   position: fixed;
@@ -275,7 +280,16 @@ const Header = ({
   switchTheme,
 }) => {
   const navigate = useNavigate()
-
+  useEffect(() => {
+    let userLS = JSON.parse(localStorage.getItem('user'))
+    if (userLS.email) {
+      setUser(userLS)
+    }
+  }, [])
+  const resetUser = () => {
+    localStorage.setItem('user', JSON.stringify(userInit))
+    setUser(userInit)
+  }
   return (
     <OuterContainer>
       <Container>
@@ -303,7 +317,15 @@ const Header = ({
           >
             <img alt='' src={categoriesImg} height={"50%"}></img>
           </NavBtn>
-          <NavBtn isOpenedMenu={isOpenedMenu} href='#'>
+          <NavBtn
+            isOpenedMenu={isOpenedMenu}
+            onClick={() => {
+              navigate(`/cart`)
+              window.scrollTo(0, 0)
+              setIsopenedMenu(false)
+            }}
+          >
+            Cart
             <img alt='' src={cartImg} height={"50%"}></img>
           </NavBtn>
         </NavMenu>
@@ -314,7 +336,15 @@ const Header = ({
                 <UserImgBtn>{user.name[0] + ' ' + user.surname[0]}</UserImgBtn>
                 <UserFullname>{user.name + ' ' + user.surname}</UserFullname>
               </UserBtnContainer>
-              <LogoutBtn onClick={() => setUser(userInit)}>
+              <LogoutBtn onClick={() =>{ 
+                saveCart(user).then((res) => {
+                  if (res) {
+                    console.log(res)
+                    resetUser()
+                  }
+                })
+                
+                }}>
                 <LogoutImg src='https://cdn-icons-png.flaticon.com/512/152/152534.png'></LogoutImg>
               </LogoutBtn>
             </>
