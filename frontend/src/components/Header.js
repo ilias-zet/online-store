@@ -4,15 +4,22 @@ import { useNavigate } from 'react-router-dom'
 import burgerImg from '../images/icons/Icon-Burger-menu.png'
 import ligthImg from '../images/icons/sunny-outline.svg'
 import darkImg from '../images/icons/moon-outline.svg'
+
 import { useEffect } from 'react'
 import { saveCart } from '../shared/utils'
+
+import homeImg from '../images/icons/home-outline.svg'
+import cartImg from '../images/icons/cart-outline.svg'
+import categoriesImg from '../images/icons/categories-outline.png'
+
 
 const OuterContainer = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(0, 0, 0, 0.7);
+  background-color: rgb(255,255, 255, 0.7);
+  border-bottom: 1px solid black;
   width: 100%;
   height: 80px;
   z-index: 2;
@@ -298,7 +305,7 @@ const Header = ({
               setIsopenedMenu(false)
             }}
           >
-            Main page
+            <img alt='' src={homeImg} height={"50%"}></img>
           </NavBtn>
           <NavBtn
             isOpenedMenu={isOpenedMenu}
@@ -308,7 +315,7 @@ const Header = ({
               setIsopenedMenu(false)
             }}
           >
-            Categories
+            <img alt='' src={categoriesImg} height={"50%"}></img>
           </NavBtn>
           <NavBtn
             isOpenedMenu={isOpenedMenu}
@@ -319,6 +326,7 @@ const Header = ({
             }}
           >
             Cart
+            <img alt='' src={cartImg} height={"50%"}></img>
           </NavBtn>
         </NavMenu>
         <BtnsContainer isOpenedMenu={isOpenedMenu}>

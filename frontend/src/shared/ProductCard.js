@@ -11,7 +11,7 @@ const CardContainer = styled.div`
   background-color: #b5b8b6;
   margin: 10px;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   transition: all 0.2s;
   &:hover {
     background-color: #7f8377;
@@ -27,7 +27,8 @@ const CardImageContainer = styled.div`
   margin-top: 10px;
   overflow: hidden;
   border-radius: 10px;
-`
+`;
+
 
 const CardImage = styled.img`
   width: 100%;

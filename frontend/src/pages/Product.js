@@ -36,7 +36,6 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
- 
 `
 const Info = styled.div`
   display: flex;
@@ -130,6 +129,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(INITIAL_PRODUCT);
   const {images,title,crawled_at,brand,priceCurrency,price,description,availability,} = product;
 
+
   const [MousePosition, setMousePosition] = useState({
     left: 0,
     top: 0
@@ -162,8 +162,8 @@ const ProductPage = () => {
           navigate(`/products?${searchParams.toString()}`);
           }}>{`<- Back to "${product.main_category}" category`}</Back>
           <InnerContainer>
-            <ImgContainer onMouseMove={(e)=> handleMouseMove(e)} onMouseOut={() => resetTransform()}>
-              <Image src={images} alt="" MousePosition={MousePosition}></Image>
+            <ImgContainer>
+              <Image src={images} alt=""></Image>
             </ImgContainer>
             <Info>
               <Title>{title}</Title>
