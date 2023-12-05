@@ -4,7 +4,6 @@ import Category from '../shared/Category'
 import ProductCard from '../shared/ProductCard'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import CreateNewProduct from '../shared/CreateNewProduct'
 const { getRecommended } = require('../shared/utils')
 
 const BodyContainer = styled.div`
@@ -30,30 +29,22 @@ const CategoriesContainer = styled.div`
   gap: 24px;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 70%;
   min-height: 500px;
   border-radius: 10px;
   margin-top: 20px;
-`
-
-const CreateNewProductBtn = styled.span`
-  cursor: pointer;
-  background-color: #383838b8;
-  padding: 4px;
-  border-radius: 4px;
 `
 
 const MainDescription = styled.div`
   width: 100%;
 `
 const RecommendedTitle = styled.h2`
-  /* margin-top: 64px; */
+  margin-top: 64px;
   margin-bottom: 0;
-  /* font-size: 48px; */
+  font-size: 48px;
   line-height: 100%;
   font-weight: bold;
   text-align: center;
-  color: #e5e5e5;
   letter-spacing: -1.5px;
   @media (max-width: 480px) {
     font-size: 32px;
@@ -92,7 +83,6 @@ const PresentTitle = styled.div`
   line-height: 100%;
   font-weight: bold;
   letter-spacing: -1.5px;
-  color: #e5e5e5;
   @media (max-width: 480px) {
     font-size: 24px;
   }
@@ -142,8 +132,7 @@ const HomePage = ({ user, setUser }) => {
   const [categories, setCategories] = useState([])
   const [recProducts, setRecProducts] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isCreateProduct, setIsCreateProduct] = useState(false)
-  console.log(user)
+
   const getData = async () => {
     const recommended = await getRecommended()
     return recommended
@@ -161,16 +150,13 @@ const HomePage = ({ user, setUser }) => {
   }, [])
   return (
     <BodyContainer>
-      {/* {user.role === "admin" && <span style={{"color":"gray"}}>Are you want to create a new product?</span>}
-      {user.role === "admin" && <CreateNewProductBtn onClick={() => setIsCreateProduct(!isCreateProduct)}>{isCreateProduct ? "Show": "Hide"}</CreateNewProductBtn>} */}
-      {isCreateProduct && <CreateNewProduct></CreateNewProduct>}
       <RecommendedTitle>Recommended</RecommendedTitle>
       <RecommendedProducts>
         {!isLoaded ? (
           <Skeleton
             style={{ margin: '20px' }}
             count={3}
-            width={210}
+            width={250}
             height={350}
             borderRadius={10}
             inline={true}
@@ -195,7 +181,7 @@ const HomePage = ({ user, setUser }) => {
           <Skeleton
             style={{ margin: '20px' }}
             count={6}
-            width={210}
+            width={250}
             height={350}
             borderRadius={10}
             inline={true}
@@ -205,9 +191,9 @@ const HomePage = ({ user, setUser }) => {
       <MainDescription>
         <RecommendedTitle>Fashion</RecommendedTitle>
         {presents.map(({ title, content }) => (
-          <Present key={title}>
-            <PresentTitle key={title+"title"}>{title}</PresentTitle>
-            <PresentContent key={title+"content"}>{content}</PresentContent>
+          <Present>
+            <PresentTitle>{title}</PresentTitle>
+            <PresentContent>{content}</PresentContent>
           </Present>
         ))}
       </MainDescription>

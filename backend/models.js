@@ -15,8 +15,7 @@ const productSchema = new Schema({
   breadcrumbs: [String],
   images: String,
   crawled_at: String,
-  main_category: String,
-  userId: { type: Schema.Types.ObjectId, ref: 'User' },
+  main_category:String,
 });
 const imgSchema = new Schema({
   main_category: { type: String, required: true },
@@ -28,34 +27,16 @@ const User = new Schema({
   surname: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  cart: {
-    type: [
-      {
-        id: { type: String },
-        images: { type: String },
-        title: { type: String },
-        availability: { type: String },
-        price: { type: String },
-      },
-    ],
-  },
-  role: { type: String },
-  buyHistory: {
-    type: [
-      {
-        date: String,
-        products: [
-          {
-            id: { type: String },
-            images: { type: String },
-            title: { type: String },
-            availability: { type: String },
-            price: { type: String },
-          },
-        ],
-      },
-    ],
-  },
+  token: { type: String },
+  cart: {type:[
+    {
+      id: { type: String,},
+      images: { type: String,},
+      title: { type: String,},
+      availability: { type: String,}, 
+      price: { type: String,},
+    },
+],},
 });
 
 const Products = mongoose.model("Product", productSchema, "products");

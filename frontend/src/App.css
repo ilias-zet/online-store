@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  color: #e5e5e5;
 }
 
 html,body {
@@ -12,18 +11,9 @@ html,body {
   left: 0;
   width: 100%;
   min-height: 100%;
-  background-color: #1a1a1a;
-  overflow-x: hidden;
-  
 }
-
-body {
-flex: 1;
-}
-
 #root {
   display: flex;
-  flex: 1;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -31,7 +21,6 @@ flex: 1;
   left: 0;
   width: 100%;
   min-height: 100%;
-  background-color: #1a1a1a;
 }
 
 body {
@@ -63,6 +52,6 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: rgba(115, 115, 117, 0.219);
+  background-color: rgba(23, 23, 24, 0.219);
   border: solid rgba(49, 49, 49, 0.075);
 }

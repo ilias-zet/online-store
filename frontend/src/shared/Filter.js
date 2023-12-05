@@ -2,45 +2,57 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
+  position: fixed;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  border: 1px solid rgba(229, 229, 229, 0.16);
-  width: 80%;
-  height: 64px;
+  top: 170px;
+  left: 20px;
+  border: 2px solid black;
+  width: 20%;
+  height: 300px;
   border-radius: 10px;
-  margin-top: 16px;
-  overflow: hidden;
+`
+const FilterTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  background-color: gray;
+  font-weight: 1000;
+  font-family: Bradley Hand;
+  font-size: 16px;
+  color: black;
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px 10px 0 0;
 `
 
 const InputContainer = styled.div`
-  padding: 8px;
-  width: 40%;
+  margin: 10px;
 `
 
 const Input = styled.input`
   width: 100%;
-  height: 24px;
-  font-size: 12px;
-  background-color: rgb(48, 48, 48);
-  border: 1px solid rgba(229, 229, 229, 0.16);
 `
 
 const SubmitPrice = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20%;
-  height: 100%;
+  margin: 10px;
+  width: 50%;
+  height: 40px;
   color: white;
   ${({ minValue, maxValue }) =>
     maxValue > minValue
       ? `
   cursor: pointer;
-  background-color: rgb(90, 90, 90);
+  background-color: black;
   `
       : `
   background-color: gray;
-  color: #a7a7a7;
   `};
 `
 
@@ -52,8 +64,9 @@ const Filter = ({ setPrice }) => {
   const { minValue, maxValue } = inputsValue
   return (
     <Container>
+      <FilterTitle>Filter by price:</FilterTitle>
       <InputContainer>
-        <label style={{"fontSize":"12px","color":"gray"}}>Min price</label>
+        <label>Min price</label>
         <Input
           type='number'
           min='0'
@@ -66,9 +79,10 @@ const Filter = ({ setPrice }) => {
             }))
           }
         />
+        {minValue || minValue === 0 ? <div>{minValue}</div> : null}
       </InputContainer>
       <InputContainer>
-        <label style={{"fontSize":"12px","color":"gray"}}>Max price</label>
+        <label>Max price</label>
         <Input
           min={Number(minValue)}
           type='number'
@@ -81,6 +95,7 @@ const Filter = ({ setPrice }) => {
             }))
           }
         />
+        {maxValue || maxValue === 0 ? <div>{maxValue}</div> : null}
       </InputContainer>
       <SubmitPrice
         minValue={Number(minValue)}

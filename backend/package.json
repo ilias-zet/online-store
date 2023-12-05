@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon backend/index.js",
-    "socket": "nodemon backend/socketServer.js",
     "dev": "concurrently \"npm run server\"npm run frontend\"\"",
     "server": "nodemon backend/index.js",
     "client": "npm run start --prefix frontend",

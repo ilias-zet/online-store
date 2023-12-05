@@ -1,14 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { updateCart } from './utils'
 
 const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 100%;
   height: 100px;
-  background-color: #303030;
-  border: 1px solid rgb(229 229 229 / 16%);
+  background-color: #c9c9c9;
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
@@ -54,10 +52,6 @@ const Title = styled.span`
   padding: 8px;
   width: 20%;
   height: 100%;
-  color: #e5e5e5;
-  white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
 `
 
 const Buttons = styled.div`
@@ -80,8 +74,7 @@ cursor: pointer;
   color: white;
   width: 30%;
   height: 30%;
-  background-color: rgb(139 63 63 / 61%);
-  border: 1px solid rgb(229 229 229 / 16%);
+  background-color: #9c3b3b;
   border-radius: 5px;
 `
 
@@ -95,20 +88,7 @@ const Cart = ({ product, setUser, user }) => {
       ...prevState,
       cart: cartCopy,
     }))
-    updateCart(user._id,cartCopy).then(res => {
-      const {data} = res;
-      const {success} = data;
-      if(!success) {
-        const {message} = data;
-        alert(message)
-        return
-      }
-      const {updatedCart} = data;
-      setUser((prevState) => ({
-        ...prevState,
-        cart: updatedCart,
-      }))
-    })
+    alert(`Removed from cart: ${title}`)
   }
   return (
     <Container>

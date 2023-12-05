@@ -48,7 +48,7 @@ const Category = ({ name, image }) => {
     navigate(`/products?${searchParams.toString()}`);
   };
   return (
-    <Container id={name} onClick={(e) => productFilterHandler(e, name)}>
+    <Container onClick={(e) => productFilterHandler(e, name)}>
       <ImgContainer>
         <CategoryImage src={imgURL} alt="" />
       </ImgContainer>

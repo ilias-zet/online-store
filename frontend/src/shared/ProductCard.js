@@ -1,18 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { updateCart } from './utils';
 
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 210px;
+  width: 230px;
   height: 350px;
-  background-color: #303030;
+  background-color: #b5b8b6;
   margin: 10px;
   padding: 10px;
-  border: 1px solid rgb(229 229 229 / 16%);
   border-radius: 5px;
   transition: all 0.2s;
   &:hover {
@@ -45,7 +43,7 @@ const CardTitle = styled.a`
   position: relative;
   justify-content: center;
   margin-top: 10px;
-  width: 100%;
+  width: 220px;
   display: inline-block;
   height: 88px;
   font-family: Bradley Hand;
@@ -90,7 +88,7 @@ const AddToCart = styled.div`
   height: 40px;
   border-radius: 10px;
   transition: background-color 0.3s;
-  background-color: rgb(44 101 71);
+  background-color: #58d176;
   &:hover {
     background-color: #38824a;
   }
@@ -114,27 +112,12 @@ const ProductCard = ({ user, setUser, product }) => {
       ...prevState,
       cart: cartCopy,
     }))
-    updateCart(user._id,cartCopy).then(res => {
-      const {data} = res;
-      const {success} = data;
-      if(!success) {
-        const {message} = data;
-        alert(message)
-        return
-      }
-      const {updatedCart} = data;
-      setUser((prevState) => ({
-        ...prevState,
-        cart: updatedCart,
-      }))
-    })
     alert(`Added to the cart: ${title}`)
   }
 
   return (
-    <CardContainer key={_id}>
+    <CardContainer>
       <CardImageContainer
-        id={_id}
         onClick={() => {
           navigate(`/products/${_id}`)
           window.scrollTo(0, 0)
