@@ -1,0 +1,162 @@
+import React from 'react'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { updateCart } from './utils';
+
+const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 210px;
+  height: 350px;
+  background-color: #303030;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid rgb(229 229 229 / 16%);
+  border-radius: 5px;
+  transition: all 0.2s;
+  &:hover {
+    background-color: #7f8377;
+  }
+`
+const CardImageContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 10px;
+`;
+
+
+const CardImage = styled.img`
+  width: 100%;
+  transition: all 0.3s;
+  &:hover {
+    width: 116%;
+    cursor: pointer;
+  }
+`
+const CardTitle = styled.a`
+  cursor: pointer;
+  position: relative;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  display: inline-block;
+  height: 88px;
+  font-family: Bradley Hand;
+  text-decoration: none;
+  color: #120907;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 1.2em;
+  white-space: nowrap;
+  &:hover {
+    color: wheat;
+  }
+`
+const CardPrice = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-weight: 1000;
+  font-family: Bradley Hand;
+  font-size: 20px;
+  color: #120907;
+  font-family: 'Inter', sans-serif;
+`
+const CardIsAmazonSeller = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-family: Bradley Hand;
+  color: rgb(74, 74, 74);
+  margin-top: 10px;
+`
+
+const AddToCart = styled.div`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 60%;
+  height: 40px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  background-color: rgb(44 101 71);
+  &:hover {
+    background-color: #38824a;
+  }
+`
+
+const ProductCard = ({ user, setUser, product }) => {
+  const navigate = useNavigate()
+  const { _id, images, title, availability, price } = product
+  const handlerSetCart = () => {
+    if (!user) {
+      alert("You isn't authorized")
+      return
+    }
+    if (user.cart.find((elem) => elem._id === _id)) {
+      alert(`This product already in cart: ${title}`)
+      return
+    }
+    const cartCopy = user.cart.slice()
+    cartCopy.push(product)
+    setUser((prevState) => ({
+      ...prevState,
+      cart: cartCopy,
+    }))
+    updateCart(user._id,cartCopy).then(res => {
+      const {data} = res;
+      const {success} = data;
+      if(!success) {
+        const {message} = data;
+        alert(message)
+        return
+      }
+      const {updatedCart} = data;
+      setUser((prevState) => ({
+        ...prevState,
+        cart: updatedCart,
+      }))
+    })
+    alert(`Added to the cart: ${title}`)
+  }
+
+  return (
+    <CardContainer key={_id}>
+      <CardImageContainer
+        id={_id}
+        onClick={() => {
+          navigate(`/products/${_id}`)
+          window.scrollTo(0, 0)
+        }}
+      >
+        {images ? <CardImage src={images}></CardImage> : null}
+      </CardImageContainer>
+      <CardTitle
+        onClick={() => {
+          navigate(`/products/${_id}`)
+          window.scrollTo(0, 0)
+        }}
+      >
+        {title}
+      </CardTitle>
+      <CardPrice>{'$' + price}</CardPrice>
+      <CardIsAmazonSeller>{availability}</CardIsAmazonSeller>
+      {user && user.email ? (
+        <AddToCart onClick={handlerSetCart}>Add to cart</AddToCart>
+      ) : null}
+    </CardContainer>
+  )
+}
+
+export default ProductCard
